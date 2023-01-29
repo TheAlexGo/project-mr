@@ -1,0 +1,15 @@
+{
+    "extends": [
+        "stylelint-config-rational-order",
+        "stylelint-stylus/standard"
+    ],
+    "plugins": [
+        "stylelint-order",
+        "stylelint-stylus"
+    ],
+    "rules": {
+        "indentation": "tab",
+        "stylus/indentation": "tab",
+        "max-empty-lines": 1
+    }
+}
