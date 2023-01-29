@@ -1,0 +1,23 @@
+{
+  "profile-settings": "Settings",
+  "profile-version": "Version",
+  "profile-sign-out": "Sign out",
+  "profile-switch-lang": "Switch language",
+  "profile-hello": "Hello",
+  "profile-themes": "Themes",
+  "profile-theme-dark": "Dark theme",
+  "profile-theme-light": "Light theme",
+  "profile-register-heading": "Create account",
+  "profile-register-description": "Synchronize your chapters in all devices! Additional text",
+  "profile-login-heading": "Log in",
+  "profile-login-description": "Synchronize your chapters in all devices! Additional text",
+  "profile-login-button-create": "Create account",
+  "profile-login-recovery": "Forgot your password?",
+  "profile-social-entrance": "Or enter via",
+  "profile-social-register": "Or create an account via",
+  "profile-login-entrance": "Log in",
+  "profile-back": "Back",
+  "profile-next": "Next",
+  "profile-recovery-heading": "Recovery",
+  "profile-recovery-description": "We will send you an email with instructions to reset your password"
+}

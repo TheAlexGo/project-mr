@@ -1,0 +1,17 @@
+{
+  "manga-favorite-blank-heading": "Your library is blank",
+  "manga-favorite-blank-description": "Add a manga in library and that appear here",
+  "manga-recent-blank-heading": "I see, you don't start read",
+  "manga-recent-blank-description": "Let's read a manga and that appear here",
+  "manga-description-title": "Description",
+  "manga-description-author": "Author",
+  "manga-description-artist": "Artist",
+  "manga-description-translator": "Translator",
+  "manga-description-demographics": "Demographics",
+  "manga-description-genres": "Genres",
+  "manga-description-full": "Full description of the manga",
+  "manga-button-read": "Read",
+  "manga-chapter": "Chapter",
+  "manga-chapters-none": "No chapters",
+  "manga-read-first-chapter": "Read from the first chapter"
+}

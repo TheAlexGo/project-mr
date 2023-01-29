@@ -1,0 +1,17 @@
+{
+  "manga-favorite-blank-heading": "В вашей библиотеке пусто",
+  "manga-favorite-blank-description": "Добавьте мангу в библиотеку и она появится здесь",
+  "manga-recent-blank-heading": "Кажется, вы ничего не читали",
+  "manga-recent-blank-description": "Начните чтение манги и она появится здесь",
+  "manga-description-title": "Описание",
+  "manga-description-author": "Автор",
+  "manga-description-artist": "Художник",
+  "manga-description-translator": "Переводчик",
+  "manga-description-demographics": "Демографика",
+  "manga-description-genres": "Жанры",
+  "manga-description-full": "Полное описание манги",
+  "manga-button-read": "Читать",
+  "manga-chapter": "Глава",
+  "manga-chapters-none": "Глав нет",
+  "manga-read-first-chapter": "Читать с первой главы"
+}

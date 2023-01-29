@@ -1,0 +1,9 @@
+{
+  "error-404-title": "Not founded",
+  "error-404-button": "Return",
+  "error-network": "Network error!",
+  "error-auth-reg-email": "Invalid mail format",
+  "error-auth-reg-username-length": "Username is too short",
+  "error-auth-reg-password-length": "Password must contain at least 8 characters!",
+  "error-auth-reg-password-not-match": "Passwords do not match"
+}

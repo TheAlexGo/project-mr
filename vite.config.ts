@@ -1,16 +1,28 @@
-import { defineConfig } from 'vite';
-import svgr from 'vite-plugin-svgr';
-import react from '@vitejs/plugin-react';
 import legacy from '@vitejs/plugin-legacy';
+import react from '@vitejs/plugin-react';
 import path from 'path';
+import { defineConfig } from 'vite';
 import eslintPlugin from 'vite-plugin-eslint';
 import stylelintPlugin from 'vite-plugin-stylelint';
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
     resolve: {
         alias: {
-            '@fonts': path.resolve(__dirname, './src/assets/fonts')
+            '@components': path.resolve(__dirname, './src/components/ui'),
+            '@layouts': path.resolve(__dirname, './src/components/layouts'),
+            '@pages': path.resolve(__dirname, './src/components/pages'),
+            '@fonts': path.resolve(__dirname, './src/assets/fonts'),
+            '@types': path.resolve(__dirname, './src/types'),
+            '@store': path.resolve(__dirname, './src/store'),
+            '@languages': path.resolve(__dirname, './src/languages'),
+            '@services': path.resolve(__dirname, './src/services'),
+            '@sb': path.resolve(__dirname, './.storybook'),
+            '@icons': path.resolve(__dirname, './src/assets/icons'),
+            '@hooks': path.resolve(__dirname, './src/hooks'),
+            '@styles': path.resolve(__dirname, './src/styles'),
+            'bem-cn-custom': path.resolve(__dirname, './src/utils/bemCnCustom')
         }
     },
     plugins: [
@@ -27,10 +39,7 @@ export default defineConfig({
         svgr({}),
         eslintPlugin(),
         stylelintPlugin({
-            fix: true,
-            lintOnStart: true,
-            emitWarning: true,
-            emitError: true
+            fix: true
         })
     ]
 })

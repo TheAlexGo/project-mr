@@ -1,0 +1,10 @@
+{
+  "error-404-title": "Я что-то нажал и всё сломалось",
+  "error-404-button": "Вернуться на главную",
+  "error-network": "Ошибка интернет-соединения!",
+  "error-auth-reg-email": "Неверный формат почты",
+  "error-auth-reg-username-length": "Имя пользователя слишком короткое",
+  "error-auth-reg-password-length": "Пароль должен содержать не менее 8 символов!",
+  "error-auth-reg-password-not-match": "Пароли не совпадают",
+  "error-login-username-password-error": "Не введено имя пользователя или пароль!"
+}

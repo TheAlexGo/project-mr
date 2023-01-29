@@ -20,16 +20,8 @@
         "sourceType": "module"
     },
     "plugins": ["react", "@typescript-eslint"],
-    "settings": {
-        "react": {
-            "version": "detect"
-        },
-        "import/resolver": {
-            "node": {
-                "paths": ["src"],
-                "extensions": [".ts", ".tsx"]
-            }
-        }
+    "globals": {
+        "JSX": true
     },
     "rules": {
         "import/no-unresolved": 0,
@@ -52,6 +44,81 @@
             {
                 "devDependencies": true
             }
-        ]
+        ],
+        // Разрешаем отсутствие дефолтного экспорта
+        "import/prefer-default-export": 0,
+        // Разрешаем использовать разные определния для компонентов
+        "react/function-component-definition": [
+            2,
+            {
+                "namedComponents": "arrow-function",
+                "unnamedComponents": "arrow-function"
+            }
+        ],
+        // Отключаем стандартную проверку на уже объявленные переменные в скопе
+        "no-shadow": 0,
+        // Разрешаем применять spread к пропсам
+        "react/jsx-props-no-spreading": [2, {
+            "html": "ignore",
+            "custom": "ignore",
+            "exceptions": [""]
+        }],
+        // Разрешаем создавать методы класса без использования в них this
+        "class-methods-use-this": 0,
+        "import/order": [
+            1,
+            {
+                "groups": [
+                    ["builtin", "external"],
+                    "internal",
+                    ["sibling", "parent"],
+                    "object",
+                    "type"
+                ],
+                "pathGroups": [
+                    {
+                        "pattern": "react",
+                        "group": "builtin",
+                        "position": "before",
+                        "patternOptions": {
+                            "matchBase": true
+                        }
+                    },
+                    {
+                        "pattern": "*.+(styl|svg)",
+                        "group": "type",
+                        "position": "after",
+                        "patternOptions": {
+                            "matchBase": true
+                        }
+                    }
+                ],
+                "pathGroupsExcludedImportTypes": ["react"],
+                "alphabetize": {
+                    "order": "asc"
+                },
+                "newlines-between": "always"
+            }
+        ],
+        "indent": [2, 4],
+        "default-case": 0,
+        // После переноса проекта - переосмыслить
+        "lines-between-class-members": 0,
+        "react/require-default-props": 0,
+        "no-unused-vars": 0,
+        "react/button-has-type": 0
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "import/resolver": {
+            "node": {
+                "paths": ["src"],
+                "extensions": [".ts", ".tsx"]
+            }
+        },
+        // указываем пути для внутренних пакетов
+        "import/internal-regex": "^@(components|fonts|types|store|languages|services|sb|icons|hooks|layouts|pages)/"
     }
 }
