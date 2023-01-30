@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 env:
-  DEPLOY_PATH: /home/${{ secrets.DEPLOY_SERVER_USERNAME }}/domains/mr.thealexgo.ru/public_html
+  DEPLOY_PATH: /home/${{ secrets.DEPLOY_SERVER_USERNAME }}/domains/${{ secrets.SITE_DOMAINS }}/public_html
   BUILD_SCRIPT: npm run build
   BUILD_SCRIPT_OUTPUT: dist
 
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Делаем checkout текущей ветки
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # Устанавливаем Node.JS для сборки приложения
       - uses: actions/setup-node@v1
         with:
@@ -24,7 +24,7 @@ jobs:
         run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/} >> $GITHUB_OUTPUT | sed 's/\//-/g' | sed 's/\./_/g')"
       # Устанавливаем зависимости для сборки
       - name: Install Dependencies
-        run: npm i
+        run: npm ci
       # Собираем приложение
       - name: Build Appliction
         run: $BUILD_SCRIPT
@@ -40,4 +40,4 @@ jobs:
           target: ${{ env.DEPLOY_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
           strip_components: 1
       - name: Print Info
-        run: echo "Deployed successfully"
+        run: echo "Deployed successfully https://${{ secrets.SITE_DOMAINS }}"
