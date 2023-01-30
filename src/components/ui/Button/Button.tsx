@@ -1,10 +1,10 @@
 import React, { ButtonHTMLAttributes, FC, useCallback, useMemo } from 'react';
 
+import { Loader } from '@components/Loader/Loader';
 import { Positions, VoidFunction } from '@types';
 import block from 'bem-cn-custom';
 import { useNavigate } from 'react-router-dom';
 
-import { Loader } from '@components/Loader/Loader';
 
 import './Button.styl';
 

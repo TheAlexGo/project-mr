@@ -3,9 +3,9 @@ import React from 'react';
 
 
 import { StarIcon, TrashIcon, VkIcon } from '@icons';
+import { StoryCategories } from '@sb/types';
 import { Positions } from '@types';
 
-import { StoryCategories } from '@sb/types';
 
 import { ButtonStates, ButtonThemes, ButtonTypes, BackgroundColors, Button } from './Button';
 
