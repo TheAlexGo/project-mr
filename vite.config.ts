@@ -4,7 +4,12 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import eslintPlugin from 'vite-plugin-eslint';
 import stylelintPlugin from 'vite-plugin-stylelint';
-import svgr from 'vite-plugin-svgr';
+import svgrPlugin from 'vite-plugin-svgr';
+
+const getStylesPath = (file: string) => path.resolve(
+    __dirname,
+    `./src/styles/${file}.styl`
+);
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -36,10 +41,21 @@ export default defineConfig({
             exclude: /\.stories\.(t|j)sx?$/,
             include: '**/*.tsx'
         }),
-        svgr({}),
+        svgrPlugin({}),
         eslintPlugin(),
         stylelintPlugin({
             fix: true
         })
-    ]
+    ],
+    css: {
+        preprocessorOptions: {
+            styl: {
+                additionalData: `
+                @require "${getStylesPath("mixins")}";
+                @require "${getStylesPath("variables")}";
+                @require "${getStylesPath("fonts")}";
+                `,
+            }
+        }
+    }
 })
