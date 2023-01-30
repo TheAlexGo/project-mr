@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 env:
-  DEPLOY_PATH: /var/www/app
+  DEPLOY_PATH: /home/${{ secrets.DEPLOY_SERVER_USERNAME }}/domains/mr.thealexgo.ru/public_html
   BUILD_SCRIPT: npm run build
   BUILD_SCRIPT_OUTPUT: dist
 
