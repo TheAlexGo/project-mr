@@ -6,7 +6,7 @@ import './General.styl';
 
 export const General: FC = observer(() => (
     <div>
-        General
+        General test
     </div>
 ));
 
