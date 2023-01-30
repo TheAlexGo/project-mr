@@ -14,7 +14,7 @@ jobs:
       # Делаем checkout текущей ветки
       - uses: actions/checkout@v3
       # Устанавливаем Node.JS для сборки приложения
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: '19'
       # Записываем в переменные окружения имя текущей ветки

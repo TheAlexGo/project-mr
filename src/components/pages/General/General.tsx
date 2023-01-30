@@ -6,7 +6,7 @@ import './General.styl';
 
 export const General: FC = observer(() => (
     <div>
-        General test
+        It&apos;s my best General Page!
     </div>
 ));
 
