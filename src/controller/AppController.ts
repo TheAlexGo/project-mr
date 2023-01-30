@@ -1,11 +1,10 @@
 import { createContext } from 'react';
 
-import { store, Store } from '@store';
-import { IApiCallback, Lang } from '@types';
-
 import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
+import { store, Store } from '@store';
+import { IApiCallback, Lang } from '@types';
 
 export class AppController {
     store: Store;

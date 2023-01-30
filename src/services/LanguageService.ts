@@ -1,7 +1,6 @@
-import { Lang } from '@types';
-
 import packageEn from '@languages/en';
 import packageRu from '@languages/ru';
+import { Lang } from '@types';
 
 export class LanguageService {
     private resources = {
