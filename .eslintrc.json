@@ -40,7 +40,7 @@
             }
         ],
         "import/no-extraneous-dependencies": [
-            1,
+            2,
             {
                 "devDependencies": true
             }
