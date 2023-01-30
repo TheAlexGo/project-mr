@@ -53,7 +53,6 @@ export default defineConfig({
                 additionalData: `
                 @require "${getStylesPath("mixins")}";
                 @require "${getStylesPath("variables")}";
-                @require "${getStylesPath("fonts")}";
                 `,
             }
         }

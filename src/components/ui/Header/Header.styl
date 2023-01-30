@@ -1,0 +1,33 @@
+.header
+    width 100%
+    color var(--color_main)
+
+    &__wrapper
+        display flex
+        justify-content space-between
+        align-items center
+        height 100%
+        color var(--color_main)
+
+    &__heading
+        word-break break-word
+
+    &__description
+        margin $offset-4x 0 $offset-9x
+        font-weight normal
+        font-size 15px
+        line-height 21px
+
+    &__left
+    &__right
+        display flex
+        align-items center
+
+    &__right
+        margin 0 (- $offset-2x)
+
+    &__button
+        margin 0 $offset-2x
+
+    &__back
+        margin-right $offset-4x

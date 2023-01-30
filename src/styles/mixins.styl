@@ -1,9 +1,43 @@
+// Fonts
 loadFont($font-family, $file-path, $weight = normal, $style = normal)
     @font-face
         font-weight $weight
         font-family $font-family
         font-style $style
         src url($file-path + '.ttf') format("truetype")
+
+fontThin()
+    font-weight 100
+    font-family Inter, sans-serif
+
+fontExtraLight()
+    font-weight 200
+    font-family Inter, sans-serif
+
+fontLight()
+    font-weight 300
+    font-family Inter, sans-serif
+
+fontRegular()
+    font-weight 400
+    font-family Inter, sans-serif
+
+fontMedium()
+    font-weight 500
+    font-family Inter, sans-serif
+
+fontSemiBold()
+    font-weight 600
+    font-family Inter, sans-serif
+
+fontBold()
+    font-weight 700
+    font-family Inter, sans-serif
+
+fontExtraBold()
+    font-weight 800
+    font-family Inter, sans-serif
+// /Fonts
 
 hover($stateClass)
     &:not(:disabled):not({$stateClass}__static):hover

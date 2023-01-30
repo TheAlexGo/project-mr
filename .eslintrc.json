@@ -100,7 +100,6 @@
                 "newlines-between": "always"
             }
         ],
-        "indent": [2, 4],
         "default-case": 0,
         // После переноса проекта - переосмыслить
         "lines-between-class-members": 0,
@@ -119,6 +118,6 @@
             }
         },
         // указываем пути для внутренних пакетов
-        "import/internal-regex": "^@(components|fonts|types|store|languages|services|sb|icons|hooks|layouts|pages)/"
+        "import/internal-regex": "^@.+(components|fonts|types|store|languages|services|sb|icons|hooks|layouts|pages)/"
     }
 }

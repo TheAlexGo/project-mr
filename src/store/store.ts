@@ -1,11 +1,11 @@
-import { Lang } from '@types';
+import { IHeaderButton, Lang } from '@types';
 import { makeAutoObservable } from 'mobx';
-
 
 export class Store {
     lang = Lang.RUSSIAN;
     readonly defaultLang = Lang.RUSSIAN;
     locale: Record<string, string> = {};
+    headerButtons: IHeaderButton[] = [];
 
     constructor() {
         makeAutoObservable(this);
