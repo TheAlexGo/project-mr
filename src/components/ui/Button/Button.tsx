@@ -114,7 +114,9 @@ export const Button: FC<IButton> = ({
     const navigate = useNavigate();
 
     const clickHandler = useCallback(() => {
-        onClick?.();
+        if (onClick) {
+            onClick();
+        }
         if (href) {
             if (isStrangeLink) {
                 window.open(href, '_blank');
