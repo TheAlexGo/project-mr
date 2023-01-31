@@ -1,5 +1,5 @@
-# vite-react-example
-Basic template for quick deployment of vite + react applications.
+# Mangareader
+Comic book reader app.
 
 ## Available scripts
 
@@ -29,4 +29,8 @@ Build Storybook to deploy.
 ### `npm run lint`
 
 Runs code linting.
+
+### `npm run lint:fix`
+
+Format all files according to codestyle rules.
 
