@@ -1,14 +1,13 @@
 import React, { createElement, FC } from 'react';
 
+import cn from 'classnames';
+import { observer } from 'mobx-react-lite';
+
 import { Button } from '@components/Button/Button';
 import { useStore } from '@hooks/useStore';
 import { FlexPositions, HeaderButtons, HeaderTypes, IHeaderButton } from '@types';
-import block from 'bem-cn-custom';
-import { observer } from 'mobx-react-lite';
 
-import './Header.styl';
-
-const classnames = block('header');
+import classes from './Header.module.styl';
 
 interface IHeader {
     heading?: string;
@@ -27,7 +26,7 @@ export const Header: FC<IHeader> = observer(
         const Heading = createElement(
             type,
             {
-                className: classnames('heading')
+                className: classes.heading
             },
             heading
         );
@@ -37,35 +36,35 @@ export const Header: FC<IHeader> = observer(
                 case HeaderButtons.MORE:
                     // more
                     return (
-                        <Button key={button.headerType} className={classnames('button')}>
+                        <Button key={button.headerType} className={classes.button}>
                             More
                         </Button>
                     );
                 case HeaderButtons.SEARCH:
                     // search
                     return (
-                        <Button key={button.headerType} className={classnames('button')}>
+                        <Button key={button.headerType} className={classes.button}>
                             Search
                         </Button>
                     );
                 case HeaderButtons.TRASH:
                     // trash
                     return (
-                        <Button key={button.headerType} className={classnames('button')}>
+                        <Button key={button.headerType} className={classes.button}>
                             Trash
                         </Button>
                     );
                 case HeaderButtons.ADD:
                     // plus
                     return (
-                        <Button key={button.headerType} className={classnames('button')}>
+                        <Button key={button.headerType} className={classes.button}>
                             Plus
                         </Button>
                     );
                 case HeaderButtons.BELL:
                     // bell
                     return (
-                        <Button key={button.headerType} className={classnames('button')}>
+                        <Button key={button.headerType} className={classes.button}>
                             Bell
                         </Button>
                     );
@@ -75,20 +74,27 @@ export const Header: FC<IHeader> = observer(
         });
 
         return (
-            <div className={classnames({}).mix(className)}>
-                <div className={classnames('wrapper')}>
-                    <div className={classnames('left')}>
-                        {needBack && <Button className={classnames('back')}>Back</Button>}
+            <div className={cn(classes.header, className)}>
+                <div className={classes.wrapper}>
+                    <div className={classes.left}>
+                        {needBack && <Button className={classes.back}>Back</Button>}
                         {Heading}
                     </div>
                     <div
-                        className={classnames('right')}
-                        style={{ justifyContent: buttonsPositions, ...(buttonsPositions ? { flex: 1 } : {}) }}
+                        className={classes.right}
+                        style={{
+                            justifyContent: buttonsPositions,
+                            ...(buttonsPositions
+                                ? {
+                                      flex: 1
+                                  }
+                                : {})
+                        }}
                     >
                         {buttonsContent}
                     </div>
                 </div>
-                {description && <div className={classnames('description')}>{description}</div>}
+                {description && <div className={classes.description}>{description}</div>}
             </div>
         );
     }

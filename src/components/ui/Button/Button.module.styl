@@ -20,12 +20,8 @@
     &:disabled
         cursor not-allowed
 
-    &__icon
-        svg
-            display block
-
-    &--theme
-        &__primary
+    & .__theme
+        &-primary
             background-color var(--color_primary)
 
             +hover('button--state')
@@ -35,55 +31,55 @@
                 color var(--color_on-surface)
                 background-color var(--color_surface)
 
-        &__secondary
+        &-secondary
             +hover('button--state')
                 background-color var(--color_surface)
 
             &:disabled
                 color var(--color_on-surface)
 
-        &__clear
+        &-clear
             flex-shrink 0
             cursor pointer
             transition background-color 0.3s
             all unset
 
-    &--size
-        &__24
+    & .__size
+        &-s24
             width 24px
             height 24px
 
-        &__36
+        &-s36
             width 36px
             height 36px
 
-        &__40
+        &-s40
             width 40px
             height 40px
 
-        &__44
+        &-s44
             width 44px
             height 44px
 
-        &__52
+        &-s52
             width 52px
             height 52px
 
-    &--content-position
-        &__left
+    & .__content_position
+        &-left
             justify-content left
 
-        &__center
+        &-center
             justify-content center
 
-        &__right
+        &-right
             justify-content right
 
-    &--color
-        &__red
+    & .__bg_color
+        &-red
             background-color var(--color_error)
 
-    &--is
+    & .__is
         &-loading
             width 48px
 
@@ -93,6 +89,9 @@
         &-rounded
             border-radius 50%
 
-    &--with
+    & .__with
         &-no_padding
             padding 0
+
+.icon svg
+    display block

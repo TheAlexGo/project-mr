@@ -6,10 +6,5 @@
     "jsxSingleQuote": false,
     "tabWidth": 4,
     "trailingComma": "none",
-    "prettier/prettier": [
-        "error",
-        {
-            "endOfLine": "auto"
-        }
-    ]
+    "endOfLine": "auto"
 }

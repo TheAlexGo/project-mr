@@ -1,15 +1,13 @@
+import path from 'path';
+
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 import { defineConfig } from 'vite';
 import eslintPlugin from 'vite-plugin-eslint';
 import stylelintPlugin from 'vite-plugin-stylelint';
 import svgrPlugin from 'vite-plugin-svgr';
 
-const getStylesPath = (file: string) => path.resolve(
-    __dirname,
-    `./src/styles/${file}.styl`
-);
+const getStylesPath = (file: string) => path.resolve(__dirname, `./src/styles/${file}.styl`);
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -32,10 +30,7 @@ export default defineConfig({
     },
     plugins: [
         legacy({
-            targets: [
-                'defaults',
-                'not IE 11'
-            ]
+            targets: ['defaults', 'not IE 11']
         }),
         react({
             exclude: /\.stories\.(t|j)sx?$/,
@@ -51,10 +46,10 @@ export default defineConfig({
         preprocessorOptions: {
             styl: {
                 additionalData: `
-                @require "${getStylesPath("mixins")}";
-                @require "${getStylesPath("variables")}";
-                `,
+                @require "${getStylesPath('mixins')}";
+                @require "${getStylesPath('variables')}";
+                `
             }
         }
     }
-})
+});

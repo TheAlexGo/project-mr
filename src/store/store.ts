@@ -1,5 +1,6 @@
-import { IHeaderButton, Lang } from '@types';
 import { makeAutoObservable } from 'mobx';
+
+import { IHeaderButton, Lang } from '@types';
 
 export class Store {
     lang = Lang.RUSSIAN;

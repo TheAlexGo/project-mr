@@ -1,24 +1,23 @@
 import React, { FC } from 'react';
 
+import cn from 'classnames';
+
 import { ButtonSizes } from '@types';
-import block from 'bem-cn-custom';
 
-import './Loader.styl';
-
-const classnames = block('loader');
+import classes from './Loader.module.styl';
 
 interface LoaderProps {
     size?: ButtonSizes;
 }
 
 export const Loader: FC<LoaderProps> = ({ size = '52' }): JSX.Element => {
-    const rootClasses = classnames({
-        [`size__${size}`]: !!size
+    const rootClasses = cn(classes.loader, {
+        [classes[`__size-s${size}`]]: !!size
     });
 
     return (
         <div className={rootClasses}>
-            <div className={classnames('circle')} />
+            <div className={classes.circle} />
         </div>
     );
 };

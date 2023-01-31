@@ -1,11 +1,9 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 
-
 import { StarIcon, TrashIcon, VkIcon } from '@icons';
 import { StoryCategories } from '@sb/types';
 import { Positions } from '@types';
-
 
 import { ButtonStates, ButtonThemes, ButtonTypes, BackgroundColors, Button } from './Button';
 

@@ -19,9 +19,9 @@ export class AppController {
         this.validateService = new ValidateService();
     }
 
-    logger(...params: any[]) {
+    logger(message: unknown, ...optionalParams: unknown[]) {
         // eslint-disable-next-line prefer-rest-params,no-console
-        console.log(params);
+        console.log(message, optionalParams);
     }
 
     apiCallback: IApiCallback = (method, result, data) => {

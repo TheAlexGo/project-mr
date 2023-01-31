@@ -3,13 +3,18 @@
         "browser": true,
         "es2021": true
     },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended",
         "airbnb",
-        "airbnb/hooks",
-        "eslint-config-prettier"
+        "airbnb/hooks"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -19,7 +24,6 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": ["react", "@typescript-eslint"],
     "globals": {
         "JSX": true
     },
@@ -69,7 +73,9 @@
             1,
             {
                 "groups": [
-                    ["builtin", "external"],
+                    "index",
+                    "builtin",
+                    "external",
                     "internal",
                     ["sibling", "parent"],
                     "object",
@@ -79,7 +85,7 @@
                     {
                         "pattern": "react",
                         "group": "builtin",
-                        "position": "before",
+                        "position": "after",
                         "patternOptions": {
                             "matchBase": true
                         }
@@ -101,6 +107,15 @@
             }
         ],
         "default-case": 0,
+        // Отступы
+        "indent": 0, // отключаем. Будем работать через prettier
+        "react/jsx-indent": [2, 4],
+        "react/jsx-indent-props": [2, 4],
+        // Не добавляем запятую у последнего элемента в массиве/объекте
+        "comma-dangle": ["error", "never"],
+        // Максимальная длина строки
+        "max-len": [2, 120],
+        "object-curly-newline": 0,
         // После переноса проекта - переосмыслить
         "lines-between-class-members": 0,
         "react/require-default-props": 0,
@@ -118,6 +133,6 @@
             }
         },
         // указываем пути для внутренних пакетов
-        "import/internal-regex": "^@.+(components|fonts|types|store|languages|services|sb|icons|hooks|layouts|pages)/"
+        "import/internal-regex": "^@(components|fonts|types|store|languages|services|sb|icons|hooks|layouts|pages).*$"
     }
 }

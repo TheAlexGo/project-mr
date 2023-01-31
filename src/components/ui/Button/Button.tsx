@@ -1,14 +1,12 @@
 import React, { ButtonHTMLAttributes, FC, useCallback, useMemo } from 'react';
 
-import { Loader } from '@components/Loader/Loader';
-import { Positions, VoidFunction } from '@types';
-import block from 'bem-cn-custom';
+import cn from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
+import { Loader } from '@components/Loader/Loader';
+import { Positions, VoidFunction } from '@types';
 
-import './Button.styl';
-
-const classnames = block('button');
+import classes from './Button.module.styl';
 
 export type ButtonSizes = '24' | '36' | '40' | '44' | '52';
 
@@ -75,6 +73,7 @@ export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button: FC<IButton> = ({
+    className,
     href,
     icon,
     onClick,
@@ -95,19 +94,23 @@ export const Button: FC<IButton> = ({
     contentPosition = Positions.CENTER,
     ...props
 }): JSX.Element => {
-    const classButton = classnames({
-        [`theme__${theme}`]: !!theme,
-        [`state__${state}`]: !!state && state !== 'default',
-        [`color__${colorBackground}`]: !!colorBackground,
-        [`size__${size}`]: !!size,
-        [`content-position__${contentPosition}`]: !!contentPosition,
-        'is-loading': isLoading,
-        'is-wide': isWide,
-        'is-rounded': isRounded,
-        'with-no_padding': withNoPadding,
-        position__left: withLeftIcon,
-        position__right: withRightIcon
-    }).mix(props.className);
+    const classButton = cn(
+        classes.button,
+        {
+            [classes[`__theme-${theme}`]]: !!theme,
+            [classes[`__state-${state}`]]: !!state && state !== 'default',
+            [classes[`__bg_color-${colorBackground}`]]: !!colorBackground,
+            [classes[`__size-s${size}`]]: !!size,
+            [classes[`__content_position-${contentPosition}`]]: !!contentPosition,
+            [classes['__is-loading']]: isLoading,
+            [classes['__is-wide']]: isWide,
+            [classes['__is-rounded']]: isRounded,
+            [classes['__with-no_padding']]: withNoPadding,
+            [classes['__position-left']]: withLeftIcon,
+            [classes['__position-right']]: withRightIcon
+        },
+        className
+    );
     const navigate = useNavigate();
 
     const clickHandler = useCallback(() => {
@@ -126,7 +129,7 @@ export const Button: FC<IButton> = ({
             if (!children) {
                 return icon;
             }
-            return <div className={classnames('icon')}>{icon}</div>;
+            return <div className={classes.icon}>{icon}</div>;
         }
         return null;
     }, [children, icon]);
