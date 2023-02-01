@@ -7,7 +7,7 @@
     height 48px
     margin 0
     padding 0 12px
-    color var(--color_main)
+    color var(--color_white)
     font-size 15px
     background-color transparent
     border 0
@@ -20,11 +20,11 @@
     &:disabled
         cursor not-allowed
 
-    & .__theme
+    &.__theme
         &-primary
             background-color var(--color_primary)
 
-            +hover('button--state')
+            +hover('__state')
                 background-color var(--color_active)
 
             &:disabled
@@ -32,7 +32,7 @@
                 background-color var(--color_surface)
 
         &-secondary
-            +hover('button--state')
+            +hover('__state')
                 background-color var(--color_surface)
 
             &:disabled
@@ -44,7 +44,7 @@
             transition background-color 0.3s
             all unset
 
-    & .__size
+    &.__size
         &-s24
             width 24px
             height 24px
@@ -65,7 +65,7 @@
             width 52px
             height 52px
 
-    & .__content_position
+    &.__content_position
         &-left
             justify-content left
 
@@ -75,11 +75,11 @@
         &-right
             justify-content right
 
-    & .__bg_color
+    &.__bg_color
         &-red
             background-color var(--color_error)
 
-    & .__is
+    &.__is
         &-loading
             width 48px
 
@@ -89,7 +89,7 @@
         &-rounded
             border-radius 50%
 
-    & .__with
+    &.__with
         &-no_padding
             padding 0
 

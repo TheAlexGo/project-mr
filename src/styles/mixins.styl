@@ -40,8 +40,8 @@ fontExtraBold()
 // /Fonts
 
 hover($stateClass)
-    &:not(:disabled):not({$stateClass}__static):hover
-    &{$stateClass}__hover
+    &:not(:disabled):not(.{$stateClass}-static):hover
+    &.{$stateClass}-hover
         {block}
 
 multiEllip($countOfLine, $lineHeight = 16px, $showEllipsis = true)

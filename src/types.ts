@@ -181,7 +181,9 @@ export type IApiCallback<T = string> = (method: IApiMethod, result: IApiCallback
 
 export type VoidFunction = () => void;
 
-export type ButtonSizes = '24' | '36' | '40' | '52' | 'default';
+export const SQUARE_ELEMENT_SIZES = ['24', '36', '40', '44', '52'] as const;
+type SquareElementSizesTuple = typeof SQUARE_ELEMENT_SIZES;
+export type SquareElementSizes = SquareElementSizesTuple[number];
 
 export interface IComment {
     id: number;

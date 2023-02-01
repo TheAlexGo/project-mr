@@ -4,11 +4,9 @@ import cn from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
 import { Loader } from '@components/Loader/Loader';
-import { Positions, VoidFunction } from '@types';
+import { Positions, SquareElementSizes, VoidFunction } from '@types';
 
 import classes from './Button.module.styl';
-
-export type ButtonSizes = '24' | '36' | '40' | '44' | '52';
 
 export enum ButtonThemes {
     PRIMARY = 'primary',
@@ -38,6 +36,8 @@ export enum BackgroundColors {
  * Интерфейс кнопки
  */
 export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
+    /** Устанавливает класс для иконки */
+    iconClassName?: string;
     /** Устанавливает тип кнопки */
     type?: ButtonTypes;
     /** Устанавливает тему кнопки */
@@ -51,7 +51,7 @@ export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
     /** Устанавливает позицию контента: слева, справа или по центру */
     contentPosition?: Positions;
     /** Устанавливает размер кнопки */
-    size?: ButtonSizes;
+    size?: SquareElementSizes;
     /** Устанавливает иконку для кнопки */
     icon?: JSX.Element;
     /** Устанавливает ссылку куда перенаправит кнопка при нажатии на неё */
@@ -69,11 +69,12 @@ export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
     /** Устанавливает состояние загрузки у кнопки */
     isLoading?: boolean;
     /** Сильная ссылка - переход на другую страницу */
-    isStrangeLink?: boolean;
+    isExternalLink?: boolean;
 }
 
 export const Button: FC<IButton> = ({
     className,
+    iconClassName,
     href,
     icon,
     onClick,
@@ -85,7 +86,7 @@ export const Button: FC<IButton> = ({
     isRounded = false,
     disabled = false,
     isLoading = false,
-    isStrangeLink = false,
+    isExternalLink = false,
     withNoPadding = false,
     state = ButtonStates.DEFAULT,
     colorBackground = BackgroundColors.DEFAULT,
@@ -94,11 +95,10 @@ export const Button: FC<IButton> = ({
     contentPosition = Positions.CENTER,
     ...props
 }): JSX.Element => {
-    const classButton = cn(
+    const rootClasses = cn(
         classes.button,
         {
             [classes[`__theme-${theme}`]]: !!theme,
-            [classes[`__state-${state}`]]: !!state && state !== 'default',
             [classes[`__bg_color-${colorBackground}`]]: !!colorBackground,
             [classes[`__size-s${size}`]]: !!size,
             [classes[`__content_position-${contentPosition}`]]: !!contentPosition,
@@ -107,7 +107,8 @@ export const Button: FC<IButton> = ({
             [classes['__is-rounded']]: isRounded,
             [classes['__with-no_padding']]: withNoPadding,
             [classes['__position-left']]: withLeftIcon,
-            [classes['__position-right']]: withRightIcon
+            [classes['__position-right']]: withRightIcon,
+            [classes[`__state-${state}`]]: !!state && state !== 'default'
         },
         className
     );
@@ -118,25 +119,25 @@ export const Button: FC<IButton> = ({
             onClick();
         }
         if (href) {
-            if (isStrangeLink) {
+            if (isExternalLink) {
                 window.open(href, '_blank');
                 return;
             }
             navigate(href);
         }
-    }, [href, isStrangeLink, navigate, onClick]);
+    }, [href, isExternalLink, navigate, onClick]);
 
     const iconElement = useMemo(() => {
         if (icon) {
-            if (!children) {
-                return icon;
-            }
-            return <div className={classes.icon}>{icon}</div>;
+            return <div className={cn(classes.icon, iconClassName)}>{icon}</div>;
         }
         return null;
-    }, [children, icon]);
+    }, [icon, iconClassName]);
 
     const content = useMemo(() => {
+        if (isLoading) {
+            return <Loader size="24" />;
+        }
         if (!children && icon) {
             return iconElement;
         }
@@ -147,11 +148,11 @@ export const Button: FC<IButton> = ({
                 {withRightIcon && iconElement}
             </>
         );
-    }, [children, icon, iconElement, withLeftIcon, withRightIcon]);
+    }, [children, icon, iconElement, isLoading, withLeftIcon, withRightIcon]);
 
     return (
-        <button {...props} type={type} disabled={isLoading || disabled} className={classButton} onClick={clickHandler}>
-            {isLoading ? <Loader size="24" /> : content}
+        <button {...props} className={rootClasses} type={type} disabled={isLoading || disabled} onClick={clickHandler}>
+            {content}
         </button>
     );
 };

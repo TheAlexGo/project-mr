@@ -3,7 +3,7 @@ import React from 'react';
 
 import { StarIcon, TrashIcon, VkIcon } from '@icons';
 import { StoryCategories } from '@sb/types';
-import { Positions } from '@types';
+import { Positions, SQUARE_ELEMENT_SIZES } from '@types';
 
 import { ButtonStates, ButtonThemes, ButtonTypes, BackgroundColors, Button } from './Button';
 
@@ -12,8 +12,6 @@ const ICONS = {
     Trash: TrashIcon,
     VK: VkIcon
 };
-
-const ButtonSizes = ['24', '36', '40', '44', '52'];
 
 export default {
     title: 'UI / Button',
@@ -31,7 +29,7 @@ export default {
                 category: StoryCategories.OTHER
             }
         },
-        isStrangeLink: {
+        isExternalLink: {
             name: 'Осуществлять переход на другую страницу?',
             table: {
                 category: StoryCategories.OTHER
@@ -65,7 +63,7 @@ export default {
         },
         size: {
             name: 'Размер (делает кнопку квадратной)',
-            options: ['none', ...ButtonSizes],
+            options: ['none', ...SQUARE_ELEMENT_SIZES],
             mapping: {
                 none: null
             },
@@ -145,6 +143,11 @@ export default {
                 category: StoryCategories.ICON
             }
         },
+        iconClassName: {
+            table: {
+                disable: true
+            }
+        },
         onClick: {
             table: {
                 disable: true
@@ -160,7 +163,7 @@ export default {
         isWide: false,
         isRounded: false,
         isLoading: false,
-        isStrangeLink: false,
+        isExternalLink: false,
         withLeftIcon: false,
         withRightIcon: false,
         withNoPadding: false,

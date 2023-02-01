@@ -36,7 +36,11 @@ export default defineConfig({
             exclude: /\.stories\.(t|j)sx?$/,
             include: '**/*.tsx'
         }),
-        svgrPlugin({}),
+        svgrPlugin({
+            svgrOptions: {
+                icon: true
+            }
+        }),
         eslintPlugin(),
         stylelintPlugin({
             fix: true

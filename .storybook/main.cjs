@@ -1,3 +1,7 @@
+const path = require('path');
+const { loadConfigFromFile, mergeConfig } = require("vite");
+const svgrPlugin = require('vite-plugin-svgr');
+
 module.exports = {
     "stories": [
         "../src/components/ui/**/*.stories.@(ts|tsx)"
@@ -13,5 +17,21 @@ module.exports = {
     },
     "features": {
         "storyStoreV7": true
-    }
+    },
+    async viteFinal(config, { configType }) {
+        const { config: userConfig } = await loadConfigFromFile(
+            path.resolve(__dirname, "../vite.config.ts")
+        );
+
+        return mergeConfig(config, {
+            ...userConfig,
+            plugins: [
+                svgrPlugin({
+                    svgrOptions: {
+                        icon: true
+                    }
+                })
+            ]
+        });
+    },
 }

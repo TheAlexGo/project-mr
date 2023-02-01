@@ -2,12 +2,12 @@ import React, { FC } from 'react';
 
 import cn from 'classnames';
 
-import { ButtonSizes } from '@types';
+import { SquareElementSizes } from '@types';
 
 import classes from './Loader.module.styl';
 
 interface LoaderProps {
-    size?: ButtonSizes;
+    size?: SquareElementSizes;
 }
 
 export const Loader: FC<LoaderProps> = ({ size = '52' }): JSX.Element => {

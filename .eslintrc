@@ -5,16 +5,17 @@
     },
     "plugins": [
         "react",
+        "prettier",
         "@typescript-eslint"
     ],
     "extends": [
+        "airbnb",
+        "prettier",
+        "airbnb/hooks",
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended",
-        "airbnb",
-        "airbnb/hooks"
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -28,6 +29,14 @@
         "JSX": true
     },
     "rules": {
+        // Включаем prettier
+        "prettier/prettier": [
+            2,
+            {},
+            {
+                "usePrettierrc": true
+            }
+        ],
         "import/no-unresolved": 0,
         "react/jsx-filename-extension": [
             2,
@@ -107,14 +116,13 @@
             }
         ],
         "default-case": 0,
-        // Отступы
-        "indent": 0, // отключаем. Будем работать через prettier
-        "react/jsx-indent": [2, 4],
-        "react/jsx-indent-props": [2, 4],
+        // Отключаем. Будем работать через prettier
+        "indent": 0,
+        "react/jsx-indent": 0,
+        "react/jsx-indent-props": 0,
+        "max-len": 0,
         // Не добавляем запятую у последнего элемента в массиве/объекте
         "comma-dangle": ["error", "never"],
-        // Максимальная длина строки
-        "max-len": [2, 120],
         "object-curly-newline": 0,
         // После переноса проекта - переосмыслить
         "lines-between-class-members": 0,
