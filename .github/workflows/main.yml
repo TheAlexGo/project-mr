@@ -3,9 +3,12 @@ name: CI
 on: [push]
 
 env:
-  DEPLOY_PATH: /home/${{ secrets.DEPLOY_SERVER_USERNAME }}/domains/${{ secrets.SITE_DOMAINS }}/public_html
+  DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+  DEPLOY_STORYBOOK_PATH: ${{ secrets.DEPLOY_STORYBOOK_PATH }}
   BUILD_SCRIPT: npm run build
+  BUILD_STORYBOOK_SCRIPT: npm run build-storybook
   BUILD_SCRIPT_OUTPUT: dist
+  BUILD_STORYBOOK_SCRIPT_OUTPUT: sb-dist
 
 jobs:
   deploy:
@@ -28,6 +31,9 @@ jobs:
       # Собираем приложение
       - name: Build Appliction
         run: $BUILD_SCRIPT
+      # Собираем storybook приложение
+      - name: Build Storybook Appliction
+        run: $BUILD_STORYBOOK_SCRIPT
       # Доставляем собранное приложение на сервер
       - name: Deploy to Server
         uses: appleboy/scp-action@master
@@ -38,6 +44,17 @@ jobs:
           key: ${{ secrets.DEPLOY_SERVER_KEY }}
           source: ${{ env.BUILD_SCRIPT_OUTPUT }}
           target: ${{ env.DEPLOY_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
+          strip_components: 1
+      # Доставляем собранный storybook приложение на сервер
+      - name: Deploy Storybook to Server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.DEPLOY_SERVER_HOST }}
+          port: ${{ secrets.DEPLOY_SERVER_PORT }}
+          username: ${{ secrets.DEPLOY_SERVER_USERNAME }}
+          key: ${{ secrets.DEPLOY_SERVER_KEY }}
+          source: ${{ env.BUILD_STORYBOOK_SCRIPT_OUTPUT }}
+          target: ${{ env.DEPLOY_STORYBOOK_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
           strip_components: 1
       - name: Print Info
         run: echo "Deployed successfully https://${{ secrets.SITE_DOMAINS }}"
