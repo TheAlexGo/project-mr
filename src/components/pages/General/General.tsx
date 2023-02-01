@@ -11,7 +11,10 @@ import classes from './General.module.styl';
 export const General: FC = observer(() => (
     <div>
         General page!
-        <Header className={classes.general__header} buttonsPositions={FlexPositions.SPACE_BETWEEN} />
+        <Header
+            className={classes.general__header}
+            buttonsPositions={FlexPositions.SPACE_BETWEEN}
+        />
         <div className={classes.general__block}>
             <ReactList />
         </div>

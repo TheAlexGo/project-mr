@@ -20,7 +20,14 @@ interface IHeader {
 }
 
 export const Header: FC<IHeader> = observer(
-    ({ className, heading, description, buttonsPositions, type = HeaderTypes.H1, needBack = false }) => {
+    ({
+        className,
+        heading,
+        description,
+        buttonsPositions,
+        type = HeaderTypes.H1,
+        needBack = false
+    }) => {
         const { headerButtons } = useStore();
 
         const Heading = createElement(

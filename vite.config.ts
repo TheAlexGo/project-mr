@@ -25,6 +25,7 @@ export default defineConfig({
             '@icons': path.resolve(__dirname, './src/assets/icons'),
             '@hooks': path.resolve(__dirname, './src/hooks'),
             '@styles': path.resolve(__dirname, './src/styles'),
+            '@utils': path.resolve(__dirname, './src/utils'),
             'bem-cn-custom': path.resolve(__dirname, './src/utils/bemCnCustom')
         }
     },
@@ -36,11 +37,7 @@ export default defineConfig({
             exclude: /\.stories\.(t|j)sx?$/,
             include: '**/*.tsx'
         }),
-        svgrPlugin({
-            svgrOptions: {
-                icon: true
-            }
-        }),
+        svgrPlugin(),
         eslintPlugin(),
         stylelintPlugin({
             fix: true

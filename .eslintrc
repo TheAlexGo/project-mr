@@ -94,10 +94,7 @@
                     {
                         "pattern": "react",
                         "group": "builtin",
-                        "position": "after",
-                        "patternOptions": {
-                            "matchBase": true
-                        }
+                        "position": "after"
                     },
                     {
                         "pattern": "*.+(styl|svg)",
@@ -141,6 +138,6 @@
             }
         },
         // указываем пути для внутренних пакетов
-        "import/internal-regex": "^@(components|fonts|types|store|languages|services|sb|icons|hooks|layouts|pages).*$"
+        "import/internal-regex": "^@(components|fonts|types|store|languages|services|sb|icons|hooks|layouts|pages|utils).*$"
     }
 }

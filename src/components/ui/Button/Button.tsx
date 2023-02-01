@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Loader } from '@components/Loader/Loader';
 import { Positions, SquareElementSizes, VoidFunction } from '@types';
+import { getSizesClass } from '@utils/styles';
 
 import classes from './Button.module.styl';
 
@@ -100,7 +101,6 @@ export const Button: FC<IButton> = ({
         {
             [classes[`__theme-${theme}`]]: !!theme,
             [classes[`__bg_color-${colorBackground}`]]: !!colorBackground,
-            [classes[`__size-s${size}`]]: !!size,
             [classes[`__content_position-${contentPosition}`]]: !!contentPosition,
             [classes['__is-loading']]: isLoading,
             [classes['__is-wide']]: isWide,
@@ -108,7 +108,8 @@ export const Button: FC<IButton> = ({
             [classes['__with-no_padding']]: withNoPadding,
             [classes['__position-left']]: withLeftIcon,
             [classes['__position-right']]: withRightIcon,
-            [classes[`__state-${state}`]]: !!state && state !== 'default'
+            [classes[`__state-${state}`]]: !!state && state !== 'default',
+            ...getSizesClass(classes, size)
         },
         className
     );
@@ -151,7 +152,13 @@ export const Button: FC<IButton> = ({
     }, [children, icon, iconElement, isLoading, withLeftIcon, withRightIcon]);
 
     return (
-        <button {...props} className={rootClasses} type={type} disabled={isLoading || disabled} onClick={clickHandler}>
+        <button
+            {...props}
+            className={rootClasses}
+            type={type}
+            disabled={isLoading || disabled}
+            onClick={clickHandler}
+        >
             {content}
         </button>
     );
