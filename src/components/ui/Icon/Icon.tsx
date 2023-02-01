@@ -25,7 +25,7 @@ interface IIcon {
     /** Размер */
     size?: SquareElementSizes;
     /** Слушатель события клика по кнопке */
-    onClick: VoidFunction;
+    onClick?: VoidFunction;
 }
 
 export const Icon: FC<IIcon> = ({ icon, className, onClick, size = '24' }) => {
@@ -35,7 +35,9 @@ export const Icon: FC<IIcon> = ({ icon, className, onClick, size = '24' }) => {
     );
 
     const clickHandler = useCallback(() => {
-        onClick?.();
+        if (onClick) {
+            onClick();
+        }
     }, [onClick]);
 
     const buttonParams: IButton = useMemo(() => {

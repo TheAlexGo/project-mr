@@ -62,6 +62,6 @@ squareElementSizes($withAlignCenter = false)
         for $size in range(24, 52, 4)
             &-s{$size}
                 if $withAlignCenter
-                    top calc(50% - $size / 2 px)
+                    top 'calc(50% - %spx)' % ($size / 2)
                 width $size px
                 height $size px
