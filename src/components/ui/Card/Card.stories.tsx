@@ -6,7 +6,6 @@ import { StoryCategories } from '@sb/types';
 import { getCoverMock } from '@utils/mockData';
 
 import { Card } from './Card';
-import { MangaCard } from './components/MangaCard/MangaCard';
 
 type Story = typeof Card;
 
