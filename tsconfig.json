@@ -22,8 +22,8 @@
             "@store": [
                 "./src/store"
             ],
-            "@icons": [
-                "./src/assets/icons"
+            "@store/*": [
+                "./src/store/*"
             ],
             "@hooks/*": [
                 "./src/hooks/*"
@@ -33,6 +33,15 @@
             ],
             "@utils/*": [
                 "./src/utils/*"
+            ],
+            "@mock": [
+                "./src/utils/mockData"
+            ],
+            "@icons": [
+                "./src/assets/icons"
+            ],
+            "@images": [
+                "./src/assets/images"
             ],
             "@sb/*": [
                 "./.storybook/*"

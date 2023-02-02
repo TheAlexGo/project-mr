@@ -65,3 +65,37 @@ squareElementSizes($withAlignCenter = false)
                     top 'calc(50% - %spx)' % ($size / 2)
                 width $size px
                 height $size px
+
+calcPositionValue($pos)
+    return start if $pos == top or $pos == left
+    end
+
+positionOfDirection()
+    for $pos in top right bottom left
+        $value = calcPositionValue($pos)
+
+        &.__content_position-{$pos}
+            for $dir in row column
+                &.__content_direction-{$dir}
+                    if $dir == row
+                        if ($pos == left or $pos == right)
+                            justify-content flex- + $value
+                        else
+                            align-items flex- + $value
+                    if $dir == column
+                        if ($pos == top or $pos == bottom)
+                            justify-content flex- + $value
+                        else
+                            align-items flex- + $value
+
+    for $dir in row column
+        &.__content_direction
+            &-{$dir}
+                flex-direction $dir
+
+flexPositionsAndDirections()
+    display flex
+    justify-content center
+    align-items center
+
+    positionOfDirection()

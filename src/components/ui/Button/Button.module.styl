@@ -19,6 +19,8 @@
 
     squareElementSizes()
 
+    flexPositionsAndDirections()
+
     &:disabled
         cursor not-allowed
 
@@ -45,20 +47,6 @@
             cursor pointer
             transition background-color 0.3s
             all unset
-
-    &.__content_position
-        &-left
-            justify-content left
-
-        &-center
-            justify-content center
-
-        &-right
-            justify-content right
-
-    &.__bg_color
-        &-red
-            background-color var(--color_error)
 
     &.__is
         &-loading

@@ -8,6 +8,7 @@ import {
 } from 'react';
 
 import { IButton } from '@components/Button/Button';
+import { Manga } from '@store/manga';
 
 export enum Lang {
     RUSSIAN = 'RUSSIAN',
@@ -39,9 +40,16 @@ export enum SourceTypes {
 }
 
 export enum Positions {
+    TOP = 'top',
+    BOTTOM = 'bottom',
     LEFT = 'left',
     RIGHT = 'right',
     CENTER = 'center'
+}
+
+export enum Directions {
+    ROW = 'row',
+    COLUMN = 'column'
 }
 
 export enum FlexPositions {
@@ -183,8 +191,6 @@ export type IApiCallback<T = string> = (
     data: T
 ) => void;
 
-export type VoidFunction = () => void;
-
 export const SQUARE_ELEMENT_SIZES = ['24', '36', '40', '44', '52'] as const;
 type SquareElementSizesTuple = typeof SQUARE_ELEMENT_SIZES;
 export type SquareElementSizes = SquareElementSizesTuple[number];
@@ -273,6 +279,13 @@ export interface IManga extends IMangaCard {
     whereBuy?: ITitleLink[];
 }
 
+export interface IReadlist {
+    id: number;
+    title: string;
+    items: Manga[];
+    alias?: CardTypes.MANGA | CardTypes.FAVORITE | CardTypes.RECENT;
+}
+
 export interface INavData {
     id: Nav;
     icon: FunctionComponent | string;
@@ -309,17 +322,6 @@ export interface IModal {
     classNameOverlay?: string;
     isFullScreen?: boolean;
     isOpacity?: boolean;
-}
-
-export interface ICard {
-    link: string;
-    title: string;
-    image: ReactNode;
-    alignCenter?: boolean;
-    className?: string;
-    onClick?: MouseEventHandler<HTMLAnchorElement>;
-    children?: ReactNode;
-    style?: CSSProperties;
 }
 
 export interface IChapter {
@@ -371,3 +373,5 @@ export interface IAuthRequestInput {
     password: string;
     email: string;
 }
+
+export type MangaFnCallback = (manga: IMangaCard) => void;

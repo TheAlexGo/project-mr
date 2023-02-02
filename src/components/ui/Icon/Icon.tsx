@@ -3,7 +3,7 @@ import React, { FC, useCallback, useMemo } from 'react';
 import cn from 'classnames';
 
 import { Button, IButton } from '@components/Button/Button';
-import { BellIcon, MoreIcon, PlusIcon, SearchIcon, TrashIcon } from '@icons';
+import { BellIcon, CloseIcon, MoreIcon, PlusIcon, SearchIcon, TrashIcon } from '@icons';
 import { SquareElementSizes } from '@types';
 import { getSizesClass } from '@utils/styles';
 
@@ -14,7 +14,8 @@ export enum Icons {
     SEARCH = 'search',
     TRASH = 'trash',
     PLUS = 'plus',
-    BELL = 'bell'
+    BELL = 'bell',
+    CLOSE = 'close'
 }
 
 interface IIcon {
@@ -28,7 +29,7 @@ interface IIcon {
     onClick?: VoidFunction;
 }
 
-export const Icon: FC<IIcon> = ({ icon, className, onClick, size = '24' }) => {
+export const Icon: FC<IIcon> = ({ icon, className, onClick, size = '24' }): JSX.Element => {
     const rootClasses = useMemo(
         () => cn(classes.icon, getSizesClass(classes, size), className),
         [className, size]
@@ -60,6 +61,9 @@ export const Icon: FC<IIcon> = ({ icon, className, onClick, size = '24' }) => {
                 break;
             case Icons.BELL:
                 params.icon = <BellIcon className={rootClasses} />;
+                break;
+            case Icons.CLOSE:
+                params.icon = <CloseIcon className={rootClasses} />;
                 break;
         }
         return params;

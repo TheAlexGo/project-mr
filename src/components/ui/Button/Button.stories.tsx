@@ -4,9 +4,9 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { StarIcon, TrashIcon, VkIcon } from '@icons';
 import { StoryCategories } from '@sb/types';
-import { Positions, SQUARE_ELEMENT_SIZES } from '@types';
+import { Directions, Positions, SQUARE_ELEMENT_SIZES } from '@types';
 
-import { ButtonStates, ButtonThemes, ButtonTypes, BackgroundColors, Button } from './Button';
+import { Button, ButtonStates, ButtonThemes, ButtonTypes } from './Button';
 
 const ICONS = {
     Star: StarIcon,
@@ -56,6 +56,12 @@ export default {
                 category: StoryCategories.STYLE
             }
         },
+        contentDirection: {
+            name: 'Расположение содержимого',
+            table: {
+                category: StoryCategories.STYLE
+            }
+        },
         state: {
             name: 'Активное состояние',
             table: {
@@ -75,12 +81,6 @@ export default {
                 labels: {
                     none: 'default'
                 }
-            }
-        },
-        colorBackground: {
-            name: 'Цвет фона',
-            table: {
-                category: StoryCategories.STYLE
             }
         },
         withNoPadding: {
@@ -159,8 +159,8 @@ export default {
         children: 'Button',
         type: ButtonTypes.BUTTON,
         contentPosition: Positions.CENTER,
+        contentDirection: Directions.ROW,
         state: ButtonStates.DEFAULT,
-        colorBackground: BackgroundColors.DEFAULT,
         isWide: false,
         isRounded: false,
         isLoading: false,

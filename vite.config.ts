@@ -22,10 +22,12 @@ export default defineConfig({
             '@languages': path.resolve(__dirname, './src/languages'),
             '@services': path.resolve(__dirname, './src/services'),
             '@sb': path.resolve(__dirname, './.storybook'),
-            '@icons': path.resolve(__dirname, './src/assets/icons'),
             '@hooks': path.resolve(__dirname, './src/hooks'),
             '@styles': path.resolve(__dirname, './src/styles'),
             '@utils': path.resolve(__dirname, './src/utils'),
+            '@mock': path.resolve(__dirname, './src/utils/mockData'),
+            '@icons': path.resolve(__dirname, './src/assets/icons'),
+            '@images': path.resolve(__dirname, './src/assets/images'),
             'bem-cn-custom': path.resolve(__dirname, './src/utils/bemCnCustom')
         }
     },

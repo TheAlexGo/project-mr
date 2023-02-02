@@ -1,10 +1,10 @@
-import React, { ButtonHTMLAttributes, FC, useCallback, useMemo } from 'react';
+import React, { ButtonHTMLAttributes, FC, ReactElement, useCallback, useMemo } from 'react';
 
 import cn from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
 import { Loader } from '@components/Loader/Loader';
-import { Positions, SquareElementSizes, VoidFunction } from '@types';
+import { Directions, Positions, SquareElementSizes } from '@types';
 import { getSizesClass } from '@utils/styles';
 
 import classes from './Button.module.styl';
@@ -28,11 +28,6 @@ export enum ButtonTypes {
     RESET = 'reset'
 }
 
-export enum BackgroundColors {
-    DEFAULT = 'default',
-    RED = 'red'
-}
-
 /**
  * Интерфейс кнопки
  */
@@ -47,14 +42,14 @@ export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
     onClick?: VoidFunction;
     /** Устанавливает состояние кнопки */
     state?: ButtonStates;
-    /** Устанавливает фон кнопки */
-    colorBackground?: BackgroundColors;
     /** Устанавливает позицию контента: слева, справа или по центру */
     contentPosition?: Positions;
+    /** Расположение контента относительно друг друга: в строку, в столбец */
+    contentDirection?: Directions;
     /** Устанавливает размер кнопки */
     size?: SquareElementSizes;
     /** Устанавливает иконку для кнопки */
-    icon?: JSX.Element;
+    icon?: ReactElement;
     /** Устанавливает ссылку куда перенаправит кнопка при нажатии на неё */
     href?: string;
     /** Устанавливает положение иконки слева */
@@ -90,18 +85,18 @@ export const Button: FC<IButton> = ({
     isExternalLink = false,
     withNoPadding = false,
     state = ButtonStates.DEFAULT,
-    colorBackground = BackgroundColors.DEFAULT,
     size,
     type = ButtonTypes.BUTTON,
     contentPosition = Positions.CENTER,
+    contentDirection = Directions.ROW,
     ...props
 }): JSX.Element => {
     const rootClasses = cn(
         classes.button,
         {
             [classes[`__theme-${theme}`]]: !!theme,
-            [classes[`__bg_color-${colorBackground}`]]: !!colorBackground,
             [classes[`__content_position-${contentPosition}`]]: !!contentPosition,
+            [classes[`__content_direction-${contentDirection}`]]: !!contentDirection,
             [classes['__is-loading']]: isLoading,
             [classes['__is-wide']]: isWide,
             [classes['__is-rounded']]: isRounded,

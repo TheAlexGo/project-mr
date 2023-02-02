@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Story } from "@storybook/react";
 
-import '../src/styles/themes.styl';
+import '../src/styles/common.styl';
 
 export const parameters = {
     actions: {
