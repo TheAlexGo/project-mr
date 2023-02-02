@@ -30,7 +30,10 @@ const config: StorybookViteConfig = {
             ...vtConf,
             plugins: [
                 svgrPlugin()
-            ]
+            ],
+            build: {
+                chunkSizeWarningLimit: 750
+            }
         });
     },
 }

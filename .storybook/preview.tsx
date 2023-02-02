@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-
-import { useController } from '../src/hooks/useController';
-import { useStore } from '../src/hooks/useStore';
+import { Story } from "@storybook/react";
 
 import '../src/styles/themes.styl';
 
@@ -26,15 +24,7 @@ export const parameters = {
 };
 
 export const decorators = [
-    (Story) => {
-        const { initResource } = useController();
-        const { lang } = useStore();
-
-        useEffect(() => {
-            initResource(lang);
-        }, [initResource, lang]);
-
-
+    (Story: Story) => {
         return (
             <Router>
                 <div style={{ position: 'relative' }}>
