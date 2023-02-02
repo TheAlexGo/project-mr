@@ -1,11 +1,4 @@
-import {
-    CSSProperties,
-    FunctionComponent,
-    InputHTMLAttributes,
-    MouseEventHandler,
-    ReactElement,
-    ReactNode
-} from 'react';
+import { FunctionComponent, InputHTMLAttributes, ReactElement, ReactNode } from 'react';
 
 import { IButton } from '@components/Button/Button';
 import { Manga } from '@store/manga';

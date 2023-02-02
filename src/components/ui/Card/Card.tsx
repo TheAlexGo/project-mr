@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import { Button } from '@components/Button/Button';
 import { Image } from '@components/Image/Image';
-import { Directions, MangaFnCallback, Positions } from '@types';
+import { Directions, Positions } from '@types';
 
 import classes from './Card.module.styl';
 

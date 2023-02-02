@@ -71,22 +71,6 @@ export class Manga implements IManga {
         Object.assign(this, manga);
     }
 
-    get description(): string {
-        return (
-            this.descriptions.find((desc) => desc.langEnum === store.lang)?.description ||
-            this.descriptions.find((desc) => desc.langEnum === store.defaultLang)?.description ||
-            ''
-        );
-    }
-
-    get title(): string {
-        return (
-            this.titles.find((title) => title.langEnum === store.lang)?.title ||
-            this.titles.find((title) => title.langEnum === store.defaultLang)?.title ||
-            ''
-        );
-    }
-
     get similar(): Manga[] {
         return getMangaListMock(7).map((manga) => new Manga(manga));
     }

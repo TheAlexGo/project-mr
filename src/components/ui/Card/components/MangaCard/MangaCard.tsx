@@ -19,13 +19,18 @@ export const MangaCard: FC<IMangaCardProps> = ({ className, onDelete, ...manga }
     const { id, titles, coverUri } = manga;
     const link = getMangaPageLink(id);
 
-    const title = useMemo(
-        () =>
-            titles.find((t) => t.langEnum === lang)?.title ||
-            titles.find((t) => t.langEnum === defaultLang)?.title ||
-            '',
-        [defaultLang, lang, titles]
-    );
+    const title = useMemo(() => {
+        let mangaTitle;
+        mangaTitle = titles.find((t) => t.langEnum === lang);
+        if (mangaTitle && mangaTitle.title) {
+            return mangaTitle.title;
+        }
+        mangaTitle = titles.find((t) => t.langEnum === defaultLang);
+        if (mangaTitle && mangaTitle.title) {
+            return mangaTitle.title;
+        }
+        return '';
+    }, [defaultLang, lang, titles]);
 
     return (
         <Card className={className} title={title} image={coverUri} href={link}>
