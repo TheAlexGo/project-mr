@@ -1,5 +1,3 @@
-import { store } from './index';
-
 import { makeAutoObservable } from 'mobx';
 
 import { getMangaListMock } from '@mock';
