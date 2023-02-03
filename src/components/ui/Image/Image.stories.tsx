@@ -19,14 +19,14 @@ export default {
                 category: StoryCategories.MAIN
             }
         },
-        loading: {
-            name: 'Устанока типа загрузки картинки',
+        alt: {
+            name: 'Альтернативное представление картинки',
             table: {
                 category: StoryCategories.MAIN
             }
         },
-        alt: {
-            name: 'Альтернативное представление картинки',
+        loading: {
+            name: 'Устанока типа загрузки картинки',
             table: {
                 category: StoryCategories.MAIN
             }
@@ -56,4 +56,8 @@ export default {
     }
 } as ComponentMeta<Story>;
 
-export const Component: ComponentStory<Story> = (args) => <Image {...args} />;
+export const Component: ComponentStory<Story> = ({ src, ...args }) => (
+    <div style={{ width: 240, height: 320 }}>
+        <Image key={src} {...args} src={src} />
+    </div>
+);

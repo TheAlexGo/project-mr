@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Loader } from '@components/Loader/Loader';
 import { Directions, Positions, SquareElementSizes } from '@types';
-import { getSizesClass } from '@utils/styles';
+import { getPositionsAndDirectionsClass, getSizesClass } from '@utils/styles';
 
 import classes from './Button.module.styl';
 
@@ -95,8 +95,6 @@ export const Button: FC<IButton> = ({
         classes.button,
         {
             [classes[`__theme-${theme}`]]: !!theme,
-            [classes[`__content_position-${contentPosition}`]]: !!contentPosition,
-            [classes[`__content_direction-${contentDirection}`]]: !!contentDirection,
             [classes['__is-loading']]: isLoading,
             [classes['__is-wide']]: isWide,
             [classes['__is-rounded']]: isRounded,
@@ -104,7 +102,8 @@ export const Button: FC<IButton> = ({
             [classes['__position-left']]: withLeftIcon,
             [classes['__position-right']]: withRightIcon,
             [classes[`__state-${state}`]]: !!state && state !== 'default',
-            ...getSizesClass(classes, size)
+            ...getSizesClass(classes, size),
+            ...getPositionsAndDirectionsClass(classes, contentPosition, contentDirection)
         },
         className
     );

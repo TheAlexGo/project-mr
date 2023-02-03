@@ -1,4 +1,4 @@
-import React, { forwardRef, ImgHTMLAttributes, useEffect, useMemo, useState } from 'react';
+import React, { FC, forwardRef, useCallback, useMemo, useState } from 'react';
 
 import cn from 'classnames';
 
@@ -7,17 +7,38 @@ import { NotFoundIcon } from '@icons';
 
 import classes from './Image.module.styl';
 
-export interface IImage extends ImgHTMLAttributes<HTMLImageElement> {
+export interface IImage {
+    /** Путь до картинки */
+    src: string;
+    /** Альтернативное представление картинки */
+    alt: string;
+    /** Внешний класс */
+    className?: string;
+    /** Тип загрузки картинки */
+    loading?: 'eager' | 'lazy';
     /** Внешний класс для картинки */
     imageClassName?: string;
     /** Закругляет углы картинки */
     withBorderRadius?: boolean;
 }
 
+const StubImage: FC = () => <img src={NotFoundIcon} alt="Не удалось загрузить изображение" />;
+
 export const Image = forwardRef<HTMLImageElement, IImage>(
-    ({ className, imageClassName, src, alt, loading, withBorderRadius = false, ...props }, ref) => {
+    (
+        {
+            className,
+            imageClassName,
+            src,
+            alt,
+            loading = 'lazy',
+            withBorderRadius = false,
+            ...props
+        },
+        ref
+    ) => {
         const [isLoaded, setIsLoaded] = useState<boolean>(false);
-        const [srcImage, setSrcImage] = useState<string>('');
+        const [isError, setIsError] = useState<boolean>(false);
 
         const rootClasses = useMemo(
             () =>
@@ -44,20 +65,19 @@ export const Image = forwardRef<HTMLImageElement, IImage>(
             [imageClassName, isLoaded]
         );
 
-        const loadHandler = () => {
+        const loadHandler = useCallback(() => {
             setIsLoaded(true);
-        };
+            setIsError(false);
+        }, []);
 
-        const errorHandler = () => {
-            setSrcImage(NotFoundIcon);
+        const errorHandler = useCallback(() => {
             setIsLoaded(true);
-        };
+            setIsError(true);
+        }, []);
 
-        useEffect(() => {
-            if (src !== undefined) {
-                setSrcImage(src);
-            }
-        }, [src]);
+        if (isError) {
+            return <StubImage />;
+        }
 
         return (
             <div className={rootClasses}>
@@ -65,11 +85,11 @@ export const Image = forwardRef<HTMLImageElement, IImage>(
                 <img
                     {...props}
                     className={imageClasses}
-                    src={srcImage}
+                    src={src}
                     alt={alt}
                     loading={loading}
-                    onError={errorHandler}
                     onLoad={loadHandler}
+                    onError={errorHandler}
                     ref={ref}
                 />
             </div>
