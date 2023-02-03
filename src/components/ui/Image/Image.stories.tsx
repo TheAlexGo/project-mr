@@ -3,7 +3,7 @@ import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { StoryCategories } from '@sb/types';
-import { getCoverMock } from '@utils/mockData';
+import { getCoverMock, getCoversMock } from '@utils/mockData';
 
 import { Image } from './Image';
 
@@ -15,6 +15,8 @@ export default {
     argTypes: {
         src: {
             name: 'Путь до картинки',
+            control: 'select',
+            options: ['Не выбрано', ...getCoversMock()],
             table: {
                 category: StoryCategories.MAIN
             }

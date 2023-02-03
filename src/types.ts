@@ -4,8 +4,9 @@ import { IButton } from '@components/Button/Button';
 import { Manga } from '@store/manga';
 
 export enum Lang {
-    RUSSIAN = 'RUSSIAN',
-    ENGLISH = 'ENGLISH'
+    RUSSIAN = 'russian',
+    ENGLISH = 'english',
+    JAPANESE = 'japanese'
 }
 
 export enum Links {
@@ -255,7 +256,9 @@ export interface ITitleLink {
 
 export interface IMangaCard {
     id: number;
+    /** Путь до обложки манги */
     coverUri: string;
+    /** Названия манги (на разных языках) */
     titles: IMangaTitle[];
 }
 

@@ -1,39 +1,42 @@
 import React, { FC, useMemo } from 'react';
 
-import { Card } from '@components/Card/Card';
-import { useStore } from '@hooks/useStore';
+import { Card, ICard } from '@components/Card/Card';
 import { IMangaCard, MangaFnCallback } from '@types';
+import { getMangaTitle } from '@utils/manga';
 import { getMangaPageLink } from '@utils/routing';
 
 import { Tools } from './components/Tools/Tools';
 
-export interface IMangaCardProps extends IMangaCard {
-    /** Внешний класс */
-    className?: string;
+type ICardProps = Pick<ICard, 'isTitleAlignCenter' | 'onClick' | 'className'>;
+
+export interface IMangaCardProps extends IMangaCard, ICardProps {
     /** Слушатель события удаления карточки */
     onDelete?: MangaFnCallback;
+    /** Располагает название по центру */
+    isTitleAlignCenter?: boolean;
 }
 
-export const MangaCard: FC<IMangaCardProps> = ({ className, onDelete, ...manga }) => {
-    const { lang, defaultLang } = useStore();
+export const MangaCard: FC<IMangaCardProps> = ({
+    className,
+    onDelete,
+    onClick,
+    isTitleAlignCenter = false,
+    ...manga
+}) => {
     const { id, titles, coverUri } = manga;
     const link = getMangaPageLink(id);
 
-    const title = useMemo(() => {
-        let mangaTitle;
-        mangaTitle = titles.find((t) => t.langEnum === lang);
-        if (mangaTitle && mangaTitle.title) {
-            return mangaTitle.title;
-        }
-        mangaTitle = titles.find((t) => t.langEnum === defaultLang);
-        if (mangaTitle && mangaTitle.title) {
-            return mangaTitle.title;
-        }
-        return '';
-    }, [defaultLang, lang, titles]);
+    const title = useMemo(() => getMangaTitle(titles), [titles]);
 
     return (
-        <Card className={className} title={title} image={coverUri} href={link}>
+        <Card
+            className={className}
+            title={title}
+            image={coverUri}
+            href={link}
+            isTitleAlignCenter={isTitleAlignCenter}
+            onClick={onClick}
+        >
             <Tools {...manga} onDelete={onDelete} />
         </Card>
     );

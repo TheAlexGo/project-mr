@@ -36,7 +36,7 @@ export default defineConfig({
             targets: ['defaults', 'not IE 11']
         }),
         react({
-            exclude: /\.stories\.(t|j)sx?$/,
+            exclude: /\.stories\.tsx?$/,
             include: '**/*.tsx'
         }),
         svgrPlugin(),
@@ -52,6 +52,21 @@ export default defineConfig({
                 @require "${getStylesPath('mixins')}";
                 @require "${getStylesPath('variables')}";
                 `
+            }
+        }
+    },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    /**
+                     * Разбиваем используемые модули из node_modules на чанки, а не складируем в одном index-файле
+                     * */
+                    if (id.includes('node_modules')) {
+                        return id.toString().split('node_modules/')[1].split('/')[0].toString();
+                    }
+                    return null;
+                }
             }
         }
     }

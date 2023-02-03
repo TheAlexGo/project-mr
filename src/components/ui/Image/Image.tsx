@@ -75,23 +75,23 @@ export const Image = forwardRef<HTMLImageElement, IImage>(
             setIsError(true);
         }, []);
 
-        if (isError) {
-            return <StubImage />;
-        }
-
         return (
             <div className={rootClasses}>
                 {!isLoaded && <Loader />}
-                <img
-                    {...props}
-                    className={imageClasses}
-                    src={src}
-                    alt={alt}
-                    loading={loading}
-                    onLoad={loadHandler}
-                    onError={errorHandler}
-                    ref={ref}
-                />
+                {isError ? (
+                    <StubImage />
+                ) : (
+                    <img
+                        {...props}
+                        className={imageClasses}
+                        src={src}
+                        alt={alt}
+                        loading={loading}
+                        onLoad={loadHandler}
+                        onError={errorHandler}
+                        ref={ref}
+                    />
+                )}
             </div>
         );
     }

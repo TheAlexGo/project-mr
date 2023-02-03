@@ -39,7 +39,6 @@ export default {
         theme: {
             name: 'Тема',
             control: 'select',
-            category: 'Style',
             table: {
                 category: StoryCategories.STYLE
             }

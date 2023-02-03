@@ -25,8 +25,14 @@ function generateArray<T>(fn: (index: number) => T, count: number): Array<T> {
 }
 
 const uuidGenerator = UUID(0);
+const languages = Object.values(Lang);
 
-const mangaTitles = [
+interface IMockMangaTitle {
+    lang: Lang;
+    titles: string[];
+}
+
+const mangaTitlesRu = [
     'У коми проблемы с общением',
     'Аюму все равно станет ближе',
     'Магическая битва',
@@ -41,6 +47,25 @@ const mangaTitles = [
     'Ублюдок FFF-ранга',
     'Архимаг, который вернулся спустя 4000 лет'
 ];
+
+const mangaTitlesEn = ['Test 123', 'Abobus test'];
+
+const mangaTitles: IMockMangaTitle[] = languages.map((lang: Lang) => {
+    const obj: IMockMangaTitle = {
+        titles: [],
+        lang
+    };
+    switch (lang) {
+        case Lang.RUSSIAN:
+            obj.titles = mangaTitlesRu;
+            break;
+        case Lang.ENGLISH:
+            obj.titles = mangaTitlesEn;
+            break;
+    }
+    return obj;
+});
+
 const mangaDescriptions = [
     'У Ён У был брат-близнец, который исчез пять лет назад. Однажды ему пришла посылка – часы его брата. В них Ён У обнаружил дневник брата... И он начинался со слов «Если ты это читаешь, то я скорее всего уже мёртв...» Обелиск, Башня Бога Солнца, мир, где пересекаются несколько вселенных и измерений. В этом мире его брат стал жертвой предательства во время восхождения на башню. Узнав правду, Ён У решил взобраться на башню вместе с дневником своего брата.',
     'На основе одноименного романа. Путь на вершину боевых искусств - путь одинокий и длинный. Перед лицом невзгод ты должен оставаться сильным и неотступным. Только тогда ты сможешь преодолеть все препятствия и стать по-настоящему сильным. Небесная Башня обучает своих учеников самым суровым образом, чтобы они могли выстоять в мире боевых искусств. Но только из-за одного самого незначительного проступка наш главный герой, Янг Кай, может быть исключен из Небесной Башни.',
@@ -127,18 +152,35 @@ export const getHumanMock = (): IMangaHuman =>
         1
     )[0];
 
-export const getMangaTitleMock = (): string => mangaTitles[getRandomInt(mangaTitles.length - 1)];
+export const getMangaTitleMock = (): string =>
+    mangaTitlesRu[getRandomInt(mangaTitlesRu.length - 1)];
 
-export const getMangaTitlesMock = (count: number): IMangaTitle[] =>
-    generateArray<IMangaTitle>(
-        () => ({
+export const getMangaTitleOfLangMock = (lang: Lang): string => {
+    const currentTitles = mangaTitles.find((titles) => titles.lang === lang);
+    if (!currentTitles) {
+        return getMangaTitleMock();
+    }
+    return getRandomOfArray(currentTitles.titles);
+};
+
+export const getMangaTitlesMock = (count: number): IMangaTitle[] => {
+    const mangaTitles = generateArray<IMangaTitle>(() => {
+        const lang = getRandomOfArray<Lang>(languages);
+        return {
             id: uuidGenerator.uuid(),
-            title: getMangaTitleMock(),
-            langEnum: Lang.RUSSIAN,
+            title: getMangaTitleOfLangMock(lang),
+            langEnum: lang,
             manga: 0
-        }),
-        count
-    );
+        };
+    }, count);
+    mangaTitles.push({
+        id: uuidGenerator.uuid(),
+        title: getMangaTitleOfLangMock(Lang.RUSSIAN),
+        langEnum: Lang.RUSSIAN,
+        manga: 0
+    });
+    return mangaTitles;
+};
 
 export const getMangaDescriptionsMock = (count: number): IMangaDescription[] =>
     generateArray<IMangaDescription>(
@@ -161,16 +203,16 @@ export const getMangaGenresMock = (count: number): IMangaGenre[] =>
         count
     );
 
-export const getCoverMock = (): string => mangaCovers[getRandomInt(mangaCovers.length - 1)];
+export const getCoversMock = (): string[] => mangaCovers;
+
+export const getCoverMock = (): string => getRandomOfArray(mangaCovers);
 
 export const getMangaCardsMock = (count: number): IMangaCard[] =>
     generateArray<IMangaCard>(
         () => ({
             id: uuidGenerator.uuid(),
             titles: getMangaTitlesMock(getRandomInt(5, 1)),
-            coverUri: getCoverMock(),
-            referenceId: '1',
-            sourceType: mangaTypes[getRandomInt(mangaTypes.length - 1)]
+            coverUri: getCoverMock()
         }),
         count
     );
@@ -204,7 +246,7 @@ export const getChaptersMock = (
     generateArray<IChapter>(
         (index) => ({
             id: id || uuidGenerator.uuid(),
-            title: getRandomOfArray(mangaTitles),
+            title: getRandomOfArray(mangaTitlesRu),
             date: new Date(),
             number: index + 1,
             pageCount,
@@ -222,7 +264,7 @@ export const getCommentsMock = (count: number): IComment[] =>
     generateArray<IComment>(
         () => ({
             id: uuidGenerator.uuid(),
-            content: getRandomOfArray(mangaTitles),
+            content: getRandomOfArray(mangaTitlesRu),
             createAt: getRandomDate(),
             userId: getRandomInt(100),
             likeCount: getRandomInt(0),
