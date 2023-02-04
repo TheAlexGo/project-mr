@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import UUID from 'uuid-int';
 
 import Covers from '@images';

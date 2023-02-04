@@ -1,4 +1,4 @@
-import { FunctionComponent, InputHTMLAttributes, ReactElement, ReactNode } from 'react';
+import { InputHTMLAttributes, ReactElement, ReactNode } from 'react';
 
 import { IButton } from '@components/Button/Button';
 import { Manga } from '@store/manga';
