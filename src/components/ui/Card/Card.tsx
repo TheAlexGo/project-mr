@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useCallback, useMemo } from 'react';
 
 import cn from 'classnames';
+import { observer } from 'mobx-react-lite';
 
 import { Button } from '@components/Button/Button';
 import { Image } from '@components/Image/Image';
@@ -28,55 +29,59 @@ export interface ICard {
 
 export type TCardProps = Pick<ICard, 'isTitleAlignCenter' | 'onClick' | 'className'>;
 
-export const Card: FC<ICard> = ({
-    className,
-    href,
-    title,
-    image,
-    onClick,
-    children,
-    isTitleAlignCenter = false
-}): JSX.Element => {
-    const { locale } = useStore();
-    const buttonClasses = useMemo(() => cn(classes.card, className), [className]);
+export const Card: FC<ICard> = observer(
+    ({
+        className,
+        href,
+        title,
+        image,
+        onClick,
+        children,
+        isTitleAlignCenter = false
+    }): JSX.Element => {
+        const { locale } = useStore();
+        const buttonClasses = useMemo(() => cn(classes.card, className), [className]);
 
-    const coverAlt = useMemo(() => locale['manga-cover'], [locale]);
+        const coverAlt = useMemo(() => locale['manga-cover'], [locale]);
 
-    const titleClasses = useMemo(
-        () =>
-            cn(classes.title, {
-                [classes['__align-center']]: isTitleAlignCenter
-            }),
-        [isTitleAlignCenter]
-    );
+        const titleClasses = useMemo(
+            () =>
+                cn(classes.title, {
+                    [classes['__align-center']]: isTitleAlignCenter
+                }),
+            [isTitleAlignCenter]
+        );
 
-    const clickHandler = useCallback(() => {
-        if (onClick) {
-            onClick();
-        }
-    }, [onClick]);
+        const clickHandler = useCallback(() => {
+            if (onClick) {
+                onClick();
+            }
+        }, [onClick]);
 
-    const imageComponent = useMemo(() => {
-        if (typeof image === 'string') {
-            return <Image className={classes.image} src={image} alt={coverAlt} withBorderRadius />;
-        }
-        return image;
-    }, [coverAlt, image]);
+        const imageComponent = useMemo(() => {
+            if (typeof image === 'string') {
+                return (
+                    <Image className={classes.image} src={image} alt={coverAlt} withBorderRadius />
+                );
+            }
+            return image;
+        }, [coverAlt, image]);
 
-    return (
-        <div className={classes.wrapper}>
-            {children}
-            <Button
-                className={buttonClasses}
-                href={href}
-                onClick={clickHandler}
-                contentPosition={Positions.TOP}
-                contentDirection={Directions.COLUMN}
-                withNoPadding
-            >
-                {imageComponent}
-                <div className={titleClasses}>{title}</div>
-            </Button>
-        </div>
-    );
-};
+        return (
+            <div className={classes.wrapper}>
+                {children}
+                <Button
+                    className={buttonClasses}
+                    href={href}
+                    onClick={clickHandler}
+                    contentPosition={Positions.TOP}
+                    contentDirection={Directions.COLUMN}
+                    withNoPadding
+                >
+                    {imageComponent}
+                    <div className={titleClasses}>{title}</div>
+                </Button>
+            </div>
+        );
+    }
+);
