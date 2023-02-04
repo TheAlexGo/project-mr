@@ -2,12 +2,12 @@ import React, { FC, useCallback } from 'react';
 
 import { Icon, Icons } from '@components/Icon/Icon';
 import { useCards } from '@hooks/useCards';
-import { IMangaCard, MangaFnCallback } from '@types';
+import { IMangaCard, TMangaFnCallback } from '@types';
 
 import classes from './Tools.module.styl';
 
 export interface ITools extends IMangaCard {
-    onDelete?: MangaFnCallback;
+    onDelete?: TMangaFnCallback;
 }
 
 export const Tools: FC<ITools> = ({ onDelete, ...manga }): JSX.Element | null => {

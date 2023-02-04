@@ -3,6 +3,9 @@ import React, { FC } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Outlet } from 'react-router-dom';
 
+import { Navbar } from '@components/Navbar/Navbar';
+import { useStore } from '@hooks/useStore';
+
 import classes from './Main.module.styl';
 
 /**
@@ -10,10 +13,12 @@ import classes from './Main.module.styl';
  * @param children
  * @constructor
  */
-export const Main: FC = observer(
-    (): JSX.Element => (
+export const Main: FC = observer((): JSX.Element => {
+    const { navigate } = useStore();
+    return (
         <div className={classes.layout}>
             <Outlet />
+            <Navbar className={classes.navbar} items={navigate} />
         </div>
-    )
-);
+    );
+});

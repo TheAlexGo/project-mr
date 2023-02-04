@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 
 import { Card, TCardProps } from '@components/Card/Card';
-import { IMangaCard, MangaFnCallback } from '@types';
+import { IMangaCard, TMangaFnCallback } from '@types';
 import { getMangaTitle } from '@utils/manga';
 import { getMangaPageLink } from '@utils/routing';
 
@@ -9,7 +9,7 @@ import { Tools } from './components/Tools/Tools';
 
 export interface IMangaCardProps extends IMangaCard, TCardProps {
     /** Слушатель события удаления карточки */
-    onDelete?: MangaFnCallback;
+    onDelete?: TMangaFnCallback;
     /** Располагает название по центру */
     isTitleAlignCenter?: boolean;
 }

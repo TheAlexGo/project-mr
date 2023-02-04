@@ -8,6 +8,8 @@ import { Directions, Positions, SQUARE_ELEMENT_SIZES } from '@types';
 
 import { Button, ButtonStates, ButtonThemes, ButtonTypes } from './Button';
 
+type Story = typeof Button;
+
 const ICONS = {
     Star: StarIcon,
     Trash: TrashIcon,
@@ -126,7 +128,7 @@ export default {
             },
             control: {
                 labels: {
-                    none: 'No icon',
+                    none: 'Не выбрано',
                     ...Object.keys(ICONS)
                 }
             }
@@ -169,16 +171,16 @@ export default {
         withNoPadding: false,
         disabled: false
     }
-} as ComponentMeta<typeof Button>;
+} as ComponentMeta<Story>;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+const Template: ComponentStory<Story> = (args) => <Button {...args} />;
 
-export const Primary: ComponentStory<typeof Button> = Template.bind({});
+export const Primary: ComponentStory<Story> = Template.bind({});
 Primary.args = {
     theme: ButtonThemes.PRIMARY
 };
 
-export const Trash: ComponentStory<typeof Button> = Template.bind({});
+export const Trash: ComponentStory<Story> = Template.bind({});
 Trash.args = {
     children: null,
     withNoPadding: true,
@@ -186,7 +188,7 @@ Trash.args = {
     icon: <TrashIcon />
 };
 
-export const Social: ComponentStory<typeof Button> = Template.bind({});
+export const Social: ComponentStory<Story> = Template.bind({});
 Social.args = {
     children: null,
     withNoPadding: true,

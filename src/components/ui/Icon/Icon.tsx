@@ -6,9 +6,11 @@ import { Button, IButton } from '@components/Button/Button';
 import {
     BellIcon,
     CloseIcon,
+    HomeIcon,
     LibraryIcon,
     MoreIcon,
     PlusIcon,
+    ProfileIcon,
     SearchIcon,
     TrashIcon
 } from '@icons';
@@ -24,7 +26,9 @@ export enum Icons {
     PLUS = 'plus',
     BELL = 'bell',
     CLOSE = 'close',
-    LIBRARY = 'library'
+    LIBRARY = 'library',
+    HOME = 'home',
+    PROFILE = 'profile'
 }
 
 interface IIcon {
@@ -84,6 +88,12 @@ export const Icon: FC<IIcon> = ({
                 break;
             case Icons.LIBRARY:
                 params.icon = <LibraryIcon className={rootClasses} />;
+                break;
+            case Icons.HOME:
+                params.icon = <HomeIcon className={rootClasses} />;
+                break;
+            case Icons.PROFILE:
+                params.icon = <ProfileIcon className={rootClasses} />;
                 break;
         }
         return params;

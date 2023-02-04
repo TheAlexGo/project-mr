@@ -53,7 +53,7 @@ export enum FlexPositions {
     SPACE_BETWEEN = 'space-between'
 }
 
-export enum Nav {
+export enum NavTabs {
     GENERAL = 'general',
     LIBRARY = 'library',
     PROFILE = 'profile'
@@ -282,13 +282,6 @@ export interface IReadlist {
     alias?: CardTypes.MANGA | CardTypes.FAVORITE | CardTypes.RECENT;
 }
 
-export interface INavData {
-    id: Nav;
-    icon: FunctionComponent | string;
-    title: string;
-    link: string;
-}
-
 export interface IIcon extends IButton {
     onActive?: VoidFunction;
     onInactive?: VoidFunction;
@@ -370,4 +363,9 @@ export interface IAuthRequestInput {
     email: string;
 }
 
-export type MangaFnCallback = (manga: IMangaCard) => void;
+export type TMangaFnCallback = (manga: IMangaCard) => void;
+
+export type TClassNameCallback = (props: {
+    isActive: boolean;
+    isPending: boolean;
+}) => string | undefined;

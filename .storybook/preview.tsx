@@ -1,6 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { useEffect } from '@storybook/addons';
 import { Story } from "@storybook/react";
+
+import { useStore } from '../src/hooks/useStore';
+import { useController } from '../src/hooks/useController';
 
 import '../src/styles/common.styl';
 
@@ -25,6 +29,14 @@ export const parameters = {
 
 export const decorators = [
     (Story: Story) => {
+        const { initResource } = useController();
+        const { lang } = useStore();
+
+        useEffect(() => {
+
+            initResource(lang);
+        }, [initResource, lang]);
+
         return (
             <Router>
                 <div style={{ position: 'relative' }}>
