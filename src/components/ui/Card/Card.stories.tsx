@@ -28,13 +28,13 @@ export default {
         href: {
             name: 'Ссылка',
             table: {
-                category: StoryCategories.MAIN
+                category: StoryCategories.OTHER
             }
         },
         isTitleAlignCenter: {
             name: 'Расположить текст по центру?',
             table: {
-                category: StoryCategories.MAIN
+                category: StoryCategories.OTHER
             }
         },
         className: {
@@ -51,11 +51,17 @@ export default {
             table: {
                 disable: true
             }
+        },
+        children: {
+            table: {
+                disable: true
+            }
         }
     },
     args: {
         title: 'У Коми проблемы с общением',
-        image: getCoverMock()
+        image: getCoverMock(),
+        isTitleAlignCenter: false
     }
 } as ComponentMeta<Story>;
 

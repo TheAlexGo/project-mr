@@ -5,6 +5,7 @@ export { ReactComponent as PlusIcon } from './plus_icon.svg';
 export { ReactComponent as SearchIcon } from './search_icon.svg';
 export { ReactComponent as BellIcon } from './bell_icon.svg';
 export { ReactComponent as CloseIcon } from './close_icon.svg';
+export { ReactComponent as LibraryIcon } from './library_icon.svg';
 
 export { ReactComponent as VkIcon } from './vk_icon.svg';
 

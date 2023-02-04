@@ -9,6 +9,7 @@ export const getPositionsAndDirectionsClass = (
     contentPosition: Positions,
     contentDirection: Directions
 ) => ({
-    [classes[`__content_position-${contentPosition}`]]: !!contentPosition,
+    [classes[`__content_position-${contentPosition}`]]:
+        !!contentPosition && contentPosition !== Positions.CENTER,
     [classes[`__content_direction-${contentDirection}`]]: !!contentDirection
 });

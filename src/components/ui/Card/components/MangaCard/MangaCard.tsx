@@ -1,15 +1,13 @@
 import React, { FC, useMemo } from 'react';
 
-import { Card, ICard } from '@components/Card/Card';
+import { Card, TCardProps } from '@components/Card/Card';
 import { IMangaCard, MangaFnCallback } from '@types';
 import { getMangaTitle } from '@utils/manga';
 import { getMangaPageLink } from '@utils/routing';
 
 import { Tools } from './components/Tools/Tools';
 
-type ICardProps = Pick<ICard, 'isTitleAlignCenter' | 'onClick' | 'className'>;
-
-export interface IMangaCardProps extends IMangaCard, ICardProps {
+export interface IMangaCardProps extends IMangaCard, TCardProps {
     /** Слушатель события удаления карточки */
     onDelete?: MangaFnCallback;
     /** Располагает название по центру */

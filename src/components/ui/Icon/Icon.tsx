@@ -3,7 +3,15 @@ import React, { FC, useCallback, useMemo } from 'react';
 import cn from 'classnames';
 
 import { Button, IButton } from '@components/Button/Button';
-import { BellIcon, CloseIcon, MoreIcon, PlusIcon, SearchIcon, TrashIcon } from '@icons';
+import {
+    BellIcon,
+    CloseIcon,
+    LibraryIcon,
+    MoreIcon,
+    PlusIcon,
+    SearchIcon,
+    TrashIcon
+} from '@icons';
 import { SquareElementSizes } from '@types';
 import { getSizesClass } from '@utils/styles';
 
@@ -15,7 +23,8 @@ export enum Icons {
     TRASH = 'trash',
     PLUS = 'plus',
     BELL = 'bell',
-    CLOSE = 'close'
+    CLOSE = 'close',
+    LIBRARY = 'library'
 }
 
 interface IIcon {
@@ -27,9 +36,17 @@ interface IIcon {
     size?: SquareElementSizes;
     /** Слушатель события клика по кнопке */
     onClick?: VoidFunction;
+    /** Иконка не является кнопкой */
+    isNotButton?: boolean;
 }
 
-export const Icon: FC<IIcon> = ({ icon, className, onClick, size = '24' }): JSX.Element => {
+export const Icon: FC<IIcon> = ({
+    icon,
+    className,
+    onClick,
+    isNotButton = false,
+    size = '24'
+}): JSX.Element => {
     const rootClasses = useMemo(
         () => cn(classes.icon, getSizesClass(classes, size), className),
         [className, size]
@@ -65,9 +82,16 @@ export const Icon: FC<IIcon> = ({ icon, className, onClick, size = '24' }): JSX.
             case Icons.CLOSE:
                 params.icon = <CloseIcon className={rootClasses} />;
                 break;
+            case Icons.LIBRARY:
+                params.icon = <LibraryIcon className={rootClasses} />;
+                break;
         }
         return params;
     }, [clickHandler, icon, rootClasses]);
+
+    if (isNotButton && buttonParams.icon) {
+        return buttonParams.icon;
+    }
 
     return <Button {...buttonParams} />;
 };

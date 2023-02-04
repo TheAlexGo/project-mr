@@ -12,7 +12,7 @@ export interface ICard {
     /** Название книги */
     title: string;
     /** Обложка книги */
-    image: string;
+    image: string | ReactElement;
     /** Ссылка на книгу */
     href?: string;
     /** Внешний класс */
@@ -24,6 +24,8 @@ export interface ICard {
     /** Дополнительное содержимое (например, панель инструментов) */
     children?: ReactElement;
 }
+
+export type TCardProps = Pick<ICard, 'isTitleAlignCenter' | 'onClick' | 'className'>;
 
 export const Card: FC<ICard> = ({
     className,
@@ -50,6 +52,13 @@ export const Card: FC<ICard> = ({
         }
     }, [onClick]);
 
+    const imageComponent = useMemo(() => {
+        if (typeof image === 'string') {
+            return <Image className={classes.image} src={image} alt={title} withBorderRadius />;
+        }
+        return image;
+    }, [image, title]);
+
     return (
         <div className={classes.wrapper}>
             {children}
@@ -61,7 +70,7 @@ export const Card: FC<ICard> = ({
                 contentDirection={Directions.COLUMN}
                 withNoPadding
             >
-                <Image className={classes.image} src={image} alt={title} withBorderRadius />
+                {imageComponent}
                 <div className={titleClasses}>{title}</div>
             </Button>
         </div>
