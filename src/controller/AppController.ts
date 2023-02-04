@@ -48,4 +48,4 @@ export class AppController {
 }
 
 export const appController = new AppController(store);
-export const AppControllerContext = createContext(appController);
+export const AppControllerContext = createContext<AppController>(appController);
