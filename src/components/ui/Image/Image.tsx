@@ -1,6 +1,7 @@
 import React, { FC, forwardRef, useCallback, useMemo, useState } from 'react';
 
 import cn from 'classnames';
+import { observer } from 'mobx-react-lite';
 
 import { Loader } from '@components/Loader/Loader';
 import { useStore } from '@hooks/useStore';
@@ -28,7 +29,7 @@ const StubImage: FC = () => {
     return <img src={NotFoundIcon} alt={locale['error-loading-image']} />;
 };
 
-export const Image = forwardRef<HTMLImageElement, IImage>(
+const ImageNotObserve = forwardRef<HTMLImageElement, IImage>(
     ({ className, imageClassName, src, alt, loading, withBorderRadius = false, ...props }, ref) => {
         const [isLoaded, setIsLoaded] = useState<boolean>(false);
         const [isError, setIsError] = useState<boolean>(false);
@@ -90,4 +91,6 @@ export const Image = forwardRef<HTMLImageElement, IImage>(
     }
 );
 
-Image.displayName = 'Image';
+ImageNotObserve.displayName = 'Image';
+
+export const Image = observer(ImageNotObserve);
