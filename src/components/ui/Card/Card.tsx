@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import { Button } from '@components/Button/Button';
 import { Image } from '@components/Image/Image';
+import { useStore } from '@hooks/useStore';
 import { Directions, Positions } from '@types';
 
 import classes from './Card.module.styl';
@@ -36,7 +37,10 @@ export const Card: FC<ICard> = ({
     children,
     isTitleAlignCenter = false
 }): JSX.Element => {
+    const { locale } = useStore();
     const buttonClasses = useMemo(() => cn(classes.card, className), [className]);
+
+    const coverAlt = useMemo(() => locale['manga-cover'], [locale]);
 
     const titleClasses = useMemo(
         () =>
@@ -54,10 +58,10 @@ export const Card: FC<ICard> = ({
 
     const imageComponent = useMemo(() => {
         if (typeof image === 'string') {
-            return <Image className={classes.image} src={image} alt={title} withBorderRadius />;
+            return <Image className={classes.image} src={image} alt={coverAlt} withBorderRadius />;
         }
         return image;
-    }, [image, title]);
+    }, [coverAlt, image]);
 
     return (
         <div className={classes.wrapper}>

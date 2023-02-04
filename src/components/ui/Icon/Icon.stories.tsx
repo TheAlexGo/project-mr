@@ -24,6 +24,12 @@ export default {
                 category: StoryCategories.MAIN
             }
         },
+        isNotButton: {
+            name: 'Не оборачивать иконку кнопкой?',
+            table: {
+                category: StoryCategories.MAIN
+            }
+        },
         className: {
             table: {
                 disable: true
@@ -37,7 +43,8 @@ export default {
     },
     args: {
         icon: Icons.SEARCH,
-        size: '24'
+        size: '24',
+        isNotButton: false
     }
 } as ComponentMeta<Story>;
 
