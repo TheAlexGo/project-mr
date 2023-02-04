@@ -1,5 +1,6 @@
 {
   "name": "mangareader",
+  "description": "Лучшее приложение для чтения манги во всём мире. Да что там в мире - в России!",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -72,6 +73,7 @@
     "uuid-int": "^3.1.0",
     "vite": "^4.0.4",
     "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-pwa": "^0.14.1",
     "vite-plugin-stylelint": "^4.1.6",
     "vite-plugin-svgr": "^2.4.0"
   }

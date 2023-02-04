@@ -4,6 +4,7 @@ import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import eslintPlugin from 'vite-plugin-eslint';
+import { VitePWA } from 'vite-plugin-pwa';
 import stylelintPlugin from 'vite-plugin-stylelint';
 import svgrPlugin from 'vite-plugin-svgr';
 
@@ -32,6 +33,34 @@ export default defineConfig({
         }
     },
     plugins: [
+        VitePWA({
+            registerType: 'autoUpdate',
+            devOptions: {
+                enabled: true
+            },
+            includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'safari-pinned-tab.svg'],
+            manifest: {
+                name: 'Mangareader',
+                short_name: 'MangaReader',
+                description:
+                    'Лучшее приложение для чтения манги во всём мире. Да что там в мире - в России!',
+                theme_color: '#ffffff',
+                icons: [
+                    {
+                        src: '/pwa-192x192.png',
+                        sizes: '192x192',
+                        type: 'image/png'
+                    },
+                    {
+                        src: '/pwa-512x512.png',
+                        sizes: '512x512',
+                        type: 'image/png'
+                    }
+                ],
+                background_color: '#ffffff',
+                display: 'standalone'
+            }
+        }),
         legacy({
             targets: ['defaults', 'not IE 11']
         }),
