@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 import { Button } from '@components/Button/Button';
 import { Icon, Icons } from '@components/Icon/Icon';
+import { useStore } from '@hooks/useStore';
 import { Directions, NavTabs, TClassNameCallback } from '@types';
 
 import classes from './NavbarItem.module.styl';
@@ -22,6 +23,8 @@ export interface INavbarItem {
 }
 
 export const NavbarItem: FC<INavbarItem> = observer(({ id, icon, link, title }): JSX.Element => {
+    const { locale } = useStore();
+
     const rootClasses: TClassNameCallback = useMemo(
         () =>
             ({ isActive }) =>
@@ -31,10 +34,12 @@ export const NavbarItem: FC<INavbarItem> = observer(({ id, icon, link, title }):
         []
     );
 
+    const ariaLabel = useMemo(() => locale['nav-icon-aria-label'] + title, [locale, title]);
+
     return (
         <NavLink key={id} to={link} className={rootClasses}>
             <Button className={classes.button} contentDirection={Directions.COLUMN} isWide>
-                <Icon className={classes.icon} icon={icon} isNotButton />
+                <Icon className={classes.icon} ariaLabel={ariaLabel} icon={icon} isNotButton />
                 <div className={classes.title}>{title}</div>
             </Button>
         </NavLink>

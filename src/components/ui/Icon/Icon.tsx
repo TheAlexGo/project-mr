@@ -34,6 +34,8 @@ export enum Icons {
 interface IIcon {
     /** Компонент иконки */
     icon: Icons;
+    /** Устанавливает текст для скрин-ридеров */
+    ariaLabel: string;
     /** Внешний класс */
     className?: string;
     /** Размер */
@@ -48,6 +50,7 @@ export const Icon: FC<IIcon> = ({
     icon,
     className,
     onClick,
+    ariaLabel,
     isNotButton = false,
     size = '24'
 }): JSX.Element => {
@@ -103,5 +106,5 @@ export const Icon: FC<IIcon> = ({
         return buttonParams.icon;
     }
 
-    return <Button {...buttonParams} />;
+    return <Button {...buttonParams} aria-label={ariaLabel} />;
 };

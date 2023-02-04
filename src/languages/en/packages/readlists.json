@@ -5,5 +5,6 @@
   "readlists-blank-description": "Let's create your first readlist",
   "readlists-blank-link": "Create a readlist",
   "readlists-default-title": "My readlist",
-  "readlists-search-placeholder": "Manga search"
+  "readlists-search-placeholder": "Manga search",
+  "readlist-icon-aria-label": "Icon for the readlist "
 }

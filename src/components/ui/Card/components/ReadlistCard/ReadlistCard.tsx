@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import { Card, TCardProps } from '@components/Card/Card';
 import { Icon, Icons } from '@components/Icon/Icon';
+import { useStore } from '@hooks/useStore';
 import { IReadlist } from '@types';
 import { getReadlistPageLink } from '@utils/routing';
 
@@ -23,19 +24,28 @@ export const ReadlistCard: FC<IReadlistCardProps> = ({
 }) => {
     const { id } = readlist;
     const rootClasses = cn(classes.card, className);
+    const { locale } = useStore();
     const link = useMemo(() => getReadlistPageLink(title, id), [id, title]);
+
+    const ariaLabel = useMemo(() => locale['readlist-icon-aria-label'] + title, [locale, title]);
 
     const image = useMemo(
         () => (
             <div className={classes.overlays}>
                 <div className={classes['overlay-front']}>
-                    <Icon className={classes.bookmark} icon={Icons.LIBRARY} size="40" isNotButton />
+                    <Icon
+                        className={classes.bookmark}
+                        icon={Icons.LIBRARY}
+                        size="40"
+                        ariaLabel={ariaLabel}
+                        isNotButton
+                    />
                 </div>
                 <div className={classes['overlay-middle']} />
                 <div className={classes['overlay-back']} />
             </div>
         ),
-        []
+        [ariaLabel]
     );
 
     return (

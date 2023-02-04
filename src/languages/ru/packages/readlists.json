@@ -6,5 +6,6 @@
   "readlists-blank-link": "Создать ридлист",
   "readlists-default-title": "Мой ридлист",
   "readlists-search-placeholder": "Поиск по манге",
-  "readlist-blank-heading": "Давайте добавим что-нибудь в ваш ридлист"
+  "readlist-blank-heading": "Давайте добавим что-нибудь в ваш ридлист",
+  "readlist-icon-aria-label": "Иконка для ридлиста "
 }
