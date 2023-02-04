@@ -6,5 +6,6 @@
   "error-auth-reg-username-length": "Имя пользователя слишком короткое",
   "error-auth-reg-password-length": "Пароль должен содержать не менее 8 символов!",
   "error-auth-reg-password-not-match": "Пароли не совпадают",
-  "error-login-username-password-error": "Не введено имя пользователя или пароль!"
+  "error-login-username-password-error": "Не введено имя пользователя или пароль!",
+  "error-loading-image": "Не удалось загрузить изображение"
 }

@@ -3,6 +3,7 @@ import React, { FC, forwardRef, useCallback, useMemo, useState } from 'react';
 import cn from 'classnames';
 
 import { Loader } from '@components/Loader/Loader';
+import { useStore } from '@hooks/useStore';
 import { NotFoundIcon } from '@icons';
 
 import classes from './Image.module.styl';
@@ -22,21 +23,13 @@ export interface IImage {
     withBorderRadius?: boolean;
 }
 
-const StubImage: FC = () => <img src={NotFoundIcon} alt="Не удалось загрузить изображение" />;
+const StubImage: FC = () => {
+    const { locale } = useStore();
+    return <img src={NotFoundIcon} alt={locale['error-loading-image']} />;
+};
 
 export const Image = forwardRef<HTMLImageElement, IImage>(
-    (
-        {
-            className,
-            imageClassName,
-            src,
-            alt,
-            loading = 'lazy',
-            withBorderRadius = false,
-            ...props
-        },
-        ref
-    ) => {
+    ({ className, imageClassName, src, alt, loading, withBorderRadius = false, ...props }, ref) => {
         const [isLoaded, setIsLoaded] = useState<boolean>(false);
         const [isError, setIsError] = useState<boolean>(false);
 
