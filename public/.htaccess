@@ -23,9 +23,6 @@ ExpiresByType image/svg "access plus 1 month"
 
 # Включаем кэширование css, javascript и текстовых файлов на одну неделю
 ExpiresByType text/css "access plus 604800 seconds"
-ExpiresByType text/javascript "access plus 604800 seconds"
-ExpiresByType application/javascript "access plus 604800 seconds"
-ExpiresByType application/x-javascript "access plus 604800 seconds"
 
 # Включаем кэширование xml файлов на десять минут
 ExpiresByType application/xhtml+xml "access plus 600 seconds"
@@ -33,19 +30,4 @@ ExpiresByType application/xhtml+xml "access plus 600 seconds"
 # Нестандартные шрифты сайта
 ExpiresByType application/x-font-ttf "access plus 1 month"
 ExpiresByType image/svg+xml "access plus 1 month"
-
-<Directory /sw.js>
-  Header Set Pragma "no-cache"
-  Header Set Expires "Thu, 1 Jan 1970 00:00:00 GMT"
-  Header Set Cache-Control "max-age=0, no-store, no-cache, must-revalidate"
-  Header Unset ETag
-  FileETag None
-</Directory>
-<Directory />
-  Header Set Pragma "no-cache"
-  Header Set Expires "Thu, 1 Jan 1970 00:00:00 GMT"
-  Header Set Cache-Control "max-age=0, no-store, no-cache, must-revalidate"
-  Header Unset ETag
-  FileETag None
-</Directory>
 </IfModule>
