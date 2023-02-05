@@ -1,16 +1,16 @@
-import ArchmageCover from './archmage.png';
-import AyumuCover from './ayumu.png';
-import BeginningCover from './beginning.png';
-import BornCover from './born.png';
-import FlameCover from './flame.png';
-import KomiCover from './komi.png';
-import LevelCover from './level.png';
-import MagicCover from './magic.png';
-import OmniscientCover from './omniscient.png';
-import PeakCover from './peak.png';
-import RankerCover from './ranker.png';
-import SweetCover from './sweet.png';
-import TrasheroCover from './trashero.png';
+import ArchmageCover from './archmage.webp';
+import AyumuCover from './ayumu.webp';
+import BeginningCover from './beginning.webp';
+import BornCover from './born.webp';
+import FlameCover from './flame.webp';
+import KomiCover from './komi.webp';
+import LevelCover from './level.webp';
+import MagicCover from './magic.webp';
+import OmniscientCover from './omniscient.webp';
+import PeakCover from './peak.webp';
+import RankerCover from './ranker.webp';
+import SweetCover from './sweet.webp';
+import TrasheroCover from './trashero.webp';
 
 export default [
     AyumuCover,
