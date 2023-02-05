@@ -2,21 +2,20 @@ import React, { FC, ReactElement, useCallback, useMemo } from 'react';
 
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
+import { Link } from 'react-router-dom';
 
-import { Button } from '@components/Button/Button';
 import { Image } from '@components/Image/Image';
 import { useStore } from '@hooks/useStore';
-import { Directions, Positions } from '@types';
 
 import classes from './Card.module.styl';
 
 export interface ICard {
-    /** Название книги */
+    /** Название карточки */
     title: string;
-    /** Обложка книги */
+    /** Обложка карточки */
     image: string | ReactElement;
-    /** Ссылка на книгу */
-    href?: string;
+    /** Ссылка на карточку */
+    href: string;
     /** Внешний класс */
     className?: string;
     /** Распологает название по центру карточки */
@@ -32,11 +31,11 @@ export type TCardProps = Pick<ICard, 'isTitleAlignCenter' | 'onClick' | 'classNa
 export const Card: FC<ICard> = observer(
     ({
         className,
-        href,
         title,
         image,
         onClick,
         children,
+        href = '/',
         isTitleAlignCenter = false
     }): JSX.Element => {
         const { locale } = useStore();
@@ -70,17 +69,10 @@ export const Card: FC<ICard> = observer(
         return (
             <div className={classes.wrapper}>
                 {children}
-                <Button
-                    className={buttonClasses}
-                    href={href}
-                    onClick={clickHandler}
-                    contentPosition={Positions.TOP}
-                    contentDirection={Directions.COLUMN}
-                    withNoPadding
-                >
+                <Link className={buttonClasses} to={href} onClick={clickHandler}>
                     {imageComponent}
                     <div className={titleClasses}>{title}</div>
-                </Button>
+                </Link>
             </div>
         );
     }

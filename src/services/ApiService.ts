@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-import { IApiCallback } from '../types';
+import { IApiCallback } from '@types';
 
 export class ApiService {
     public API_callback: IApiCallback;
@@ -9,6 +9,10 @@ export class ApiService {
 
     constructor(apiCallback: IApiCallback) {
         this.API_callback = apiCallback;
+    }
+
+    async initApi(): Promise<boolean> {
+        return Promise.resolve(true);
     }
 
     responseBuilder<T>(response: Promise<AxiosResponse<T>>) {

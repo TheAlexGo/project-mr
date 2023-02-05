@@ -6,14 +6,14 @@ import { Outlet } from 'react-router-dom';
 import { Navbar } from '@components/Navbar/Navbar';
 import { useStore } from '@hooks/useStore';
 
-import classes from './Main.module.styl';
+import classes from './LayoutMain.module.styl';
 
 /**
  * Шаблон для основных страниц приложения
  * @param children
  * @constructor
  */
-export const Main: FC = observer((): JSX.Element => {
+export const LayoutMain: FC = observer((): JSX.Element => {
     const { navigate } = useStore();
     return (
         <div className={classes.layout}>

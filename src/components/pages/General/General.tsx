@@ -5,21 +5,18 @@ import ReactList from 'react-list';
 
 import { MangaCard } from '@components/Card/components/MangaCard/MangaCard';
 import { Header } from '@components/Header/Header';
-import { FlexPositions } from '@types';
+import { Page } from '@pages/Page/Page';
+import { Pages } from '@types';
 import { getMangaCardMock } from '@utils/mockData';
 
 import classes from './General.module.styl';
 
 export const General: FC = observer(() => (
-    <div>
-        General page!
-        <Header
-            className={classes.general__header}
-            buttonsPositions={FlexPositions.SPACE_BETWEEN}
-        />
+    <Page>
+        <Header activePage={Pages.GENERAL} className={classes.general__header} />
         <div className={classes.general__block}>
             <ReactList />
         </div>
         <MangaCard {...getMangaCardMock()} />
-    </div>
+    </Page>
 ));

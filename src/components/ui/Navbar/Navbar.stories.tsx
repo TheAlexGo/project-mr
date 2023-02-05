@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { Icons } from '@components/Icon/Icon';
 import { StoryCategories } from '@sb/types';
-import { Links, NavTabs } from '@types';
+import { Pages, NavTabs } from '@types';
 
 import { Navbar } from './Navbar';
 
@@ -32,19 +32,19 @@ export default {
                 id: NavTabs.GENERAL,
                 icon: Icons.HOME,
                 title: 'Главная',
-                link: Links.GENERAL
+                link: Pages.GENERAL
             },
             {
                 id: NavTabs.LIBRARY,
                 icon: Icons.LIBRARY,
                 title: 'Библиотека',
-                link: Links.LIBRARY
+                link: Pages.LIBRARY
             },
             {
                 id: NavTabs.PROFILE,
                 icon: Icons.PROFILE,
                 title: 'Профиль',
-                link: Links.PROFILE
+                link: Pages.PROFILE
             }
         ]
     }

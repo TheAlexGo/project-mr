@@ -1,4 +1,5 @@
 import blocks from './packages/blocks.json';
+import buttons from './packages/buttons.json';
 import comments from './packages/comments.json';
 import errors from './packages/errors.json';
 import manga from './packages/manga.json';
@@ -25,5 +26,6 @@ export default {
     ...tabs,
     ...readlists,
     ...profile,
-    ...blocks
+    ...blocks,
+    ...buttons
 };

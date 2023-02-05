@@ -2,12 +2,12 @@
     width 100%
     color var(--color_main)
 
-    &__wrapper
-        display flex
-        justify-content space-between
-        align-items center
-        height 100%
-        color var(--color_main)
+.wrapper
+    display flex
+    justify-content space-between
+    align-items center
+    height 100%
+    color var(--color_main)
 
 .heading
     word-break break-word
@@ -25,6 +25,10 @@
 
 .right
     margin 0 (- $offset-2x)
+
+    &.__is-only-buttons
+        justify-content space-between
+        width 100%
 
 .back
     margin-right $offset-4x

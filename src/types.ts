@@ -9,7 +9,7 @@ export enum Lang {
     JAPANESE = 'japanese'
 }
 
-export enum Links {
+export enum Pages {
     LIBRARY = 'library',
     MANGA = 'manga',
     READLIST = 'readlist',
@@ -46,13 +46,6 @@ export enum Directions {
     COLUMN = 'column'
 }
 
-export enum FlexPositions {
-    LEFT = 'left',
-    RIGHT = 'right',
-    CENTER = 'center',
-    SPACE_BETWEEN = 'space-between'
-}
-
 export enum NavTabs {
     GENERAL = 'general',
     LIBRARY = 'library',
@@ -78,23 +71,6 @@ export enum CardStates {
     DEFAULT = 'default',
     DELETE = 'delete',
     EDIT = 'edit'
-}
-
-export enum HeaderTypes {
-    H1 = 'h1',
-    H2 = 'h2',
-    H3 = 'h3',
-    H4 = 'h4',
-    H5 = 'h5',
-    H6 = 'h6'
-}
-
-export enum HeaderButtons {
-    MORE = 'more',
-    SEARCH = 'search',
-    ADD = 'add',
-    TRASH = 'trash',
-    BELL = 'bell'
 }
 
 export enum QueryParams {
@@ -282,12 +258,6 @@ export interface IReadlist {
     alias?: CardTypes.MANGA | CardTypes.FAVORITE | CardTypes.RECENT;
 }
 
-export interface IIcon extends IButton {
-    onActive?: VoidFunction;
-    onInactive?: VoidFunction;
-    isComplex?: boolean;
-}
-
 export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
     /** Функция валидации */
     validator?: (value: string) => IResult;
@@ -296,10 +266,6 @@ export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
     /** Проверяет, прошло ли поле валидацию */
     isCheck?: boolean;
     showErrorBlock?: boolean;
-}
-
-export interface IHeaderButton extends IIcon {
-    headerType: HeaderButtons;
 }
 
 export interface IModal {

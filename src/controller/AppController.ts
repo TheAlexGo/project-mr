@@ -24,6 +24,18 @@ export class AppController {
         console.log(message, optionalParams);
     }
 
+    initApi = async () =>
+        this.apiService
+            .initApi()
+            .then((result) => {
+                this.initResource(this.store.lang);
+                return result;
+            })
+            .then<boolean>((result) => {
+                this.store.setIsAppReady(result);
+                return result;
+            });
+
     apiCallback: IApiCallback = (method, result, data) => {
         this.logger(method, result, data);
     };
@@ -40,6 +52,10 @@ export class AppController {
      * Устанавливает текстовый ресурс
      */
     initResource = (lang: Lang) => {
+        if (this.store.lang === lang && Object.keys(this.store.locale).length) {
+            this.logger(`Ресурс ${lang} уже загружен!`);
+            return;
+        }
         const resource = this.langService.loadResource(lang);
         this.store.setLocale(resource);
         this.validateService.setLocale(resource);

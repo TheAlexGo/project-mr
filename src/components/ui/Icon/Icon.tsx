@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import { Button, IButton } from '@components/Button/Button';
 import {
+    BackIcon,
     BellIcon,
     CloseIcon,
     HomeIcon,
@@ -28,10 +29,11 @@ export enum Icons {
     CLOSE = 'close',
     LIBRARY = 'library',
     HOME = 'home',
-    PROFILE = 'profile'
+    PROFILE = 'profile',
+    BACK = 'back'
 }
 
-interface IIcon {
+export interface IIcon {
     /** Компонент иконки */
     icon: Icons;
     /** Устанавливает текст для скрин-ридеров */
@@ -97,6 +99,9 @@ export const Icon: FC<IIcon> = ({
                 break;
             case Icons.PROFILE:
                 params.icon = <ProfileIcon className={rootClasses} />;
+                break;
+            case Icons.BACK:
+                params.icon = <BackIcon className={rootClasses} />;
                 break;
         }
         return params;

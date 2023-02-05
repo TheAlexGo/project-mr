@@ -12,6 +12,12 @@ export default {
     title: 'UI / Card',
     component: ReadlistCard,
     argTypes: {
+        id: {
+            name: 'Уникальный идентификатор (для образования ссылки)',
+            table: {
+                category: StoryCategories.MAIN
+            }
+        },
         title: {
             name: 'Название',
             table: {
@@ -22,11 +28,6 @@ export default {
             name: 'Расположить название по центру?',
             table: {
                 category: StoryCategories.OTHER
-            }
-        },
-        id: {
-            table: {
-                disable: true
             }
         },
         items: {
@@ -52,7 +53,8 @@ export default {
     },
     args: {
         title: 'Тестовое название',
-        isTitleAlignCenter: false
+        isTitleAlignCenter: false,
+        id: 123
     }
 } as ComponentMeta<Story>;
 

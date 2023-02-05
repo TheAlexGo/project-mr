@@ -1,34 +1,39 @@
-import React, { FC, useLayoutEffect, useState } from 'react';
+import React, { FC, useEffect, useLayoutEffect } from 'react';
 
+import { observer } from 'mobx-react-lite';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { Loader } from '@components/Loader/Loader';
 import { useController } from '@hooks/useController';
 import { useStore } from '@hooks/useStore';
-import { Main } from '@layouts/Main/Main';
+import { LayoutMain } from '@layouts/LayoutMain/LayoutMain';
 import { General } from '@pages/General/General';
+import { NotFound } from '@pages/NotFound/NotFound';
 
-export const App: FC = () => {
-    const [isLoaded, setIsLoaded] = useState<boolean>(false);
-    const { initResource } = useController();
-    const { lang } = useStore();
+export const App: FC = observer(() => {
+    const { initApi, initResource } = useController();
+    const { lang, isAppReady } = useStore();
 
     useLayoutEffect(() => {
+        initApi();
+    }, [initApi]);
+
+    useEffect(() => {
         initResource(lang);
-        setIsLoaded(true);
     }, [initResource, lang]);
 
-    if (!isLoaded) {
+    if (!isAppReady) {
         return <Loader />;
     }
 
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Main />}>
+                <Route path="/" element={<LayoutMain />}>
                     <Route index element={<General />} />
+                    <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
         </Router>
     );
-};
+});

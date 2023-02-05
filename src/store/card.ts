@@ -1,3 +1,5 @@
+import { createContext } from 'react';
+
 import { makeAutoObservable } from 'mobx';
 
 export class CardsStore {
@@ -25,3 +27,6 @@ export class CardsStore {
         this.isEditing = isEditing;
     };
 }
+
+export const cardsStore = new CardsStore();
+export const CardsContext = createContext<CardsStore>(cardsStore);

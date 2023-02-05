@@ -8,6 +8,7 @@ export { ReactComponent as CloseIcon } from './close_icon.svg';
 export { ReactComponent as LibraryIcon } from './library_icon.svg';
 export { ReactComponent as HomeIcon } from './home_icon.svg';
 export { ReactComponent as ProfileIcon } from './profile_icon.svg';
+export { ReactComponent as BackIcon } from './small_back_icon.svg';
 
 export { ReactComponent as VkIcon } from './vk_icon.svg';
 

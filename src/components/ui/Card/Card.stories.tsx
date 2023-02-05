@@ -28,7 +28,7 @@ export default {
         href: {
             name: 'Ссылка',
             table: {
-                category: StoryCategories.OTHER
+                category: StoryCategories.MAIN
             }
         },
         isTitleAlignCenter: {
@@ -61,7 +61,8 @@ export default {
     args: {
         title: 'У Коми проблемы с общением',
         image: getCoverMock(),
-        isTitleAlignCenter: false
+        isTitleAlignCenter: false,
+        href: '/'
     }
 } as ComponentMeta<Story>;
 
