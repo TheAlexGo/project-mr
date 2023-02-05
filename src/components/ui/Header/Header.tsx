@@ -75,7 +75,7 @@ export const Header: FC<IHeader> = observer(
                 <div className={classes.left}>
                     {needBack && (
                         <Icon
-                            className={classes.back}
+                            wrapperClassName={classes.back}
                             icon={Icons.BACK}
                             ariaLabel={locale['button-back-aria-label']}
                             onClick={clickBackHandler}

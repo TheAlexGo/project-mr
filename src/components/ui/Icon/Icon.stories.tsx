@@ -30,12 +30,23 @@ export default {
                 category: StoryCategories.MAIN
             }
         },
+        ariaLabel: {
+            name: 'Aria-label',
+            table: {
+                category: StoryCategories.OTHER
+            }
+        },
         className: {
             table: {
                 disable: true
             }
         },
         onClick: {
+            table: {
+                disable: true
+            }
+        },
+        wrapperClassName: {
             table: {
                 disable: true
             }

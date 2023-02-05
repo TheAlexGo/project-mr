@@ -40,6 +40,8 @@ export interface IIcon {
     ariaLabel: string;
     /** Внешний класс */
     className?: string;
+    /** Внешний класс для обёртки */
+    wrapperClassName?: string;
     /** Размер */
     size?: SquareElementSizes;
     /** Слушатель события клика по кнопке */
@@ -51,12 +53,14 @@ export interface IIcon {
 export const Icon: FC<IIcon> = ({
     icon,
     className,
+    wrapperClassName,
     onClick,
     ariaLabel,
     isNotButton = false,
     size = '24'
 }): JSX.Element => {
-    const rootClasses = useMemo(
+    const rootClasses = useMemo(() => cn(classes.wrapper, wrapperClassName), [wrapperClassName]);
+    const iconClasses = useMemo(
         () => cn(classes.icon, getSizesClass(classes, size), className),
         [className, size]
     );
@@ -74,42 +78,42 @@ export const Icon: FC<IIcon> = ({
         };
         switch (icon) {
             case Icons.MORE:
-                params.icon = <MoreIcon className={rootClasses} />;
+                params.icon = <MoreIcon className={iconClasses} />;
                 break;
             case Icons.SEARCH:
-                params.icon = <SearchIcon className={rootClasses} />;
+                params.icon = <SearchIcon className={iconClasses} />;
                 break;
             case Icons.TRASH:
-                params.icon = <TrashIcon className={rootClasses} />;
+                params.icon = <TrashIcon className={iconClasses} />;
                 break;
             case Icons.PLUS:
-                params.icon = <PlusIcon className={rootClasses} />;
+                params.icon = <PlusIcon className={iconClasses} />;
                 break;
             case Icons.BELL:
-                params.icon = <BellIcon className={rootClasses} />;
+                params.icon = <BellIcon className={iconClasses} />;
                 break;
             case Icons.CLOSE:
-                params.icon = <CloseIcon className={rootClasses} />;
+                params.icon = <CloseIcon className={iconClasses} />;
                 break;
             case Icons.LIBRARY:
-                params.icon = <LibraryIcon className={rootClasses} />;
+                params.icon = <LibraryIcon className={iconClasses} />;
                 break;
             case Icons.HOME:
-                params.icon = <HomeIcon className={rootClasses} />;
+                params.icon = <HomeIcon className={iconClasses} />;
                 break;
             case Icons.PROFILE:
-                params.icon = <ProfileIcon className={rootClasses} />;
+                params.icon = <ProfileIcon className={iconClasses} />;
                 break;
             case Icons.BACK:
-                params.icon = <BackIcon className={rootClasses} />;
+                params.icon = <BackIcon className={iconClasses} />;
                 break;
         }
         return params;
-    }, [clickHandler, icon, rootClasses]);
+    }, [clickHandler, icon, iconClasses]);
 
     if (isNotButton && buttonParams.icon) {
         return buttonParams.icon;
     }
 
-    return <Button {...buttonParams} aria-label={ariaLabel} />;
+    return <Button {...buttonParams} className={rootClasses} aria-label={ariaLabel} />;
 };
