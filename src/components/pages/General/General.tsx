@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 
 import { Axes, CardList } from '@components/CardList/CardList';
 import { useResponse } from '@hooks/useResponse';
@@ -6,19 +6,44 @@ import { IMangaCard } from '@types';
 
 import { Page } from '../Page/Page';
 
+import classes from './General.module.styl';
+
 const General: FC = () => {
-    const { getTopList } = useResponse();
-    const [items, setItems] = useState<IMangaCard[]>([]);
+    const { getTopList, getContinueReadingList, getComedyList } = useResponse();
+    const [continueReadingList, setContinueReadingList] = useState<IMangaCard[]>([]);
+    const [topList, setTopList] = useState<IMangaCard[]>([]);
+    const [comedyList, setComedyList] = useState<IMangaCard[]>([]);
 
     useEffect(() => {
-        getTopList().then(setItems);
-    }, [getTopList]);
+        getContinueReadingList().then(setContinueReadingList);
+        getTopList().then(setTopList);
+        getComedyList().then(setComedyList);
+    }, [getComedyList, getContinueReadingList, getTopList]);
 
-    return (
-        <Page>
-            <CardList axis={Axes.X} cards={items} title="Продолжите чтение" />
-        </Page>
-    );
+    const renderAllLists = useCallback(() => {
+        const array = [
+            {
+                title: 'Продолжите чтение',
+                elements: continueReadingList
+            },
+            {
+                title: 'Топ 10 в этом месяце',
+                elements: topList
+            },
+            {
+                title: 'Комедия: популярное',
+                elements: comedyList
+            }
+        ];
+
+        return array.map((cards) => (
+            <div key={cards.title} className={classes.list}>
+                <CardList axis={Axes.X} cards={cards.elements} title={cards.title} />
+            </div>
+        ));
+    }, [comedyList, continueReadingList, topList]);
+
+    return <Page>{renderAllLists()}</Page>;
 };
 
 export default General;

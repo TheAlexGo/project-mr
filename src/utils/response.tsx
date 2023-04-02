@@ -10,6 +10,10 @@ class ResponseBuilder {
         this.client = null;
     }
 
+    async getContinueReadingList(): Promise<IMangaCard[]> {
+        return getMangaListMock(5);
+    }
+
     async getTopList(): Promise<IMangaCard[]> {
         return getMangaListMock(100);
     }
