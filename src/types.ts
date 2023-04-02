@@ -9,19 +9,12 @@ export enum Lang {
 }
 
 export enum Pages {
-    LIBRARY = 'library',
-    MANGA = 'manga',
-    READLIST = 'readlist',
-    PROFILE = 'profile',
-    LOGIN = 'login',
-    REGISTER = 'register',
-    RECOVERY = 'recovery',
-    RECOVERY_SUCCESS = 'success',
-    CHAPTER = 'chapter',
-    READER = 'reader',
-    SEARCH = 'search',
-    GENERAL = '',
-    NOT_FOUND = 'not-found'
+    GENERAL = '/',
+    LIBRARY = '/library',
+    MANGA = '/manga',
+    READLIST = '/readlist',
+    PROFILE = '/profile',
+    NOT_FOUND = '/not-found'
 }
 
 export enum SourceTypes {
@@ -213,15 +206,13 @@ export interface IMangaCover {
 export interface IMangaDescription {
     id: number;
     description: string;
-    manga: number;
-    langEnum: Lang;
+    lang: Lang;
 }
 
 export interface IMangaTitle {
     id: number;
     title: string;
-    manga: number;
-    langEnum: Lang;
+    lang: Lang;
 }
 
 export interface ITitleLink {
@@ -230,6 +221,7 @@ export interface ITitleLink {
 }
 
 export interface IMangaCard {
+    type: 'manga';
     id: number;
     /** Путь до обложки манги */
     coverUri: string;
@@ -246,11 +238,10 @@ export interface IManga extends IMangaCard {
     translator?: IMangaHuman;
     demographics: Demographics;
     contentRating: ContentRating;
-    sources?: ITitleLink[];
-    whereBuy?: ITitleLink[];
 }
 
 export interface IReadlist {
+    type: 'readlist';
     id: number;
     title: string;
     items: Manga[];

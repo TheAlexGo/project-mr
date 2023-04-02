@@ -4,11 +4,12 @@ import { Button, ButtonThemes } from '@components/Button/Button';
 import { Image } from '@components/Image/Image';
 import { useStore } from '@hooks/useStore';
 import { NotFoundIcon } from '@icons';
-import { Page } from '@pages/Page/Page';
+
+import { Page } from '../Page/Page';
 
 import classes from './NotFound.module.styl';
 
-export const NotFound = () => {
+const NotFound = () => {
     const { locale } = useStore();
 
     return (
@@ -28,3 +29,5 @@ export const NotFound = () => {
         </Page>
     );
 };
+
+export default NotFound;

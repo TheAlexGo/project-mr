@@ -170,15 +170,13 @@ export const getMangaTitlesMock = (count: number): IMangaTitle[] => {
         return {
             id: uuidGenerator.uuid(),
             title: getMangaTitleOfLangMock(lang),
-            langEnum: lang,
-            manga: 0
+            lang
         };
     }, count);
     mangaTitles.push({
         id: uuidGenerator.uuid(),
         title: getMangaTitleOfLangMock(Lang.RUSSIAN),
-        langEnum: Lang.RUSSIAN,
-        manga: 0
+        lang: Lang.RUSSIAN
     });
     return mangaTitles;
 };
@@ -188,8 +186,7 @@ export const getMangaDescriptionsMock = (count: number): IMangaDescription[] =>
         () => ({
             id: uuidGenerator.uuid(),
             description: getMangaTitleMock(),
-            langEnum: Lang.RUSSIAN,
-            manga: 0
+            lang: Lang.RUSSIAN
         }),
         count
     );
@@ -211,6 +208,7 @@ export const getCoverMock = (): string => getRandomOfArray(mangaCovers);
 export const getMangaCardsMock = (count: number): IMangaCard[] =>
     generateArray<IMangaCard>(
         () => ({
+            type: 'manga',
             id: uuidGenerator.uuid(),
             titles: getMangaTitlesMock(getRandomInt(5, 1)),
             coverUri: getCoverMock()
@@ -223,6 +221,7 @@ export const getMangaCardMock = (): IMangaCard => getMangaCardsMock(1)[0];
 export const getMangaListMock = (count: number, id?: number): IManga[] =>
     generateArray<IManga>(
         () => ({
+            type: 'manga',
             id: id || uuidGenerator.uuid(),
             titles: getMangaTitlesMock(getRandomInt(5, 1)),
             descriptions: getMangaDescriptionsMock(getRandomInt(5, 1)),

@@ -4,7 +4,7 @@ import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IApiCallback, Lang } from '@types';
+import { IApiCallback, Lang, Pages } from '@types';
 
 export class AppController {
     store: Store;
@@ -21,20 +21,27 @@ export class AppController {
 
     logger(message: unknown, ...optionalParams: unknown[]) {
         // eslint-disable-next-line prefer-rest-params,no-console
-        console.log(message, optionalParams);
+        console.log(message, ...optionalParams);
     }
 
-    initApi = async () =>
-        this.apiService
+    initApi = async () => {
+        this.logger('Начинается инициализация приложения...');
+        if (this.store.isAppReady) {
+            this.logger('Приложение уже инициализированно!');
+            return false;
+        }
+        return this.apiService
             .initApi()
             .then((result) => {
                 this.initResource(this.store.lang);
                 return result;
             })
             .then<boolean>((result) => {
+                this.logger('Приложение инициализированно успешно!');
                 this.store.setIsAppReady(result);
                 return result;
             });
+    };
 
     apiCallback: IApiCallback = (method, result, data) => {
         this.logger(method, result, data);
@@ -60,6 +67,11 @@ export class AppController {
         this.store.setLocale(resource);
         this.validateService.setLocale(resource);
         this.logger(`Ресурс ${lang} загружен:`, resource);
+    };
+
+    changePage = (page: Pages) => {
+        this.logger('Перешли на страницу:', page);
+        this.store.setActivePage(page);
     };
 }
 

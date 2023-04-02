@@ -24,8 +24,6 @@
     align-items center
 
 .right
-    margin 0 (- $offset-2x)
-
     &.__is-only-buttons
         justify-content space-between
         width 100%
@@ -34,4 +32,7 @@
     margin-right $offset-4x
 
 .button
-    margin 0 $offset-2x
+    margin-right $offset-4x
+
+    &:last-child
+        margin-right 0

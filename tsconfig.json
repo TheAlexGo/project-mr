@@ -4,17 +4,20 @@
             "@components/*": [
                 "./src/components/ui/*"
             ],
+            "@cards/*": [
+                "./src/components/ui/Card/components/*"
+            ],
             "@layouts/*": [
                 "./src/components/layouts/*"
-            ],
-            "@pages/*": [
-                "./src/components/pages/*"
             ],
             "@languages/*": [
                 "./src/languages/*"
             ],
             "@services/*": [
                 "./src/services/*"
+            ],
+            "@pages": [
+                "./src/components/pages"
             ],
             "@types": [
                 "./src/types"

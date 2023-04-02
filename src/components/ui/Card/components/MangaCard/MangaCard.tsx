@@ -16,6 +16,7 @@ export interface IMangaCardProps extends IMangaCard, TCardProps {
 
 export const MangaCard: FC<IMangaCardProps> = ({
     className,
+    wrapperClassName,
     onDelete,
     onClick,
     isTitleAlignCenter = false,
@@ -29,6 +30,7 @@ export const MangaCard: FC<IMangaCardProps> = ({
     return (
         <Card
             className={className}
+            wrapperClassName={wrapperClassName}
             title={title}
             image={coverUri}
             href={link}

@@ -1,22 +1,24 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
-import { observer } from 'mobx-react-lite';
-import ReactList from 'react-list';
+import { Axes, CardList } from '@components/CardList/CardList';
+import { useResponse } from '@hooks/useResponse';
+import { IMangaCard } from '@types';
 
-import { MangaCard } from '@components/Card/components/MangaCard/MangaCard';
-import { Header } from '@components/Header/Header';
-import { Page } from '@pages/Page/Page';
-import { Pages } from '@types';
-import { getMangaCardMock } from '@utils/mockData';
+import { Page } from '../Page/Page';
 
-import classes from './General.module.styl';
+const General: FC = () => {
+    const { getTopList } = useResponse();
+    const [items, setItems] = useState<IMangaCard[]>([]);
 
-export const General: FC = observer(() => (
-    <Page>
-        <Header activePage={Pages.GENERAL} className={classes.general__header} />
-        <div className={classes.general__block}>
-            <ReactList />
-        </div>
-        <MangaCard {...getMangaCardMock()} />
-    </Page>
-));
+    useEffect(() => {
+        getTopList().then(setItems);
+    }, [getTopList]);
+
+    return (
+        <Page>
+            <CardList axis={Axes.X} cards={items} title="Продолжите чтение" />
+        </Page>
+    );
+};
+
+export default General;

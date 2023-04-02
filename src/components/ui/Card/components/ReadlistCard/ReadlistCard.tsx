@@ -10,7 +10,7 @@ import { getReadlistPageLink } from '@utils/routing';
 
 import classes from './ReadlistCard.module.styl';
 
-interface IReadlistCardProps extends IReadlist, TCardProps {
+export interface IReadlistCardProps extends IReadlist, TCardProps {
     /** Название ридлиста */
     title: string;
 }

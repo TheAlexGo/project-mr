@@ -4,12 +4,22 @@
     flex-grow 1
     flex-direction column
     width 100%
-    padding $offset-4x $offset-4x $size-nav
-    overflow-y auto
+    padding s('calc(%s + env(safe-area-inset-top))', $size-header) $offset-4x $size-nav
 
 .navbar
+.header
     position fixed
-    bottom 0
     left 0
     z-index 10
-    padding-bottom env(safe-area-inset-bottom, 12px)
+    width 100%
+
+.header
+    top 0
+    padding 16px
+    padding-top s('calc(16px + env(safe-area-inset-top))')
+    background-color var(--color_background)
+
+.navbar
+    bottom 0
+    padding-bottom s('env(safe-area-inset-bottom)')
+    background-color var(--color_surface)

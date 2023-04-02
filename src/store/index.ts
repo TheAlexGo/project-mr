@@ -4,7 +4,7 @@ import { makeAutoObservable } from 'mobx';
 
 import { Icons } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
-import { Lang, Pages, NavTabs } from '@types';
+import { Lang, NavTabs, Pages } from '@types';
 
 export class Store {
     /**
@@ -14,6 +14,7 @@ export class Store {
     lang = Lang.RUSSIAN;
     readonly defaultLang = Lang.RUSSIAN;
     locale: Record<string, string> = {};
+    activePage: Pages = Pages.GENERAL;
 
     constructor() {
         makeAutoObservable(this);
@@ -29,6 +30,10 @@ export class Store {
 
     setLocale(locale: Record<string, string>) {
         this.locale = locale;
+    }
+
+    setActivePage(page: Pages) {
+        this.activePage = page;
     }
 
     get navigate(): INavbarItem[] {

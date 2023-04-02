@@ -18,6 +18,8 @@ export interface ICard {
     href: string;
     /** Внешний класс */
     className?: string;
+    /** Внешний класс обёртки */
+    wrapperClassName?: string;
     /** Распологает название по центру карточки */
     isTitleAlignCenter?: boolean;
     /** Слушатель события клика по карточке */
@@ -26,11 +28,15 @@ export interface ICard {
     children?: ReactElement;
 }
 
-export type TCardProps = Pick<ICard, 'isTitleAlignCenter' | 'onClick' | 'className'>;
+export type TCardProps = Pick<
+    ICard,
+    'isTitleAlignCenter' | 'onClick' | 'className' | 'wrapperClassName'
+>;
 
 export const Card: FC<ICard> = observer(
     ({
         className,
+        wrapperClassName,
         title,
         image,
         onClick,
@@ -39,7 +45,12 @@ export const Card: FC<ICard> = observer(
         isTitleAlignCenter = false
     }): JSX.Element => {
         const { locale } = useStore();
-        const buttonClasses = useMemo(() => cn(classes.card, className), [className]);
+
+        const rootClasses = useMemo(
+            () => cn(classes.wrapper, wrapperClassName),
+            [wrapperClassName]
+        );
+        const linkClasses = useMemo(() => cn(classes.card, className), [className]);
 
         const coverAlt = useMemo(() => locale['manga-cover'], [locale]);
 
@@ -67,13 +78,13 @@ export const Card: FC<ICard> = observer(
         }, [coverAlt, image]);
 
         return (
-            <div className={classes.wrapper}>
+            <li className={rootClasses}>
                 {children}
-                <Link className={buttonClasses} to={href} onClick={clickHandler}>
+                <Link className={linkClasses} to={href} onClick={clickHandler}>
                     {imageComponent}
                     <div className={titleClasses}>{title}</div>
                 </Link>
-            </div>
+            </li>
         );
     }
 );

@@ -17,10 +17,6 @@ interface IHeader {
     heading?: string;
     /** Описание заголовка (напр. для чего эта страница) */
     description?: string;
-    /** Внешний класс */
-    className?: string;
-    /** Активная страница (по ней будут формироваться кнопки) */
-    activePage?: Pages;
     /** Тип заголовка: h1..h6 */
     headingType?: HeadingTypes;
     /** Добавляет кнопку "Назад" */
@@ -28,27 +24,21 @@ interface IHeader {
 }
 
 export const Header: FC<IHeader> = observer(
-    ({
-        className,
-        heading,
-        description,
-        activePage,
-        headingType = HeadingTypes.H1,
-        needBack = false
-    }) => {
+    ({ heading, description, headingType = HeadingTypes.H1, needBack = false }) => {
         const { logger } = useController();
-        const { locale } = useStore();
+        const { locale, activePage } = useStore();
         const navigate = useNavigate();
 
         const headerButtons: IIcon[] = useMemo(() => {
             const getIconObj = (icon: Icons, onClick: VoidFunction) => ({
-                className: classes.button,
+                wrapperClassName: classes.button,
                 ariaLabel: locale[`button-${icon}-aria-label`],
                 onClick,
                 icon
             });
             switch (activePage) {
                 case Pages.GENERAL:
+                case Pages.LIBRARY:
                     return [
                         getIconObj(Icons.BELL, () => logger('Нажали на колокольчик!')),
                         getIconObj(Icons.SEARCH, () => logger('Нажали на поиск!'))
@@ -89,7 +79,7 @@ export const Header: FC<IHeader> = observer(
         }, [clickBackHandler, heading, headingType, locale, needBack]);
 
         return (
-            <div className={cn(classes.header, className)}>
+            <div className={classes.header}>
                 <div className={classes.wrapper}>
                     {leftComponent}
                     <div

@@ -15,6 +15,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '@components': path.resolve(__dirname, './src/components/ui'),
+            '@cards': path.resolve(__dirname, './src/components/ui/Card/components'),
             '@layouts': path.resolve(__dirname, './src/components/layouts'),
             '@pages': path.resolve(__dirname, './src/components/pages'),
             '@fonts': path.resolve(__dirname, './src/assets/fonts'),
@@ -104,5 +105,8 @@ export default defineConfig({
                 }
             }
         }
+    },
+    server: {
+        host: true
     }
 });

@@ -13,6 +13,7 @@ import {
 
 export class Manga implements IManga {
     private readonly defaults: IManga = {
+        type: 'manga',
         id: 0,
         titles: [],
         descriptions: [],
@@ -33,6 +34,7 @@ export class Manga implements IManga {
         rating: 0
     };
 
+    type = 'manga' as const;
     id: number;
     titles: IMangaTitle[];
     descriptions: IMangaDescription[];
