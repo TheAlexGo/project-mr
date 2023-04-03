@@ -1,62 +1,79 @@
-.button
-    position relative
-    height 48px
-    margin 0
-    padding 0 12px
-    color var(--color_white)
-    font-size 15px
-    background-color transparent
-    border 0
-    border-radius 9px
-    cursor pointer
-    transition $trans-300
+.button {
+    position: relative;
+    height: 48px;
+    margin: 0;
+    padding: 0 12px;
+    color: var(--color_white);
+    font-size: 15px;
+    background-color: transparent;
+    border: 0;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: $trans-300;
 
-    fontMedium()
+    fontMedium();
 
-    squareElementSizes()
+    squareElementSizes();
 
-    flexPositionsAndDirections()
+    flexPositionsAndDirections();
 
-    &:disabled
-        cursor not-allowed
+    &:disabled {
+        cursor: not-allowed;
+    }
 
-    &.__theme
-        &-primary
-            background-color var(--color_primary)
+    &.__theme {
+        &-primary {
+            background-color: var(--color_primary);
 
-            +hover('__state')
-                background-color var(--color_active)
+            +hover('__state') {
+                background-color: var(--color_active);
+            }
 
-            &:disabled
-                color var(--color_on-surface)
-                background-color var(--color_surface)
+            &:disabled {
+                color: var(--color_on-surface);
+                background-color: var(--color_surface);
+            }
+        }
 
-        &-secondary
-            +hover('__state')
-                background-color var(--color_surface)
+        &-secondary {
+            +hover('__state') {
+                background-color: var(--color_surface);
+            }
 
-            &:disabled
-                color var(--color_on-surface)
+            &:disabled {
+                color: var(--color_on-surface);
+            }
+        }
 
-        &-clear
-            flex-shrink 0
-            cursor pointer
-            transition background-color 0.3s
-            all unset
+        &-clear {
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            all: unset;
+        }
+    }
 
-    &.__is
-        &-loading
-            width 48px
+    &.__is {
+        &-loading {
+            width: 48px;
+        }
 
-        &-wide
-            width 100%
+        &-wide {
+            width: 100%;
+        }
 
-        &-rounded
-            border-radius 50%
+        &-rounded {
+            border-radius: 50%;
+        }
+    }
 
-    &.__with
-        &-no_padding
-            padding 0
+    &.__with {
+        &-no_padding {
+            padding: 0;
+        }
+    }
+}
 
-.icon svg
-    display block
+.icon svg {
+    display: block;
+}

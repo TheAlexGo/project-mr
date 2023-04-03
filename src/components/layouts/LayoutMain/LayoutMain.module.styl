@@ -1,28 +1,32 @@
-$size-header-full = s('calc(%s + env(safe-area-inset-top))', $size-header)
-$size-nav-full = s('calc(%s + env(safe-area-inset-bottom))', $size-nav)
+$size-header-full = s('calc(%s + env(safe-area-inset-top))', $size-header);
+$size-nav-full = s('calc(%s + env(safe-area-inset-bottom))', $size-nav);
 
-.layout
-    position relative
-    display flex
-    flex-grow 1
-    flex-direction column
-    width 100%
-    padding $size-header-full $offset-4x $size-nav-full
-
-.navbar
-.header
-    position fixed
-    left 0
-    z-index 10
-    width 100%
-
-.header
-    top 0
-    padding 16px
-    padding-top s('calc(16px + env(safe-area-inset-top))')
-    background-color var(--color_background)
+.layout {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    width: 100%;
+    padding: $size-header-full $offset-4x $size-nav-full;
+}
 
 .navbar
-    bottom 0
-    padding-bottom s('env(safe-area-inset-bottom)')
-    background-color var(--color_surface)
+.header {
+    position: fixed;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+}
+
+.header {
+    top: 0;
+    padding: 16px;
+    padding-top: s('calc(16px + env(safe-area-inset-top))');
+    background-color: var(--color_background);
+}
+
+.navbar {
+    bottom: 0;
+    padding-bottom: s('env(safe-area-inset-bottom)');
+    background-color: var(--color_surface);
+}

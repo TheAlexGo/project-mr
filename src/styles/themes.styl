@@ -1,10 +1,14 @@
-darkTheme()
-    @media (prefers-color-scheme dark)
-        :root:not(.__ui-theme_light) &
-            {block}
+darkTheme() {
+    @media (prefers-color-scheme dark) {
+        :root:not(.__ui-theme_light) & {
+            {block};
+        }
+    }
 
-    :root.__ui-theme_dark &
-        {block}
+    :root.__ui-theme_dark & {
+        {block};
+    }
+}
 
 @css {
     :root {
@@ -34,8 +38,9 @@ darkTheme()
     }
 }
 
-+darkTheme()
-    --color_main_rgb 255, 255, 255
-    --color_background #1a1818
-    --color_secondary #808080
-    --color_surface #242424
++darkTheme() {
+    --color_main_rgb: 255, 255, 255;
+    --color_background: #1a1818;
+    --color_secondary: #808080;
+    --color_surface: #242424;
+}

@@ -1,101 +1,139 @@
 // Fonts
-loadFont($font-family, $file-path, $weight = normal, $style = normal)
-    @font-face
-        font-weight $weight
-        font-family $font-family
-        font-style $style
-        src url($file-path + '.ttf') format("truetype")
+loadFont($font-family, $file-path, $weight = normal, $style = normal) {
+    @font-face {
+        font-weight: $weight;
+        font-family: $font-family;
+        font-style: $style;
+        src: url($file-path + '.ttf') format("truetype");
+    }
+}
 
-fontThin()
-    font-weight 100
-    font-family Inter, sans-serif
+fontThin() {
+    font-weight: 100;
+    font-family: Inter, sans-serif;
+}
 
-fontExtraLight()
-    font-weight 200
-    font-family Inter, sans-serif
+fontExtraLight() {
+    font-weight: 200;
+    font-family: Inter, sans-serif;
+}
 
-fontLight()
-    font-weight 300
-    font-family Inter, sans-serif
+fontLight() {
+    font-weight: 300;
+    font-family: Inter, sans-serif;
+}
 
-fontRegular()
-    font-weight 400
-    font-family Inter, sans-serif
+fontRegular() {
+    font-weight: 400;
+    font-family: Inter, sans-serif;
+}
 
-fontMedium()
-    font-weight 500
-    font-family Inter, sans-serif
+fontMedium() {
+    font-weight: 500;
+    font-family: Inter, sans-serif;
+}
 
-fontSemiBold()
-    font-weight 600
-    font-family Inter, sans-serif
+fontSemiBold() {
+    font-weight: 600;
+    font-family: Inter, sans-serif;
+}
 
-fontBold()
-    font-weight 700
-    font-family Inter, sans-serif
+fontBold() {
+    font-weight: 700;
+    font-family: Inter, sans-serif;
+}
 
-fontExtraBold()
-    font-weight 800
-    font-family Inter, sans-serif
+fontExtraBold() {
+    font-weight: 800;
+    font-family: Inter, sans-serif;
+}
 // /Fonts
 
-hover($stateClass)
+hover($stateClass) {
     &:not(:disabled):not(.{$stateClass}-static):hover
-    &.{$stateClass}-hover
-        {block}
+    &.{$stateClass}-hover {
+        {block};
+    }
+}
 
-multiEllip($countOfLine, $lineHeight = 16px, $showEllipsis = true)
-    if $showEllipsis
-        display -webkit-box
-    else
-        display block
+multiEllip($countOfLine, $lineHeight = 16px, $showEllipsis = true) {
+    if $showEllipsis {
+        display: -webkit-box;
+    }
+    else {
+        display: block;
+    }
 
-    max-height ($countOfLine * $lineHeight)
-    overflow hidden
-    text-overflow ellipsis
-    word-wrap break-word
-    -webkit-line-clamp $countOfLine
-    -webkit-box-orient vertical
+    max-height: ($countOfLine * $lineHeight);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: $countOfLine;
+    -webkit-box-orient: vertical;
+}
 
-squareElementSizes($withAlignCenter = false)
-    &.__size
-        for $size in range(24, 52, 4)
-            &-s{$size}
-                if $withAlignCenter
-                    top 'calc(50% - %spx)' % ($size / 2)
-                width $size px
-                height $size px
+squareElementSizes($withAlignCenter = false) {
+    &.__size {
+        for $size in range(24, 52, 4) {
+            &-s{$size} {
+                if $withAlignCenter {
+                    top: 'calc(50% - %spx)' % ($size / 2);
+                }
+                width: $size px;
+                height: $size px;
+            }
+        }
+    }
+}
 
-calcPositionValue($pos)
-    return start if $pos == top or $pos == left
-    end
+calcPositionValue($pos) {
+    if ($pos == top or $pos == left) {
+        return start;
+    }
+    return end;
+}
 
-positionOfDirection()
-    for $pos in top right bottom left
-        $value = calcPositionValue($pos)
+positionOfDirection() {
+    for $pos in top right bottom left {
+        $value = calcPositionValue($pos);
 
-        &.__content_position-{$pos}
-            for $dir in row column
-                &.__content_direction-{$dir}
-                    if $dir == row
-                        if ($pos == left or $pos == right)
-                            justify-content flex- + $value
-                        else
-                            align-items flex- + $value
-                    if $dir == column
-                        if ($pos == top or $pos == bottom)
-                            justify-content flex- + $value
-                        else
-                            align-items flex- + $value
+        &.__content_position-{$pos} {
+            for $dir in row column {
+                &.__content_direction-{$dir} {
+                    if $dir == row {
+                        if ($pos == left or $pos == right) {
+                            justify-content: flex- + $value;
+                        }
+                        else {
+                            align-items: flex- + $value;
+                        }
+                    }
+                    if $dir == column {
+                        if ($pos == top or $pos == bottom) {
+                            justify-content: flex- + $value;
+                        }
+                        else {
+                            align-items: flex- + $value;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-    for $dir in row column
-        &.__content_direction
-            &-{$dir}
-                flex-direction $dir
+    for $dir in row column {
+        &.__content_direction {
+            &-{$dir} {
+                flex-direction: $dir;
+            }
+        }
+    }
+}
 
-flexPositionsAndDirections()
-    display flex
-    justify-content center
-    align-items center
+flexPositionsAndDirections() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    positionOfDirection()
+    positionOfDirection();
+}
