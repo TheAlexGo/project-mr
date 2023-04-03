@@ -43,7 +43,7 @@ const General: FC = () => {
         ));
     }, [comedyList, continueReadingList, topList]);
 
-    return <Page>{renderAllLists()}</Page>;
+    return <Page className={classes.container}>{renderAllLists()}</Page>;
 };
 
 export default General;

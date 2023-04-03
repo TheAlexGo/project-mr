@@ -15,7 +15,7 @@ class ResponseBuilder {
     }
 
     async getTopList(): Promise<IMangaCard[]> {
-        return getMangaListMock(100);
+        return getMangaListMock(10);
     }
 
     async getComedyList(): Promise<IMangaCard[]> {
