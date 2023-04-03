@@ -2,6 +2,7 @@ import path from 'path';
 
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
+import autoprefixer from 'autoprefixer';
 import { defineConfig } from 'vite';
 import eslintPlugin from 'vite-plugin-eslint';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -82,6 +83,9 @@ export default defineConfig({
         })
     ],
     css: {
+        postcss: {
+            plugins: [autoprefixer({})]
+        },
         preprocessorOptions: {
             styl: {
                 additionalData: `
