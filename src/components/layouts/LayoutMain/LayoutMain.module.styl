@@ -1,5 +1,7 @@
 $size-header-full = s('calc(%s + env(safe-area-inset-top))', $size-header);
 $size-nav-full = s('calc(%s + env(safe-area-inset-bottom))', $size-nav);
+$size-left-full = s('calc(%s + env(safe-area-inset-left))', $offset-4x);
+$size-right-full = s('calc(%s + env(safe-area-inset-right))', $offset-4x);
 
 .layout {
     position: relative;
@@ -7,7 +9,7 @@ $size-nav-full = s('calc(%s + env(safe-area-inset-bottom))', $size-nav);
     flex-grow: 1;
     flex-direction: column;
     width: 100%;
-    padding: $size-header-full $offset-4x $size-nav-full;
+    padding: $size-header-full $size-left-full $size-nav-full $size-right-full;
 }
 
 .navbar
