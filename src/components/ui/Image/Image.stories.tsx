@@ -39,6 +39,12 @@ export default {
                 category: StoryCategories.STYLE
             }
         },
+        isLazy: {
+            name: 'Включить ленивую загрузку?',
+            table: {
+                category: StoryCategories.MAIN
+            }
+        },
         className: {
             table: {
                 disable: true
@@ -54,7 +60,8 @@ export default {
         src: getCoverMock(),
         loading: 'lazy',
         alt: 'Я - картинка',
-        withBorderRadius: true
+        withBorderRadius: true,
+        isLazy: true
     }
 } as ComponentMeta<Story>;
 

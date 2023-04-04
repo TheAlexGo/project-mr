@@ -20,7 +20,9 @@ function observerHandler(entries: IntersectionObserverEntry[]) {
             if (entry.isIntersecting || entry.intersectionRatio > 0) {
                 observer.unobserve(target);
                 listenerCallbacks.delete(target);
-                callback?.();
+                if (callback) {
+                    callback();
+                }
             }
         }
     });

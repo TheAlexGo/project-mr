@@ -23,6 +23,7 @@ export interface IImage {
     imageClassName?: string;
     /** Закругляет углы картинки */
     withBorderRadius?: boolean;
+    /** Включает ленивую загрузку через Intersection Observer */
     isLazy?: boolean;
 }
 
