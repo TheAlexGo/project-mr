@@ -71,7 +71,13 @@ export const Card: FC<ICard> = observer(
         const imageComponent = useMemo(() => {
             if (typeof image === 'string') {
                 return (
-                    <Image className={classes.image} src={image} alt={coverAlt} withBorderRadius />
+                    <Image
+                        className={classes.image}
+                        src={image}
+                        alt={coverAlt}
+                        loading="lazy"
+                        withBorderRadius
+                    />
                 );
             }
             return image;
