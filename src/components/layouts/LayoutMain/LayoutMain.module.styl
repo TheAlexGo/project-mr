@@ -1,15 +1,10 @@
-$size-header-full = s('calc(%s + env(safe-area-inset-top))', $size-header);
-$size-nav-full = s('calc(%s + env(safe-area-inset-bottom))', $size-nav);
-$size-left-full = s('calc(%s + env(safe-area-inset-left))', $offset-4x);
-$size-right-full = s('calc(%s + env(safe-area-inset-right))', $offset-4x);
-
 .layout {
     position: relative;
     display: flex;
     flex-grow: 1;
     flex-direction: column;
     width: 100%;
-    padding: $size-header-full $size-left-full $size-nav-full $size-right-full;
+    padding: $size-header $offset-4x $size-nav;
 }
 
 .navbar
@@ -18,12 +13,12 @@ $size-right-full = s('calc(%s + env(safe-area-inset-right))', $offset-4x);
     left: 0;
     z-index: 10;
     width: 100%;
+    padding: 0 s('env(safe-area-inset-right)') 0 s('env(safe-area-inset-left)');
 }
 
 .header {
     top: 0;
-    padding: 16px;
-    padding-top: s('calc(16px + env(safe-area-inset-top))');
+    padding-top: s('env(safe-area-inset-top)');
     background-color: var(--color_background);
 }
 
