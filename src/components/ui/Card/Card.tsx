@@ -75,8 +75,8 @@ export const Card: FC<ICard> = observer(
                         className={classes.image}
                         src={image}
                         alt={coverAlt}
-                        loading="lazy"
                         withBorderRadius
+                        isLazy
                     />
                 );
             }

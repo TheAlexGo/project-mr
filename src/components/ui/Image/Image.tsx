@@ -1,9 +1,10 @@
-import React, { FC, forwardRef, useCallback, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
 
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 
 import { Loader } from '@components/Loader/Loader';
+import { useIntersection } from '@hooks/useIntersection';
 import { useStore } from '@hooks/useStore';
 import { NotFoundIcon } from '@icons';
 
@@ -22,6 +23,7 @@ export interface IImage {
     imageClassName?: string;
     /** Закругляет углы картинки */
     withBorderRadius?: boolean;
+    isLazy?: boolean;
 }
 
 const StubImage: FC = () => {
@@ -29,10 +31,25 @@ const StubImage: FC = () => {
     return <img src={NotFoundIcon} alt={locale['error-loading-image']} />;
 };
 
-const ImageNotObserve = forwardRef<HTMLImageElement, IImage>(
-    ({ className, imageClassName, src, alt, loading, withBorderRadius = false, ...props }, ref) => {
+export const Image: FC<IImage> = observer(
+    ({
+        className,
+        imageClassName,
+        src,
+        alt,
+        loading,
+        withBorderRadius = false,
+        isLazy = false,
+        ...props
+    }) => {
+        const [isInView, setIsInView] = useState<boolean>(!isLazy);
         const [isLoaded, setIsLoaded] = useState<boolean>(false);
         const [isError, setIsError] = useState<boolean>(false);
+
+        const ref = useRef<HTMLImageElement>(null);
+        useIntersection(ref, () => {
+            setIsInView(true);
+        });
 
         const rootClasses = useMemo(
             () =>
@@ -69,28 +86,35 @@ const ImageNotObserve = forwardRef<HTMLImageElement, IImage>(
             setIsError(true);
         }, []);
 
+        const renderLoader = useCallback(() => {
+            if ((isLazy && !isInView) || isLoaded) {
+                return null;
+            }
+            return <Loader />;
+        }, [isInView, isLazy, isLoaded]);
+
+        const renderImage = useCallback(() => {
+            if (!isInView) {
+                return null;
+            }
+            return (
+                <img
+                    {...props}
+                    className={imageClasses}
+                    src={src}
+                    alt={alt}
+                    loading={loading}
+                    onLoad={loadHandler}
+                    onError={errorHandler}
+                />
+            );
+        }, [alt, errorHandler, imageClasses, isInView, loadHandler, loading, props, src]);
+
         return (
-            <div className={rootClasses}>
-                {!isLoaded && <Loader />}
-                {isError ? (
-                    <StubImage />
-                ) : (
-                    <img
-                        {...props}
-                        className={imageClasses}
-                        src={src}
-                        alt={alt}
-                        loading={loading}
-                        onLoad={loadHandler}
-                        onError={errorHandler}
-                        ref={ref}
-                    />
-                )}
+            <div className={rootClasses} ref={ref}>
+                {renderLoader()}
+                {isError ? <StubImage /> : renderImage()}
             </div>
         );
     }
 );
-
-ImageNotObserve.displayName = 'Image';
-
-export const Image = observer(ImageNotObserve);
