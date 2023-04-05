@@ -9,12 +9,12 @@ export enum Lang {
 }
 
 export enum Pages {
-    GENERAL = '/',
-    LIBRARY = '/library',
-    MANGA = '/manga',
-    READLIST = '/readlist',
-    PROFILE = '/profile',
-    NOT_FOUND = '/not-found'
+    GENERAL = '',
+    LIBRARY = 'library',
+    READLIST = 'readlist',
+    PROFILE = 'profile',
+    NOT_FOUND = 'not-found',
+    MANGA = 'manga'
 }
 
 export enum SourceTypes {
