@@ -5,7 +5,7 @@ import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IApiCallback, IPageState, Lang, Pages } from '@types';
+import { IApiCallback, Lang, Pages } from '@types';
 
 export class AppController {
     store: Store;
