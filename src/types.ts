@@ -325,3 +325,7 @@ export type TClassNameCallback = (props: {
     isActive: boolean;
     isPending: boolean;
 }) => string | undefined;
+
+export interface IPageState {
+    positionY: number;
+}

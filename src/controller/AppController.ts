@@ -5,7 +5,7 @@ import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IApiCallback, Lang, Pages } from '@types';
+import { IApiCallback, IPageState, Lang, Pages } from '@types';
 
 export class AppController {
     store: Store;
@@ -93,6 +93,25 @@ export class AppController {
             this.store.setHeaderTitle('');
         }
         this.store.setHeaderButtons(headerButtons);
+    };
+
+    loadPage = (currentPage: Pages) => {
+        const { currentStatePage, activePage } = this.store;
+        if (currentPage !== activePage) {
+            return;
+        }
+        this.logger('Загрузили страницу:', activePage);
+        if (currentStatePage) {
+            setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
+        }
+    };
+
+    leavePage = () => {
+        this.logger('Покинули страницу:', this.store.activePage);
+        const state = {
+            positionY: window.scrollY
+        };
+        this.store.updateStatePages(state);
     };
 }
 

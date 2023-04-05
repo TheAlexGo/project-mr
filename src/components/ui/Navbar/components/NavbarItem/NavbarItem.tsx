@@ -1,10 +1,11 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { NavLink } from 'react-router-dom';
 
 import { Icon, Icons } from '@components/Icon/Icon';
+import { useController } from '@hooks/useController';
 import { useStore } from '@hooks/useStore';
 import { NavTabs, Pages, TClassNameCallback } from '@types';
 
@@ -22,7 +23,8 @@ export interface INavbarItem {
 }
 
 export const NavbarItem: FC<INavbarItem> = observer(({ id, icon, link, title }): JSX.Element => {
-    const { locale } = useStore();
+    const { locale, activePage } = useStore();
+    const { leavePage } = useController();
 
     const rootClasses: TClassNameCallback = useMemo(
         () =>
@@ -35,8 +37,14 @@ export const NavbarItem: FC<INavbarItem> = observer(({ id, icon, link, title }):
 
     const ariaLabel = useMemo(() => locale['nav-icon-aria-label'] + title, [locale, title]);
 
+    const clickHandler = useCallback(() => {
+        if (activePage !== link) {
+            leavePage();
+        }
+    }, [activePage, leavePage, link]);
+
     return (
-        <NavLink key={id} to={link} className={rootClasses}>
+        <NavLink key={id} to={link} className={rootClasses} onClick={clickHandler}>
             <Icon className={classes.icon} ariaLabel={ariaLabel} icon={icon} isNotButton />
             <div className={classes.title}>{title}</div>
         </NavLink>

@@ -4,7 +4,7 @@ import { makeAutoObservable } from 'mobx';
 
 import { Icons, IIcon } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
-import { Lang, NavTabs, Pages } from '@types';
+import { IPageState, Lang, NavTabs, Pages } from '@types';
 
 export class Store {
     /**
@@ -17,6 +17,7 @@ export class Store {
     activePage: Pages = Pages.GENERAL;
     headerTitle = '';
     headerButtons: IIcon[] = [];
+    statePages: Map<Pages, IPageState> = new Map<Pages, IPageState>();
 
     constructor() {
         makeAutoObservable(this);
@@ -46,6 +47,10 @@ export class Store {
         this.headerButtons = headerButtons;
     }
 
+    updateStatePages(statePage: IPageState) {
+        this.statePages.set(this.activePage, statePage);
+    }
+
     get navigate(): INavbarItem[] {
         return [
             {
@@ -67,6 +72,10 @@ export class Store {
                 link: Pages.PROFILE
             }
         ];
+    }
+
+    get currentStatePage(): IPageState | null {
+        return this.statePages.get(this.activePage) || null;
     }
 }
 

@@ -5,6 +5,7 @@ import { Image } from '@components/Image/Image';
 import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
 import { NotFoundIcon } from '@icons';
+import { Pages } from '@types';
 
 import { Page } from '../Page/Page';
 
@@ -13,7 +14,7 @@ import classes from './NotFound.module.styl';
 const NotFound = () => {
     const { locale } = useStore();
 
-    usePage();
+    usePage(Pages.NOT_FOUND);
 
     return (
         <Page className={classes['not-found']}>

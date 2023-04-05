@@ -6,7 +6,7 @@ import { useController } from '@hooks/useController';
 import { usePage } from '@hooks/usePage';
 import { useResponse } from '@hooks/useResponse';
 import { useStore } from '@hooks/useStore';
-import { IMangaCard } from '@types';
+import { IMangaCard, Pages } from '@types';
 import { getIconObj } from '@utils/header';
 
 import { Page } from '../Page/Page';
@@ -30,7 +30,7 @@ const General: FC = () => {
         [locale, logger]
     );
 
-    usePage(headerButtons);
+    usePage(Pages.GENERAL, headerButtons);
 
     useEffect(() => {
         getContinueReadingList().then(setContinueReadingList);

@@ -6,7 +6,7 @@ import { useController } from '@hooks/useController';
 import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
 import { getMangaCardsMock } from '@mock';
-import { IMangaCard } from '@types';
+import { IMangaCard, Pages } from '@types';
 import { getIconObj } from '@utils/header';
 
 import { Page } from '../Page/Page';
@@ -26,7 +26,7 @@ const Library = () => {
         [locale, logger]
     );
 
-    usePage(headerButtons, true);
+    usePage(Pages.LIBRARY, headerButtons, true);
 
     useEffect(() => {
         setItems(getMangaCardsMock(10));
