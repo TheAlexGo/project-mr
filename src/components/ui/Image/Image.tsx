@@ -51,7 +51,7 @@ export const Image: FC<IImage> = observer(
         const intersectionCallback = useCallback(() => {
             setIsInView(true);
         }, []);
-        useIntersection(ref, intersectionCallback);
+        useIntersection<HTMLImageElement>(ref, intersectionCallback);
 
         const rootClasses = useMemo(
             () =>
