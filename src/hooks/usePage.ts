@@ -18,12 +18,12 @@ export const usePage = (page: Pages, headerButtons: IIcon[] = [], withHeading = 
     const { loadPage, changePage } = useController();
     const location = useLocation();
 
-    useEffect(() => loadPage(page), [loadPage, page]);
-
     useEffect(() => {
         const currentPage = Object.entries(Pages).find(([, value]) => location.pathname === value);
         if (currentPage) {
             changePage(currentPage, headerButtons, withHeading);
         }
     }, [location.pathname, changePage, headerButtons, withHeading]);
+
+    useEffect(() => loadPage(page), [loadPage, page]);
 };
