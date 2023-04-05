@@ -29,7 +29,7 @@ const Library = () => {
     usePage(Pages.LIBRARY, headerButtons, true);
 
     useEffect(() => {
-        setItems(getMangaCardsMock(10));
+        setItems(getMangaCardsMock(100));
     }, []);
 
     return (

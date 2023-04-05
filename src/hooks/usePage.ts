@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 
-import { useLocation } from 'react-router-dom';
-
 import { IIcon } from '@components/Icon/Icon';
 import { useController } from '@hooks/useController';
 import { Pages } from '@types';
+import { getPageName } from '@utils/routing';
 
 /**
  * Хук для загрузки UI страницы (шапки)
@@ -15,15 +14,17 @@ import { Pages } from '@types';
  * @param withHeading
  */
 export const usePage = (page: Pages, headerButtons: IIcon[] = [], withHeading = false) => {
-    const { loadPage, changePage } = useController();
-    const location = useLocation();
+    const { loadPage, changePage, leavePage } = useController();
 
     useEffect(() => {
-        const currentPage = Object.entries(Pages).find(([, value]) => location.pathname === value);
+        const currentPage = getPageName(page);
         if (currentPage) {
             changePage(currentPage, headerButtons, withHeading);
         }
-    }, [location.pathname, changePage, headerButtons, withHeading]);
+    }, [changePage, headerButtons, page, withHeading]);
 
-    useEffect(() => loadPage(page), [loadPage, page]);
+    useEffect(() => {
+        loadPage();
+        return leavePage;
+    }, [leavePage, loadPage]);
 };

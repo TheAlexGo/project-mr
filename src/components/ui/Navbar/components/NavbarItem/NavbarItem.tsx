@@ -23,8 +23,8 @@ export interface INavbarItem {
 }
 
 export const NavbarItem: FC<INavbarItem> = observer(({ id, icon, link, title }): JSX.Element => {
-    const { locale, activePage } = useStore();
-    const { leavePage } = useController();
+    const { locale } = useStore();
+    const { navigate } = useController();
 
     const rootClasses: TClassNameCallback = useMemo(
         () =>
@@ -37,11 +37,7 @@ export const NavbarItem: FC<INavbarItem> = observer(({ id, icon, link, title }):
 
     const ariaLabel = useMemo(() => locale['nav-icon-aria-label'] + title, [locale, title]);
 
-    const clickHandler = useCallback(() => {
-        if (activePage !== link) {
-            leavePage();
-        }
-    }, [activePage, leavePage, link]);
+    const clickHandler = useCallback(() => navigate(link), [link, navigate]);
 
     return (
         <NavLink key={id} to={link} className={rootClasses} onClick={clickHandler}>

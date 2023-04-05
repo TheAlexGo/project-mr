@@ -18,6 +18,7 @@ export class Store {
     headerTitle = '';
     headerButtons: IIcon[] = [];
     statePages: Map<Pages, IPageState> = new Map<Pages, IPageState>();
+    lastPositionY = 0;
 
     constructor() {
         makeAutoObservable(this);
@@ -29,6 +30,10 @@ export class Store {
 
     setLang = (lang: Lang) => {
         this.lang = lang;
+    };
+
+    setLastPositionY = (lastPositionY: number) => {
+        this.lastPositionY = lastPositionY;
     };
 
     setLocale(locale: Record<string, string>) {

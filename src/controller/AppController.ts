@@ -84,6 +84,13 @@ export class AppController {
         this.logger(`Ресурс ${lang} загружен:`, currentResourceObj);
     };
 
+    navigate = (newPage: Pages) => {
+        if (this.store.activePage === newPage) {
+            window.scrollTo(0, 0);
+        }
+        this.store.setLastPositionY(window.scrollY);
+    };
+
     changePage = ([title, page]: [string, Pages], headerButtons: IIcon[], withHeading = false) => {
         this.logger('Перешли на страницу:', page);
         this.store.setActivePage(page);
@@ -95,11 +102,8 @@ export class AppController {
         this.store.setHeaderButtons(headerButtons);
     };
 
-    loadPage = (currentPage: Pages) => {
+    loadPage = () => {
         const { currentStatePage, activePage } = this.store;
-        if (currentPage !== activePage) {
-            return;
-        }
         this.logger('Загрузили страницу:', activePage);
         if (currentStatePage) {
             setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
@@ -109,9 +113,10 @@ export class AppController {
     leavePage = () => {
         this.logger('Покинули страницу:', this.store.activePage);
         const state = {
-            positionY: window.scrollY
+            positionY: this.store.lastPositionY
         };
         this.store.updateStatePages(state);
+        this.store.setLastPositionY(0);
     };
 }
 
