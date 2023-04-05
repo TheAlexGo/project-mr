@@ -4,6 +4,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { Icons } from '@components/Icon/Icon';
 import { StoryCategories } from '@sb/types';
+import { Pages } from '@types';
 
 import { NavbarItem } from './NavbarItem';
 
@@ -42,7 +43,7 @@ export default {
     args: {
         icon: Icons.HOME,
         title: 'Главная',
-        link: '/general'
+        link: Pages.GENERAL
     }
 } as ComponentMeta<Story>;
 

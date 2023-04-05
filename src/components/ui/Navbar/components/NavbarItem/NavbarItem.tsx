@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 import { Icon, Icons } from '@components/Icon/Icon';
 import { useStore } from '@hooks/useStore';
-import { NavTabs, TClassNameCallback } from '@types';
+import { NavTabs, Pages, TClassNameCallback } from '@types';
 
 import classes from './NavbarItem.module.styl';
 
@@ -18,7 +18,7 @@ export interface INavbarItem {
     /** Название раздела */
     title: string;
     /** Ссылка на раздел */
-    link: string;
+    link: Pages;
 }
 
 export const NavbarItem: FC<INavbarItem> = observer(({ id, icon, link, title }): JSX.Element => {
