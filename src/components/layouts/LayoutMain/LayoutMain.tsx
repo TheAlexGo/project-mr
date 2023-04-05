@@ -1,13 +1,13 @@
-import React, { FC, Suspense, useEffect } from 'react';
+import React, { FC, Suspense } from 'react';
 
-import { Outlet, useLocation } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { Outlet } from 'react-router-dom';
 
 import { Header } from '@components/Header/Header';
+import { HeadingTypes } from '@components/Heading/Heading';
 import { Loader } from '@components/Loader/Loader';
 import { Navbar } from '@components/Navbar/Navbar';
-import { useController } from '@hooks/useController';
 import { useStore } from '@hooks/useStore';
-import { Pages } from '@types';
 
 import classes from './LayoutMain.module.styl';
 
@@ -15,22 +15,17 @@ import classes from './LayoutMain.module.styl';
  * Шаблон для основных страниц приложения
  * @constructor
  */
-export const LayoutMain: FC = (): JSX.Element => {
-    const { navigate } = useStore();
-    const { changePage } = useController();
-    const location = useLocation();
-
-    useEffect(() => {
-        const currentPage = Object.entries(Pages).find(([, value]) => location.pathname === value);
-        if (currentPage) {
-            changePage(currentPage[1]);
-        }
-    }, [location.pathname, changePage]);
+export const LayoutMain: FC = observer((): JSX.Element => {
+    const { navigate, headerTitle, headerButtons } = useStore();
 
     return (
         <div className={classes.layout}>
             <div className={classes.header}>
-                <Header />
+                <Header
+                    headingType={HeadingTypes.H3}
+                    heading={headerTitle}
+                    buttons={headerButtons}
+                />
             </div>
             <Suspense fallback={<Loader />}>
                 <Outlet />
@@ -40,4 +35,4 @@ export const LayoutMain: FC = (): JSX.Element => {
             </div>
         </div>
     );
-};
+});

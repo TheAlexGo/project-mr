@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 import { makeAutoObservable } from 'mobx';
 
-import { Icons } from '@components/Icon/Icon';
+import { Icons, IIcon } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
 import { Lang, NavTabs, Pages } from '@types';
 
@@ -15,6 +15,8 @@ export class Store {
     readonly defaultLang = Lang.RUSSIAN;
     locale: Record<string, string> = {};
     activePage: Pages = Pages.GENERAL;
+    headerTitle = '';
+    headerButtons: IIcon[] = [];
 
     constructor() {
         makeAutoObservable(this);
@@ -34,6 +36,14 @@ export class Store {
 
     setActivePage(page: Pages) {
         this.activePage = page;
+    }
+
+    setHeaderTitle(headerTitle: string) {
+        this.headerTitle = headerTitle;
+    }
+
+    setHeaderButtons(headerButtons: IIcon[]) {
+        this.headerButtons = headerButtons;
     }
 
     get navigate(): INavbarItem[] {

@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
-import { Axes, CardList, ScrollSnapTypes } from '@components/CardList/CardList';
+import { Axes, CardList } from '@components/CardList/CardList';
+import { Icons } from '@components/Icon/Icon';
+import { useController } from '@hooks/useController';
+import { usePage } from '@hooks/usePage';
+import { useStore } from '@hooks/useStore';
 import { getMangaCardsMock } from '@mock';
 import { IMangaCard } from '@types';
+import { getIconObj } from '@utils/header';
 
 import { Page } from '../Page/Page';
 
@@ -10,13 +15,26 @@ import classes from './Library.module.styl';
 
 const Library = () => {
     const [items, setItems] = useState<IMangaCard[]>([]);
+    const { locale } = useStore();
+    const { logger } = useController();
+
+    const headerButtons = useMemo(
+        () => [
+            getIconObj(Icons.SEARCH, () => logger('Нажали на поиск!'), locale),
+            getIconObj(Icons.TRASH, () => logger('Нажали на удаление!'), locale)
+        ],
+        [locale, logger]
+    );
+
+    usePage(headerButtons, true);
+
     useEffect(() => {
         setItems(getMangaCardsMock(10));
     }, []);
 
     return (
         <Page className={classes.container}>
-            <CardList axis={Axes.Y} cards={items} scrollSnap={ScrollSnapTypes.Y_Mandatory} />
+            <CardList axis={Axes.Y} cards={items} />
         </Page>
     );
 };

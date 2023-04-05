@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Button, ButtonThemes } from '@components/Button/Button';
 import { Image } from '@components/Image/Image';
+import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
 import { NotFoundIcon } from '@icons';
 
@@ -12,13 +13,15 @@ import classes from './NotFound.module.styl';
 const NotFound = () => {
     const { locale } = useStore();
 
+    usePage();
+
     return (
         <Page className={classes['not-found']}>
             <div className={classes.top}>
                 <Image
                     className={classes.image}
                     src={NotFoundIcon}
-                    alt={locale['page-not-found']}
+                    alt={locale['page-not_found-aria-label']}
                 />
                 <h1 className={classes.heading}>404</h1>
                 <p className={classes.description}>{locale['error-404-title']}</p>

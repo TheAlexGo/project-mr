@@ -1,7 +1,7 @@
 import React, { FC, useLayoutEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import { Loader } from '@components/Loader/Loader';
 import { useController } from '@hooks/useController';
@@ -30,7 +30,8 @@ export const App: FC = observer(() => {
                     <Route path={Pages.LIBRARY}>
                         <Route index element={<Library />} />
                     </Route>
-                    <Route path="*" element={<NotFound />} />
+                    <Route path={Pages.NOT_FOUND} element={<NotFound />} />
+                    <Route path="*" element={<Navigate to={Pages.NOT_FOUND} />} />
                 </Route>
             </Routes>
         </Router>

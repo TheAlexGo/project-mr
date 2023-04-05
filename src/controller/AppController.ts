@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 
+import { IIcon } from '@components/Icon/Icon';
 import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
@@ -63,15 +64,35 @@ export class AppController {
             this.logger(`Ресурс ${lang} уже загружен!`);
             return;
         }
+        const { logger } = this;
         const resource = this.langService.loadResource(lang);
-        this.store.setLocale(resource);
-        this.validateService.setLocale(resource);
-        this.logger(`Ресурс ${lang} загружен:`, resource);
+
+        const currentResourceObj = new Proxy(resource, {
+            get(target: Record<string, string>, name) {
+                const currentKey = name.toString();
+                const value = target[currentKey];
+                if (!value) {
+                    logger(`Для ключа ${currentKey} нет локализации!`);
+                    return currentKey;
+                }
+                return value;
+            }
+        });
+
+        this.store.setLocale(currentResourceObj);
+        this.validateService.setLocale(currentResourceObj);
+        this.logger(`Ресурс ${lang} загружен:`, currentResourceObj);
     };
 
-    changePage = (page: Pages) => {
+    changePage = ([title, page]: [string, Pages], headerButtons: IIcon[], withHeading = false) => {
         this.logger('Перешли на страницу:', page);
         this.store.setActivePage(page);
+        if (withHeading && title) {
+            this.store.setHeaderTitle(this.store.locale[`page-${title.toLowerCase()}-heading`]);
+        } else {
+            this.store.setHeaderTitle('');
+        }
+        this.store.setHeaderButtons(headerButtons);
     };
 }
 

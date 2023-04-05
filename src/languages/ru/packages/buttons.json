@@ -1,5 +1,6 @@
 {
   "button-bell-aria-label": "Уведомления",
   "button-search-aria-label": "Поиск",
-  "button-back-aria-label": "Назад"
+  "button-back-aria-label": "Назад",
+  "button-trash-aria-label": "Удалить"
 }

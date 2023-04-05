@@ -1,5 +1,6 @@
 {
     "button-bell-aria-label": "Notification",
     "button-search-aria-label": "Search",
-    "button-back-aria-label": "Back"
+    "button-back-aria-label": "Back",
+    "button-trash-aria-label": "Delete"
 }
