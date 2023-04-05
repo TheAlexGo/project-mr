@@ -5,7 +5,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { getMangaCardsMock } from '@mock';
 import { StoryCategories } from '@sb/types';
 
-import { CardList } from './CardList';
+import { CardList, ScrollSnapTypes } from './CardList';
 
 type Story = typeof CardList;
 
@@ -30,12 +30,19 @@ export default {
             table: {
                 category: StoryCategories.MAIN
             }
+        },
+        scrollSnap: {
+            name: 'Тип привязки прокрутки',
+            table: {
+                category: StoryCategories.STYLE
+            }
         }
     },
     args: {
         title: 'Тестовое название',
         axis: 'y',
-        cards: getMangaCardsMock(20)
+        cards: getMangaCardsMock(20),
+        scrollSnap: ScrollSnapTypes.X_Mandatory
     }
 } as ComponentMeta<Story>;
 

@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 
-import { Axes, CardList } from '@components/CardList/CardList';
+import { Axes, CardList, ScrollSnapTypes } from '@components/CardList/CardList';
 import { useResponse } from '@hooks/useResponse';
 import { IMangaCard } from '@types';
 
@@ -38,7 +38,12 @@ const General: FC = () => {
 
         return array.map((cards) => (
             <div key={cards.title} className={classes.list}>
-                <CardList axis={Axes.X} cards={cards.elements} title={cards.title} />
+                <CardList
+                    axis={Axes.X}
+                    cards={cards.elements}
+                    title={cards.title}
+                    scrollSnap={ScrollSnapTypes.X_Mandatory}
+                />
             </div>
         ));
     }, [comedyList, continueReadingList, topList]);

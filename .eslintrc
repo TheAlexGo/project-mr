@@ -126,7 +126,8 @@
         "react/require-default-props": 0,
         "no-unused-vars": 0,
         "react/button-has-type": 0,
-        "react/prop-types": 0
+        "react/prop-types": 0,
+        "dot-notation": 0
     },
     "settings": {
         "react": {

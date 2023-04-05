@@ -34,7 +34,7 @@ export const decorators = [
 
         return (
             <Router>
-                <div style={{ position: 'relative' }}>
+                <div style={{ position: 'relative', height: '100%' }}>
                     <Story />
                 </div>
             </Router>

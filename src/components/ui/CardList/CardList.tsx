@@ -14,6 +14,12 @@ export enum Axes {
     Y = 'y'
 }
 
+export enum ScrollSnapTypes {
+    X_Mandatory = 'x_mandatory',
+    Y_Mandatory = 'y_mandatory',
+    None = ''
+}
+
 interface ICardList {
     /** Относительно этой оси будет происходить прокрутка контента */
     axis: Axes;
@@ -21,17 +27,25 @@ interface ICardList {
     cards: Array<IMangaCardProps | IReadlistCardProps>;
     /** Назване списка (если требуется) */
     title?: string;
+    /** Тип привязки прокрутки: https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type */
+    scrollSnap?: ScrollSnapTypes;
 }
 
 /**
  * Компоннет списка карточек. Позволяет быстро создать вертикальный или горизонтальный список,
  * а также дать название
- * @param cards
- * @param axis
- * @param title
+ * @param {Array<IMangaCardProps | IReadlistCardProps>} cards - карточки для списка
+ * @param {Axes} axis - ось прокрутки
+ * @param {string} title - название списка
+ * @param {ScrollSnapTypes} scrollSnap
  * @constructor
  */
-export const CardList: FC<ICardList> = ({ cards, axis, title }) => {
+export const CardList: FC<ICardList> = ({
+    cards,
+    axis,
+    title,
+    scrollSnap = ScrollSnapTypes.None
+}) => {
     const renderElements = useCallback(
         () =>
             cards.map((card) => {
@@ -64,9 +78,10 @@ export const CardList: FC<ICardList> = ({ cards, axis, title }) => {
     const rootClasses = useMemo(
         () =>
             cn(classes.list, {
-                [classes[`__axis-${axis}`]]: axis
+                [classes[`__axis-${axis}`]]: axis,
+                [classes[`__scroll_snap-${scrollSnap}`]]: scrollSnap
             }),
-        [axis]
+        [axis, scrollSnap]
     );
 
     return (
@@ -75,7 +90,9 @@ export const CardList: FC<ICardList> = ({ cards, axis, title }) => {
                 {title && (
                     <Heading type={HeadingTypes.H3} className={classes.heading} text={title} />
                 )}
-                <ul className={rootClasses}>{renderElements()}</ul>
+                <div className={classes.container}>
+                    <ul className={rootClasses}>{renderElements()}</ul>
+                </div>
             </div>
         </Loading>
     );
