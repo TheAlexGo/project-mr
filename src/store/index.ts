@@ -18,6 +18,7 @@ export class Store {
     activePage: Pages;
     headerTitle = '';
     headerButtons: IIcon[] = [];
+    headerWithBack = false;
     statePages: Map<Pages, IPageState> = new Map<Pages, IPageState>();
     lastPositionY = 0;
 
@@ -59,6 +60,10 @@ export class Store {
 
     setHeaderButtons(headerButtons: IIcon[]) {
         this.headerButtons = headerButtons;
+    }
+
+    setHeaderWithBack(headerWithBack: boolean) {
+        this.headerWithBack = headerWithBack;
     }
 
     updateStatePages(statePage: IPageState) {

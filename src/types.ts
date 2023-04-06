@@ -10,11 +10,12 @@ export enum Lang {
 
 export enum Pages {
     GENERAL = '',
+    MANGA = 'library/manga',
     LIBRARY = 'library',
     READLIST = 'readlist',
+    PROFILE_SETTINGS = 'profile/settings',
     PROFILE = 'profile',
-    NOT_FOUND = 'not_found',
-    MANGA = 'manga'
+    NOT_FOUND = 'not_found'
 }
 
 export enum SourceTypes {
@@ -30,7 +31,8 @@ export enum Positions {
     BOTTOM = 'bottom',
     LEFT = 'left',
     RIGHT = 'right',
-    CENTER = 'center'
+    CENTER = 'center',
+    SPACE_BETWEEN = 'space-between'
 }
 
 export enum Directions {

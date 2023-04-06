@@ -9,7 +9,13 @@ $size-left = s('calc(%s + env(safe-area-inset-left))', $offset-4x);
     flex-grow: 1;
     flex-direction: column;
     width: 100%;
-    padding: $size-top $size-right $size-bottom $size-left;
+    padding: 0 $size-right $size-bottom $size-left;
+
+    &.__is {
+        &-with_heading {
+            padding-top: $size-top;
+        }
+    }
 }
 
 .navbar

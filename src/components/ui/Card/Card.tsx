@@ -2,9 +2,9 @@ import React, { FC, ReactElement, useCallback, useMemo } from 'react';
 
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
-import { Link } from 'react-router-dom';
 
 import { Image } from '@components/Image/Image';
+import { Link } from '@components/Link/Link';
 import { useStore } from '@hooks/useStore';
 
 import classes from './Card.module.styl';

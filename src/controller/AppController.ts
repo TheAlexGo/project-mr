@@ -52,6 +52,7 @@ export class AppController {
      * Устанавливает язык ресурса
      */
     switchLang = (lang: Lang) => {
+        this.initResource(lang);
         this.store.setLang(lang);
         this.logger('Установлен язык:', lang);
     };
@@ -91,7 +92,7 @@ export class AppController {
         this.store.setLastPositionY(window.scrollY);
     };
 
-    changePage = (page: Pages, headerButtons: IIcon[], withHeading = false) => {
+    changePage = (page: Pages, headerButtons: IIcon[], withHeading = false, withBack = false) => {
         this.logger('Перешли на страницу:', page);
         this.store.setActivePage(page);
         if (withHeading && page) {
@@ -100,6 +101,7 @@ export class AppController {
             this.store.setHeaderTitle('');
         }
         this.store.setHeaderButtons(headerButtons);
+        this.store.setHeaderWithBack(withBack);
     };
 
     loadPage = () => {

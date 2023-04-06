@@ -1,5 +1,6 @@
-import React, { FC, Suspense } from 'react';
+import React, { FC, Suspense, useCallback, useMemo } from 'react';
 
+import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { Outlet } from 'react-router-dom';
 
@@ -16,17 +17,40 @@ import classes from './LayoutMain.module.styl';
  * @constructor
  */
 export const LayoutMain: FC = observer((): JSX.Element => {
-    const { navigate, headerTitle, headerButtons } = useStore();
+    const { navigate, headerTitle, headerButtons, headerWithBack } = useStore();
 
-    return (
-        <div className={classes.layout}>
+    const withHeader = useMemo(
+        () => headerButtons.length || headerTitle,
+        [headerButtons.length, headerTitle]
+    );
+
+    const rootClasses = useMemo(
+        () =>
+            cn(classes.layout, {
+                [classes['__is-with_heading']]: withHeader
+            }),
+        [withHeader]
+    );
+
+    const renderHeader = useCallback(() => {
+        if (!withHeader) {
+            return null;
+        }
+        return (
             <div className={classes.header}>
                 <Header
                     headingType={HeadingTypes.H3}
                     heading={headerTitle}
                     buttons={headerButtons}
+                    needBack={headerWithBack}
                 />
             </div>
+        );
+    }, [headerButtons, headerTitle, headerWithBack, withHeader]);
+
+    return (
+        <div className={rootClasses}>
+            {renderHeader()}
             <Suspense fallback={<Loader />}>
                 <Outlet />
             </Suspense>

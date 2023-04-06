@@ -10,6 +10,8 @@ import { LayoutMain } from '@layouts/LayoutMain/LayoutMain';
 import { General, Library, NotFound, Profile, Manga } from '@pages';
 import { Pages } from '@types';
 
+import ProfileSettings from './pages/ProfileSettings/ProfileSettings';
+
 export const App: FC = observer(() => {
     const { initApi } = useController();
     const { isAppReady } = useStore();
@@ -27,11 +29,10 @@ export const App: FC = observer(() => {
             <Routes>
                 <Route path="/" element={<LayoutMain />}>
                     <Route index element={<General />} />
-                    <Route path={Pages.LIBRARY}>
-                        <Route index element={<Library />} />
-                        <Route path={`${Pages.MANGA}/:id`} element={<Manga />} />
-                    </Route>
+                    <Route path={Pages.LIBRARY} element={<Library />} />
+                    <Route path={`${Pages.MANGA}/:id`} element={<Manga />} />
                     <Route path={Pages.PROFILE} element={<Profile />} />
+                    <Route path={Pages.PROFILE_SETTINGS} element={<ProfileSettings />} />
                     <Route path={Pages.NOT_FOUND} element={<NotFound />} />
                     <Route path="*" element={<Navigate to={Pages.NOT_FOUND} />} />
                 </Route>

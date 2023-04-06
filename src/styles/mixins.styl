@@ -87,6 +87,9 @@ squareElementSizes($withAlignCenter = false) {
 }
 
 calcPositionValue($pos) {
+    if ($pos == space-between) {
+        return $pos;
+    }
     if ($pos == top or $pos == left) {
         return start;
     }
@@ -94,26 +97,36 @@ calcPositionValue($pos) {
 }
 
 positionOfDirection() {
-    for $pos in top right bottom left {
+    for $pos in top right bottom left space-between {
         $value = calcPositionValue($pos);
 
         &.__content_position-{$pos} {
             for $dir in row column {
                 &.__content_direction-{$dir} {
                     if $dir == row {
-                        if ($pos == left or $pos == right) {
-                            justify-content: flex- + $value;
+                        if ($pos == space-between) {
+                            justify-content: $value;
                         }
                         else {
-                            align-items: flex- + $value;
+                            if ($pos == left or $pos == right) {
+                                justify-content: flex- + $value;
+                            }
+                            else {
+                                align-items: flex- + $value;
+                            }
                         }
                     }
                     if $dir == column {
-                        if ($pos == top or $pos == bottom) {
-                            justify-content: flex- + $value;
+                        if ($pos == space-between) {
+                            justify-content: $value;
                         }
                         else {
-                            align-items: flex- + $value;
+                            if ($pos == top or $pos == bottom) {
+                                justify-content: flex- + $value;
+                            }
+                            else {
+                                align-items: flex- + $value;
+                            }
                         }
                     }
                 }

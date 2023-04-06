@@ -4,9 +4,11 @@ import cn from 'classnames';
 
 import { Button, IButton } from '@components/Button/Button';
 import {
+    ArrowRIcon,
     BackIcon,
     BellIcon,
     CloseIcon,
+    EditIcon,
     HomeIcon,
     LibraryIcon,
     MoreIcon,
@@ -30,14 +32,16 @@ export enum Icons {
     LIBRARY = 'library',
     HOME = 'home',
     PROFILE = 'profile',
-    BACK = 'back'
+    BACK = 'back',
+    EDIT = 'edit',
+    ARROW_RIGHT = 'arrow_right'
 }
 
 export interface IIcon {
     /** Компонент иконки */
     icon: Icons;
     /** Устанавливает текст для скрин-ридеров */
-    ariaLabel: string;
+    ariaLabel: string | null;
     /** Внешний класс */
     className?: string;
     /** Внешний класс для обёртки */
@@ -58,7 +62,7 @@ export const Icon: FC<IIcon> = ({
     ariaLabel,
     isNotButton = false,
     size = '24'
-}): JSX.Element => {
+}): JSX.Element | null => {
     const rootClasses = useMemo(() => cn(classes.wrapper, wrapperClassName), [wrapperClassName]);
     const iconClasses = useMemo(
         () => cn(classes.icon, getSizesClass(classes, size), className),
@@ -107,12 +111,22 @@ export const Icon: FC<IIcon> = ({
             case Icons.BACK:
                 params.icon = <BackIcon className={iconClasses} />;
                 break;
+            case Icons.EDIT:
+                params.icon = <EditIcon className={iconClasses} />;
+                break;
+            case Icons.ARROW_RIGHT:
+                params.icon = <ArrowRIcon className={iconClasses} />;
+                break;
         }
         return params;
     }, [clickHandler, icon, iconClasses]);
 
     if (isNotButton && buttonParams.icon) {
         return buttonParams.icon;
+    }
+
+    if (!ariaLabel) {
+        return null;
     }
 
     return <Button {...buttonParams} className={rootClasses} aria-label={ariaLabel} />;

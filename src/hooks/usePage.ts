@@ -11,13 +11,19 @@ import { Pages } from '@types';
  * @param page
  * @param headerButtons
  * @param withHeading
+ * @param withBack
  */
-export const usePage = (page: Pages, headerButtons: IIcon[] = [], withHeading = false) => {
+export const usePage = (
+    page: Pages,
+    headerButtons: IIcon[] = [],
+    withHeading = false,
+    withBack = false
+) => {
     const { loadPage, changePage, leavePage } = useController();
 
     useEffect(() => {
-        changePage(page, headerButtons, withHeading);
-    }, [changePage, headerButtons, page, withHeading]);
+        changePage(page, headerButtons, withHeading, withBack);
+    }, [changePage, headerButtons, page, withBack, withHeading]);
 
     useEffect(() => {
         loadPage();

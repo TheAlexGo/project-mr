@@ -9,6 +9,8 @@ export { ReactComponent as LibraryIcon } from './library_icon.svg';
 export { ReactComponent as HomeIcon } from './home_icon.svg';
 export { ReactComponent as ProfileIcon } from './profile_icon.svg';
 export { ReactComponent as BackIcon } from './small_back_icon.svg';
+export { ReactComponent as EditIcon } from './edit_icon.svg';
+export { ReactComponent as ArrowRIcon } from './arrow_right_icon.svg';
 
 export { ReactComponent as VkIcon } from './vk_icon.svg';
 
