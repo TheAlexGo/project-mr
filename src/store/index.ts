@@ -15,11 +15,11 @@ export class Store {
     lang = Lang.RUSSIAN;
     readonly defaultLang = Lang.RUSSIAN;
     locale: Record<string, string> = {};
-    activePage: Pages;
+    activePage: string;
     headerTitle = '';
     headerButtons: IIcon[] = [];
     headerWithBack = false;
-    statePages: Map<Pages, IPageState> = new Map<Pages, IPageState>();
+    statePages: Map<string, IPageState> = new Map<string, IPageState>();
     lastPositionY = 0;
 
     constructor() {
@@ -50,7 +50,7 @@ export class Store {
         this.locale = locale;
     }
 
-    setActivePage(page: Pages) {
+    setActivePage(page: string) {
         this.activePage = page;
     }
 

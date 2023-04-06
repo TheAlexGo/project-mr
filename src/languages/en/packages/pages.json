@@ -1,7 +1,7 @@
 {
   "page-general-heading": "General",
-  "page-library-heading": "Library",
+  "page-/library-heading": "Library",
   "page-profile-heading": "Profile",
-  "page-profile/settings-heading": "Settings",
+  "page-/profile/settings-heading": "Settings",
   "page-not-found": "Page not found!"
 }

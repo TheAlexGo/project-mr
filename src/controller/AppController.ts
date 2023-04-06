@@ -5,7 +5,7 @@ import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IApiCallback, Lang, Pages } from '@types';
+import { IApiCallback, Lang } from '@types';
 
 export class AppController {
     store: Store;
@@ -85,14 +85,14 @@ export class AppController {
         this.logger(`Ресурс ${lang} загружен:`, currentResourceObj);
     };
 
-    navigate = (newPage: Pages) => {
+    navigate = (newPage: string) => {
         if (this.store.activePage === newPage) {
             window.scrollTo(0, 0);
         }
         this.store.setLastPositionY(window.scrollY);
     };
 
-    changePage = (page: Pages, headerButtons: IIcon[], withHeading = false, withBack = false) => {
+    changePage = (page: string, headerButtons: IIcon[], withHeading = false, withBack = false) => {
         this.logger('Перешли на страницу:', page);
         this.store.setActivePage(page);
         if (withHeading && page) {
