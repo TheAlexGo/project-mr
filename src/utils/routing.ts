@@ -10,5 +10,5 @@ export const getMangaPageLink = (id: number) => `/${Pages.LIBRARY}/${Pages.MANGA
 export const getReadlistPageLink = (title: string, id: number) =>
     `${Pages.LIBRARY}/${Pages.READLIST}/${id}/${new CustomString(title).toURL()}`;
 
-export const getPageName = (page: Pages): [string, Pages] | null =>
-    Object.entries(Pages).find(([, value]) => page === value) || null;
+export const getPageName = (page: string): [string, Pages] | null =>
+    Object.entries(Pages).find(([, value]) => page.includes(value)) || null;

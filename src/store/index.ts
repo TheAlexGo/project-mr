@@ -5,6 +5,7 @@ import { makeAutoObservable } from 'mobx';
 import { Icons, IIcon } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
 import { IPageState, Lang, NavTabs, Pages } from '@types';
+import { getPageName } from '@utils/routing';
 
 export class Store {
     /**
@@ -14,7 +15,7 @@ export class Store {
     lang = Lang.RUSSIAN;
     readonly defaultLang = Lang.RUSSIAN;
     locale: Record<string, string> = {};
-    activePage: Pages = Pages.GENERAL;
+    activePage: Pages;
     headerTitle = '';
     headerButtons: IIcon[] = [];
     statePages: Map<Pages, IPageState> = new Map<Pages, IPageState>();
@@ -22,6 +23,14 @@ export class Store {
 
     constructor() {
         makeAutoObservable(this);
+
+        const currentPage = getPageName(window.location.pathname);
+        if (currentPage) {
+            const [, page] = currentPage;
+            this.activePage = page;
+        } else {
+            this.activePage = Pages.GENERAL;
+        }
     }
 
     setIsAppReady = (isAppReady: boolean) => {

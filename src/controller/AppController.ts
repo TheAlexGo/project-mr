@@ -91,11 +91,11 @@ export class AppController {
         this.store.setLastPositionY(window.scrollY);
     };
 
-    changePage = ([title, page]: [string, Pages], headerButtons: IIcon[], withHeading = false) => {
+    changePage = (page: Pages, headerButtons: IIcon[], withHeading = false) => {
         this.logger('Перешли на страницу:', page);
         this.store.setActivePage(page);
-        if (withHeading && title) {
-            this.store.setHeaderTitle(this.store.locale[`page-${title.toLowerCase()}-heading`]);
+        if (withHeading && page) {
+            this.store.setHeaderTitle(this.store.locale[`page-${page.toLowerCase()}-heading`]);
         } else {
             this.store.setHeaderTitle('');
         }

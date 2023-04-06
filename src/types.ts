@@ -13,7 +13,7 @@ export enum Pages {
     LIBRARY = 'library',
     READLIST = 'readlist',
     PROFILE = 'profile',
-    NOT_FOUND = 'not-found',
+    NOT_FOUND = 'not_found',
     MANGA = 'manga'
 }
 
