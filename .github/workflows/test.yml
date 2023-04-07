@@ -9,7 +9,7 @@ env:
   DEPLOY_SERVER_PORT: ${{ secrets.DEPLOY_SERVER_PORT }}
   USERNAME: ${{ secrets.DEPLOY_SERVER_USERNAME }}
   KEY: ${{ secrets.DEPLOY_SERVER_KEY }}
-  DEPLOY_PATH: ${{ secrets.TEST_DEPLOY_PATH }}
+  TEST_DEPLOY_PATH: ${{ secrets.TEST_DEPLOY_PATH }}
   BUILD_SCRIPT: npm run build
   BUILD_SCRIPT_OUTPUT: dist
 
