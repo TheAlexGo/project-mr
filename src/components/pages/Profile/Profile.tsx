@@ -26,7 +26,7 @@ const Profile = observer(() => {
             <div className={classes['container']}>
                 <div className={classes['container-name']}>
                     <div>
-                        <div className={classes['greetings']}>{locale['profile-hello']}</div>
+                        <div className={classes['greetings']}>{locale['profile-hello']},</div>
                         <div className={classes['name']}>TheAlexGo</div>
                     </div>
                     <div>
@@ -44,7 +44,7 @@ const Profile = observer(() => {
                     withRightIcon
                     isWide
                 >
-                    Настройки
+                    {locale['button-profile-settings-text']}
                 </Button>
             </div>
         </Page>

@@ -49,7 +49,21 @@ const mangaTitlesRu = [
     'Архимаг, который вернулся спустя 4000 лет'
 ];
 
-const mangaTitlesEn = ['Test 123', 'Abobus test'];
+const mangaTitlesEn = [
+    'Komi have communication problems',
+    'Ayumu will get closer anyway',
+    'Magic Battle',
+    'Level Up Alone',
+    'Beginning after the end',
+    'Peak of martial arts',
+    'Omniscient Reader',
+    'The Flame of Countless Troubles',
+    'Ranker who lives a second time',
+    'Born Mercenary',
+    'Sweet home',
+    'FFF-rank bastard',
+    'The archmage who returned after 4000 years'
+];
 
 const mangaTitles: IMockMangaTitle[] = languages.map((lang: Lang) => {
     const obj: IMockMangaTitle = {
@@ -177,6 +191,11 @@ export const getMangaTitlesMock = (count: number): IMangaTitle[] => {
         id: uuidGenerator.uuid(),
         title: getMangaTitleOfLangMock(Lang.RUSSIAN),
         lang: Lang.RUSSIAN
+    });
+    mangaTitles.push({
+        id: uuidGenerator.uuid(),
+        title: getMangaTitleOfLangMock(Lang.ENGLISH),
+        lang: Lang.ENGLISH
     });
     return mangaTitles;
 };

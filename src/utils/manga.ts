@@ -7,6 +7,9 @@ import { IMangaTitle } from '@types';
 export const getMangaTitle = (titles: IMangaTitle[]) => {
     const { lang, defaultLang } = store;
 
-    const mangaTitle = titles.find((t) => t.lang === lang || t.lang === defaultLang);
+    let mangaTitle = titles.find((t) => t.lang === lang);
+    if (!mangaTitle) {
+        mangaTitle = titles.find((t) => t.lang === defaultLang);
+    }
     return (mangaTitle && mangaTitle.title) || '';
 };

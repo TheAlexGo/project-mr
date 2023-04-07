@@ -4,8 +4,7 @@ import { Manga } from '@store/manga';
 
 export enum Lang {
     RUSSIAN = 'russian',
-    ENGLISH = 'english',
-    JAPANESE = 'japanese'
+    ENGLISH = 'english'
 }
 
 export enum Pages {

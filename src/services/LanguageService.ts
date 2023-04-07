@@ -5,8 +5,7 @@ import { Lang } from '@types';
 export class LanguageService {
     private resources = {
         [Lang.RUSSIAN]: packageRu,
-        [Lang.ENGLISH]: packageEn,
-        [Lang.JAPANESE]: packageRu
+        [Lang.ENGLISH]: packageEn
     };
 
     loadResource(lang: Lang) {

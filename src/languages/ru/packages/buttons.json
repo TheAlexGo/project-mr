@@ -2,5 +2,6 @@
   "button-bell-aria-label": "Уведомления",
   "button-search-aria-label": "Поиск",
   "button-back-aria-label": "Назад",
-  "button-trash-aria-label": "Удалить"
+  "button-trash-aria-label": "Удалить",
+  "button-profile-settings-text": "Настройки"
 }

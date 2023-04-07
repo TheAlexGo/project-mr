@@ -41,15 +41,15 @@ const General: FC = () => {
     const renderAllLists = useCallback(() => {
         const array = [
             {
-                title: 'Продолжите чтение',
+                title: 'block-general-continue',
                 elements: continueReadingList
             },
             {
-                title: 'Топ 10 в этом месяце',
+                title: 'block-general-top',
                 elements: topList
             },
             {
-                title: 'Комедия: популярное',
+                title: 'block-general-comedy',
                 elements: comedyList
             }
         ];
@@ -59,12 +59,12 @@ const General: FC = () => {
                 <CardList
                     axis={Axes.X}
                     cards={cards.elements}
-                    title={cards.title}
+                    title={locale[cards.title]}
                     scrollSnap={ScrollSnapTypes.X_Mandatory}
                 />
             </div>
         ));
-    }, [comedyList, continueReadingList, topList]);
+    }, [comedyList, continueReadingList, locale, topList]);
 
     return <Page className={classes.container}>{renderAllLists()}</Page>;
 };
