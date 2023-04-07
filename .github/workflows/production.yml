@@ -1,6 +1,9 @@
-name: CI
+name: Deploy to production
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 env:
   DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
@@ -29,10 +32,10 @@ jobs:
       - name: Install Dependencies
         run: npm ci
       # Собираем приложение
-      - name: Build Appliction
+      - name: Build Application
         run: $BUILD_SCRIPT
       # Собираем storybook приложение
-      - name: Build Storybook Appliction
+      - name: Build Storybook Application
         run: $BUILD_STORYBOOK_SCRIPT
       # Доставляем собранное приложение на сервер
       - name: Deploy to Server

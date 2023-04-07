@@ -1,0 +1,43 @@
+name: Deploy to test
+
+on:
+  push:
+    branches: ["test"]
+
+env:
+  DEPLOY_SERVER_HOST: ${{ secrets.DEPLOY_SERVER_HOST }}
+  DEPLOY_SERVER_PORT: ${{ secrets.DEPLOY_SERVER_PORT }}
+  USERNAME: ${{ secrets.DEPLOY_SERVER_USERNAME }}
+  KEY: ${{ secrets.DEPLOY_SERVER_KEY }}
+  DEPLOY_PATH: ${{ secrets.TEST_DEPLOY_PATH }}
+  BUILD_SCRIPT: npm run build
+  BUILD_SCRIPT_OUTPUT: dist
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '19'
+      - name: test
+        id: load-variables
+        shell: bash
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/} >> $GITHUB_OUTPUT | sed 's/\//-/g' | sed 's/\./_/g')"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build Application
+        run: $BUILD_SCRIPT
+      - name: Deploy to Test Server
+        uses: appleboy/scp-action@master
+        with:
+          host: $TEST_DEPLOY_SERVER_HOST
+          port: $TEST_DEPLOY_SERVER_PORT
+          username: $USERNAME
+          key: $KEY
+          source: $BUILD_SCRIPT_OUTPUT
+          target: ${{ env.TEST_DEPLOY_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
+          strip_components: 1
+      - name: Print Info
+        run: echo "Deployed successfully https://${{ secrets.TEST_SITE_DOMAINS }}"
