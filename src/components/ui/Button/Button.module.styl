@@ -3,7 +3,7 @@
     height: 48px;
     margin: 0;
     padding: 0 12px;
-    color: var(--color_white);
+    color: $color_white;
     font-size: $font-size-h4;
     background-color: transparent;
     border: 0;
@@ -23,25 +23,25 @@
 
     &.__theme {
         &-primary {
-            background-color: var(--color_primary);
+            background-color: $color_primary;
 
             +hover('__state') {
-                background-color: var(--color_active);
+                background-color: $color_active;
             }
 
             &:disabled {
-                color: var(--color_on-surface);
-                background-color: var(--color_surface);
+                color: $color_on-surface;
+                background-color: $color_surface;
             }
         }
 
         &-secondary {
             +hover('__state') {
-                background-color: var(--color_surface);
+                background-color: $color_surface;
             }
 
             &:disabled {
-                color: var(--color_on-surface);
+                color: $color_on-surface;
             }
         }
 
