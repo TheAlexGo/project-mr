@@ -88,7 +88,9 @@ export const CardList: FC<ICardList> = ({
         <Loading condition={cards.length !== 0}>
             <div className={classes.wrapper}>
                 {title && (
-                    <Heading type={HeadingTypes.H3} className={classes.heading} text={title} />
+                    <Heading type={HeadingTypes.H3} className={classes.heading}>
+                        {title}
+                    </Heading>
                 )}
                 <div className={classes.container}>
                     <ul className={rootClasses}>{renderElements()}</ul>

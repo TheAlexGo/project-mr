@@ -39,7 +39,7 @@ export const LayoutMain: FC = observer((): JSX.Element => {
         return (
             <div className={classes.header}>
                 <Header
-                    headingType={HeadingTypes.H3}
+                    headingType={HeadingTypes.H1}
                     heading={headerTitle}
                     buttons={headerButtons}
                     needBack={headerWithBack}

@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { StarIcon, TrashIcon, VkIcon } from '@icons';
 import { StoryCategories } from '@sb/types';
-import { Directions, Positions, SQUARE_ELEMENT_SIZES } from '@types';
+import { Directions, Justifies, Positions, SQUARE_ELEMENT_SIZES } from '@types';
 
 import { Button, ButtonStates, ButtonThemes, ButtonTypes } from './Button';
 
@@ -52,13 +52,19 @@ export default {
             }
         },
         contentPosition: {
-            name: 'Позиция содержимого',
+            name: 'Расположение содержимого (отн. кнопки)',
+            table: {
+                category: StoryCategories.STYLE
+            }
+        },
+        contentJustify: {
+            name: 'Расположение содержимого (отн. друг друга)',
             table: {
                 category: StoryCategories.STYLE
             }
         },
         contentDirection: {
-            name: 'Расположение содержимого',
+            name: 'Позиция содержимого',
             table: {
                 category: StoryCategories.STYLE
             }
@@ -159,8 +165,9 @@ export default {
     args: {
         children: 'Button',
         type: ButtonTypes.BUTTON,
-        contentPosition: Positions.CENTER,
         contentDirection: Directions.ROW,
+        contentJustify: Justifies.CENTER,
+        contentPosition: Positions.CENTER,
         state: ButtonStates.DEFAULT,
         isWide: false,
         isRounded: false,
@@ -178,6 +185,16 @@ const Template: ComponentStory<Story> = (args) => <Button {...args} />;
 export const Primary: ComponentStory<Story> = Template.bind({});
 Primary.args = {
     theme: ButtonThemes.PRIMARY
+};
+
+export const Secondary: ComponentStory<Story> = Template.bind({});
+Secondary.args = {
+    theme: ButtonThemes.SECONDARY
+};
+
+export const Tag: ComponentStory<Story> = Template.bind({});
+Tag.args = {
+    theme: ButtonThemes.TAG
 };
 
 export const Trash: ComponentStory<Story> = Template.bind({});

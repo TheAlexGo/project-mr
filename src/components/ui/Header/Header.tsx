@@ -59,7 +59,9 @@ export const Header: FC<IHeader> = ({
                     />
                 )}
                 {heading && (
-                    <Heading className={classes.heading} type={headingType} text={heading} />
+                    <Heading className={classes.heading} type={headingType}>
+                        {heading}
+                    </Heading>
                 )}
             </div>
         );

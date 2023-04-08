@@ -12,7 +12,7 @@ export default {
     title: 'UI / Heading',
     component: Heading,
     argTypes: {
-        text: {
+        children: {
             name: 'Содержимое заголовка',
             table: {
                 category: StoryCategories.MAIN
@@ -32,7 +32,7 @@ export default {
         }
     },
     args: {
-        text: 'Тестовый заголовок',
+        children: 'Тестовый заголовок',
         type: HeadingTypes.H1
     }
 } as ComponentMeta<Story>;
