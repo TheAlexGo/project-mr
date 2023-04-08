@@ -17,6 +17,7 @@ import classes from './ProfileSettings.module.styl';
 const ProfileSettings = observer(() => {
     const { lang, locale } = useStore();
     const { switchLang } = useController();
+
     usePage(Pages.PROFILE_SETTINGS, [], true, true);
 
     const clickHandler = useCallback(() => {

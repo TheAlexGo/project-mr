@@ -1,8 +1,8 @@
-import React, { ButtonHTMLAttributes, FC, ReactElement, useCallback, useMemo } from 'react';
+import React, { FC, ReactElement, ReactNode, useCallback, useMemo } from 'react';
 
 import cn from 'classnames';
-import { useNavigate } from 'react-router-dom';
 
+import { Link } from '@components/Link/Link';
 import { Loader } from '@components/Loader/Loader';
 import { Directions, Positions, Justifies, SquareElementSizes } from '@types';
 import { getDirectionClass, getPositionClass, getJustifyClass, getSizesClass } from '@utils/styles';
@@ -30,9 +30,13 @@ export enum ButtonTypes {
 /**
  * Интерфейс кнопки
  */
-export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IButton {
+    /** Устанавливает внешний класс */
+    className?: string;
     /** Устанавливает класс для иконки */
     iconClassName?: string;
+    /** Содержимое кнопки */
+    children?: ReactNode;
     /** Устанавливает тип кнопки */
     type?: ButtonTypes;
     /** Устанавливает тему кнопки */
@@ -59,6 +63,8 @@ export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
     withRightIcon?: boolean;
     /** Убрать внутренний отступ */
     withNoPadding?: boolean;
+    /** Устанавливает состояние кнопки, как неактивное */
+    isDisabled?: boolean;
     /** Растягивает кнопку на всю ширину */
     isWide?: boolean;
     /** Делает кнопку круглой */
@@ -81,7 +87,7 @@ export const Button: FC<IButton> = ({
     withRightIcon = false,
     isWide = false,
     isRounded = false,
-    disabled = false,
+    isDisabled = false,
     isLoading = false,
     isExternalLink = false,
     withNoPadding = false,
@@ -90,8 +96,7 @@ export const Button: FC<IButton> = ({
     type = ButtonTypes.BUTTON,
     contentJustify = Justifies.CENTER,
     contentDirection = Directions.ROW,
-    contentPosition = Positions.CENTER,
-    ...props
+    contentPosition = Positions.CENTER
 }): JSX.Element => {
     const rootClasses = useMemo(
         () =>
@@ -129,20 +134,12 @@ export const Button: FC<IButton> = ({
             withRightIcon
         ]
     );
-    const navigate = useNavigate();
 
     const clickHandler = useCallback(() => {
         if (onClick) {
             onClick();
         }
-        if (href) {
-            if (isExternalLink) {
-                window.open(href, '_blank');
-                return;
-            }
-            navigate(href);
-        }
-    }, [href, isExternalLink, navigate, onClick]);
+    }, [onClick]);
 
     const iconElement = useMemo(() => {
         if (icon) {
@@ -167,12 +164,24 @@ export const Button: FC<IButton> = ({
         );
     }, [children, icon, iconElement, isLoading, withLeftIcon, withRightIcon]);
 
+    if (href) {
+        return (
+            <Link
+                className={rootClasses}
+                to={href}
+                onClick={clickHandler}
+                target={isExternalLink ? '_blank' : '_self'}
+            >
+                {content}
+            </Link>
+        );
+    }
+
     return (
         <button
-            {...props}
             className={rootClasses}
             type={type}
-            disabled={isLoading || disabled}
+            disabled={isLoading || isDisabled}
             onClick={clickHandler}
         >
             {content}

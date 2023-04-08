@@ -38,7 +38,7 @@ export class Store {
     headerButtons: IIcon[] = [];
     headerWithBack = false;
     statePages: Map<string, IPageState> = new Map<string, IPageState>();
-    lastPositionY = 0;
+    isPageLoaded = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -64,10 +64,6 @@ export class Store {
         this.activeTheme = theme;
     }
 
-    setLastPositionY = (lastPositionY: number) => {
-        this.lastPositionY = lastPositionY;
-    };
-
     setLocale(locale: Record<string, string>) {
         this.locale = locale;
     }
@@ -86,6 +82,10 @@ export class Store {
 
     setHeaderWithBack(headerWithBack: boolean) {
         this.headerWithBack = headerWithBack;
+    }
+
+    setIsPageLoaded(isPageLoaded: boolean) {
+        this.isPageLoaded = isPageLoaded;
     }
 
     updateStatePages(statePage: IPageState) {

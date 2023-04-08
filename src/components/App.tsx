@@ -51,7 +51,7 @@ export const App: FC = observer(() => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<LayoutMain />}>
+                <Route path={Pages.GENERAL} element={<LayoutMain />}>
                     <Route index element={<General />} />
                     <Route path={Pages.LIBRARY} element={<Library />} />
                     <Route path={`${Pages.MANGA}/:id`} element={<Manga />} />

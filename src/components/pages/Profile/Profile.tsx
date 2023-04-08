@@ -1,13 +1,10 @@
 import React, { useMemo } from 'react';
 
-import { observer } from 'mobx-react-lite';
-
 import { Button, ButtonStates, ButtonThemes } from '@components/Button/Button';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { Icon, Icons } from '@components/Icon/Icon';
 import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
-import { ArrowRIcon } from '@icons';
 import { Justifies, Pages } from '@types';
 
 import { Theme } from './components/Theme/Theme';
@@ -16,10 +13,10 @@ import { Page } from '../Page/Page';
 
 import classes from './Profile.module.styl';
 
-const Profile = observer(() => {
+const Profile = () => {
     const { locale } = useStore();
 
-    usePage(Pages.PROFILE);
+    usePage(Pages.PROFILE, [], false, false);
 
     const versionApp = useMemo(() => `${locale['profile-version']} ${pkg.version}`, [locale]);
 
@@ -58,6 +55,6 @@ const Profile = observer(() => {
             </div>
         </Page>
     );
-});
+};
 
 export default Profile;
