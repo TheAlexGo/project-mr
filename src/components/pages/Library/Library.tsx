@@ -16,14 +16,14 @@ import classes from './Library.module.styl';
 const Library = () => {
     const [items, setItems] = useState<IMangaCard[]>([]);
     const { locale } = useStore();
-    const { logger } = useController();
+    const { debug } = useController();
 
     const headerButtons = useMemo(
         () => [
-            getIconObj(Icons.SEARCH, () => logger('Нажали на поиск!'), locale),
-            getIconObj(Icons.TRASH, () => logger('Нажали на удаление!'), locale)
+            getIconObj(Icons.SEARCH, () => debug('Нажали на поиск!'), locale),
+            getIconObj(Icons.TRASH, () => debug('Нажали на удаление!'), locale)
         ],
-        [locale, logger]
+        [locale, debug]
     );
 
     useEffect(() => {

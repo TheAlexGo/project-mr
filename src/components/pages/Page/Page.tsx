@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useMemo } from 'react';
 
 import cn from 'classnames';
 
@@ -14,6 +14,7 @@ export interface IPage {
 /**
  * Компонент-обёртка для страниц
  * */
-export const Page: FC<IPage> = ({ className, children }) => (
-    <div className={cn(classes.page, className)}>{children}</div>
-);
+export const Page: FC<IPage> = ({ className, children }) => {
+    const rootClasses = useMemo(() => cn(classes.page, className), [className]);
+    return <div className={rootClasses}>{children}</div>;
+};

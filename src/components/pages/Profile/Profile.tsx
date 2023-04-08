@@ -16,7 +16,8 @@ import classes from './Profile.module.styl';
 const Profile = () => {
     const { locale } = useStore();
 
-    usePage(Pages.PROFILE, [], false, false);
+    const headerButtons = useMemo(() => [], []);
+    usePage(Pages.PROFILE, headerButtons, false, false);
 
     const versionApp = useMemo(() => `${locale['profile-version']} ${pkg.version}`, [locale]);
 

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { usePage } from '@hooks/usePage';
 import { Pages } from '@types';
 
 const ProfileSettingsEmail = () => {
-    usePage(Pages.PROFILE_SETTINGS_CHANGE_EMAIL, [], true, true);
+    const headerButtons = useMemo(() => [], []);
+    usePage(Pages.PROFILE_SETTINGS_CHANGE_EMAIL, headerButtons, true, true);
 
     return <div>Поменять почту</div>;
 };

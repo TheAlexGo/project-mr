@@ -18,13 +18,15 @@ import classes from './LayoutMain.module.styl';
  * @constructor
  */
 export const LayoutMain: FC = observer((): JSX.Element => {
-    const { navigate, headerTitle, headerButtons, headerWithBack } = useStore();
+    const { navigate, headerTitleKey, headerButtons, headerWithBack, locale } = useStore();
     const { changePage } = useController();
     const location = useLocation();
 
+    const heading = useMemo(() => locale[headerTitleKey], [headerTitleKey, locale]);
+
     const withHeader = useMemo(
-        () => headerButtons.length || headerTitle,
-        [headerButtons.length, headerTitle]
+        () => headerButtons.length || heading,
+        [headerButtons.length, heading]
     );
 
     const rootClasses = useMemo(
@@ -43,13 +45,13 @@ export const LayoutMain: FC = observer((): JSX.Element => {
             <div className={classes.header}>
                 <Header
                     headingType={HeadingTypes.H1}
-                    heading={headerTitle}
+                    heading={heading}
                     buttons={headerButtons}
                     needBack={headerWithBack}
                 />
             </div>
         );
-    }, [headerButtons, headerTitle, headerWithBack, withHeader]);
+    }, [headerButtons, heading, headerWithBack, withHeader]);
 
     useLayoutEffect(() => {
         changePage(location.pathname);

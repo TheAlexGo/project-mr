@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
 
@@ -18,7 +18,8 @@ const ProfileSettings = observer(() => {
     const { lang, locale } = useStore();
     const { switchLang } = useController();
 
-    usePage(Pages.PROFILE_SETTINGS, [], true, true);
+    const headerButtons = useMemo(() => [], []);
+    usePage(Pages.PROFILE_SETTINGS, headerButtons, true, true);
 
     const clickHandler = useCallback(() => {
         if (lang === Lang.ENGLISH) {

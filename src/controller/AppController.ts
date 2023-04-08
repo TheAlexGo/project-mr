@@ -25,10 +25,16 @@ export class AppController {
         console.log(message, ...optionalParams);
     }
 
+    debug(message: unknown, ...optionalParams: unknown[]) {
+        if (import.meta.env.DEV) {
+            this.logger(message, ...optionalParams);
+        }
+    }
+
     initApi = async () => {
-        this.logger('Начинается инициализация приложения...');
+        this.debug('Начинается инициализация приложения...');
         if (this.store.isAppReady) {
-            this.logger('Приложение уже инициализированно!');
+            this.debug('Приложение уже инициализированно!');
             return false;
         }
         return this.apiService
@@ -38,14 +44,14 @@ export class AppController {
                 return result;
             })
             .then<boolean>((result) => {
-                this.logger('Приложение инициализированно успешно!');
+                this.debug('Приложение инициализированно успешно!');
                 this.store.setIsAppReady(result);
                 return result;
             });
     };
 
     apiCallback: IApiCallback = (method, result, data) => {
-        this.logger(method, result, data);
+        this.debug(method, result, data);
     };
 
     /**
@@ -54,7 +60,7 @@ export class AppController {
     switchLang = (lang: Lang) => {
         this.initResource(lang);
         this.store.setLang(lang);
-        this.logger('Установлен язык:', lang);
+        this.debug('Установлен язык:', lang);
     };
 
     /**
@@ -70,18 +76,24 @@ export class AppController {
      */
     initResource = (lang: Lang) => {
         if (this.store.lang === lang && Object.keys(this.store.locale).length) {
-            this.logger(`Ресурс ${lang} уже загружен!`);
+            this.debug(`Ресурс ${lang} уже загружен!`);
             return;
         }
-        const { logger } = this;
+        const { debug } = this;
         const resource = this.langService.loadResource(lang);
 
         const currentResourceObj = new Proxy(resource, {
-            get(target: Record<string, string>, name) {
+            get(target: Record<string | symbol, string>, name) {
+                const isMobx =
+                    (typeof name === 'symbol' && name.description) ||
+                    (typeof name === 'string' && name.includes('isMobX'));
+                if (isMobx) {
+                    return target[name];
+                }
                 const currentKey = name.toString();
                 const value = target[currentKey];
-                if (!value) {
-                    logger(`Для ключа ${currentKey} нет локализации!`);
+                if (currentKey && !value) {
+                    debug(`Для ключа ${currentKey} нет локализации!`);
                     return currentKey;
                 }
                 return value;
@@ -90,7 +102,7 @@ export class AppController {
 
         this.store.setLocale(currentResourceObj);
         this.validateService.setLocale(currentResourceObj);
-        this.logger(`Ресурс ${lang} загружен:`, currentResourceObj);
+        this.debug(`Ресурс ${lang} загружен:`, currentResourceObj);
     };
 
     navigate = (newPage: string) => {
@@ -102,29 +114,27 @@ export class AppController {
     changePage = (page: string) => {
         const { activePage } = this.store;
         if (page === activePage) {
-            this.logger('Уже на странице:', page);
+            this.debug('Уже на странице:', page);
             return;
         }
-        this.logger('Перешли на страницу:', page);
+        this.debug('Перешли на страницу:', page);
         this.store.setActivePage(page);
     };
 
     loadPage = (page: Pages, headerButtons: IIcon[], withHeading = false, withBack = false) => {
         const { currentStatePage, activePage, isPageLoaded } = this.store;
         if (isPageLoaded) {
-            this.logger('Страница уже загружена:', activePage);
+            this.debug('Страница уже загружена:', activePage);
             return;
         }
-        this.logger('Загрузили страницу:', activePage);
+        this.debug('Загрузили страницу:', activePage);
         if (currentStatePage) {
             setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
         }
         if (withHeading) {
-            this.store.setHeaderTitle(
-                this.store.locale[`page-${activePage.toLowerCase()}-heading`]
-            );
+            this.store.setHeaderTitleKey(`page-${activePage.toLowerCase()}-heading`);
         } else {
-            this.store.setHeaderTitle('');
+            this.store.setHeaderTitleKey('');
         }
         this.store.setHeaderButtons(headerButtons);
         this.store.setHeaderWithBack(withBack);
@@ -134,10 +144,10 @@ export class AppController {
     leavePage = () => {
         const { isPageLoaded, activePage } = this.store;
         if (!isPageLoaded) {
-            this.logger('Страницу уже покинули:', activePage);
+            this.debug('Страницу уже покинули:', activePage);
             return;
         }
-        this.logger('Покинули страницу:', activePage);
+        this.debug('Покинули страницу:', activePage);
         const state = {
             positionY: window.scrollY
         };
