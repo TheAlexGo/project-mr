@@ -1,5 +1,6 @@
 import { InputHTMLAttributes, ReactElement, ReactNode } from 'react';
 
+import { Icons } from '@components/Icon/Icon';
 import { Manga } from '@store/manga';
 
 export enum Lang {
@@ -26,11 +27,15 @@ export enum SourceTypes {
 }
 
 export enum Positions {
-    TOP = 'top',
-    BOTTOM = 'bottom',
-    LEFT = 'left',
-    RIGHT = 'right',
+    START = 'start',
     CENTER = 'center',
+    END = 'end'
+}
+
+export enum Justifies {
+    START = 'start',
+    CENTER = 'center',
+    END = 'end',
     SPACE_BETWEEN = 'space-between'
 }
 
@@ -112,7 +117,8 @@ export enum SortMethod {
 
 export enum Themes {
     LIGHT = 'light',
-    DARK = 'dark'
+    DARK = 'dark',
+    AUTO = 'auto'
 }
 
 export enum ModalLinks {
@@ -329,4 +335,10 @@ export type TClassNameCallback = (props: {
 
 export interface IPageState {
     positionY: number;
+}
+
+export interface IThemeButton {
+    theme: Themes;
+    icon: Icons;
+    text: string;
 }

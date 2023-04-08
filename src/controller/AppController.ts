@@ -5,7 +5,7 @@ import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IApiCallback, Lang } from '@types';
+import { IApiCallback, Lang, Themes } from '@types';
 
 export class AppController {
     store: Store;
@@ -55,6 +55,14 @@ export class AppController {
         this.initResource(lang);
         this.store.setLang(lang);
         this.logger('Установлен язык:', lang);
+    };
+
+    /**
+     * Устанавливает новую тему
+     * @param {Themes} theme - выбранная тема
+     */
+    changeTheme = (theme: Themes) => {
+        this.store.setTheme(theme);
     };
 
     /**

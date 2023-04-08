@@ -1,21 +1,19 @@
+baseButtonStyles() {
+    height: 48px;
+    padding: 0 12px;
+    border-radius: 8px;
+}
+
 .button {
     position: relative;
-    height: 48px;
     margin: 0;
-    padding: 0 12px;
     color: $color_main;
-    font-size: $font-size-h4;
+    font-size: $fs-s;
+    text-align: initial;
     background-color: transparent;
     border: 0;
-    border-radius: 9px;
     cursor: pointer;
-    transition: $trans-300;
-
-    fontMedium();
-
-    squareElementSizes();
-
-    flexPositionsAndDirections();
+    transition: background-color $trans-300;
 
     &:disabled {
         cursor: not-allowed;
@@ -23,6 +21,8 @@
 
     &.__theme {
         &-primary {
+            baseButtonStyles();
+
             color: $color_white;
             background-color: $color_primary;
 
@@ -37,6 +37,8 @@
         }
 
         &-secondary {
+            baseButtonStyles();
+
             +hover('__state') {
                 background-color: $color_surface;
             }
@@ -44,13 +46,6 @@
             &:disabled {
                 color: $color_on-surface;
             }
-        }
-
-        &-clear {
-            flex-shrink: 0;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            all: unset;
         }
     }
 
@@ -73,6 +68,12 @@
             padding: 0;
         }
     }
+
+    fontMedium();
+
+    squareElementSizes();
+
+    flexPositionsAndDirections();
 }
 
 .icon svg {

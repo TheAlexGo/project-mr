@@ -1,0 +1,30 @@
+.buttons {
+    display: grid;
+    grid-gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.heading {
+    margin-bottom: 16px;
+    font-size: $fs-s;
+}
+
+.button {
+    padding: 14px; // 16px - borders
+    color: $color_main;
+    background-color: $color_surface;
+    border: 2px solid $color_surface;
+    border-radius: 6px;
+
+    &.__is-active {
+        border-color: $color_active;
+    }
+
+    &:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+    }
+}
+
+.icon {
+    margin-bottom: 8px;
+}

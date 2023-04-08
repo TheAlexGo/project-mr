@@ -4,7 +4,7 @@ import { makeAutoObservable } from 'mobx';
 
 import { Icons, IIcon } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
-import { IPageState, Lang, NavTabs, Pages } from '@types';
+import { IPageState, IThemeButton, Lang, NavTabs, Pages, Themes } from '@types';
 import { getPageName } from '@utils/routing';
 
 export class Store {
@@ -13,7 +13,25 @@ export class Store {
      */
     isAppReady = false;
     lang = Lang.RUSSIAN;
+    activeTheme = Themes.AUTO;
     readonly defaultLang = Lang.RUSSIAN;
+    readonly availableThemes: IThemeButton[] = [
+        {
+            theme: Themes.DARK,
+            icon: Icons.NIGHT,
+            text: 'profile-theme-dark'
+        },
+        {
+            theme: Themes.LIGHT,
+            icon: Icons.DAY,
+            text: 'profile-theme-light'
+        },
+        {
+            theme: Themes.AUTO,
+            icon: Icons.AUTO,
+            text: 'profile-theme-auto'
+        }
+    ];
     locale: Record<string, string> = {};
     activePage: string;
     headerTitle = '';
@@ -41,6 +59,10 @@ export class Store {
     setLang = (lang: Lang) => {
         this.lang = lang;
     };
+
+    setTheme(theme: Themes) {
+        this.activeTheme = theme;
+    }
 
     setLastPositionY = (lastPositionY: number) => {
         this.lastPositionY = lastPositionY;

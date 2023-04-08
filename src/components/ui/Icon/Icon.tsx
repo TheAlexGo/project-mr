@@ -1,17 +1,20 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 
 import cn from 'classnames';
 
 import { Button, IButton } from '@components/Button/Button';
 import {
     ArrowRIcon,
+    AutoIcon,
     BackIcon,
     BellIcon,
     CloseIcon,
+    DayIcon,
     EditIcon,
     HomeIcon,
     LibraryIcon,
     MoreIcon,
+    NightIcon,
     PlusIcon,
     ProfileIcon,
     SearchIcon,
@@ -34,7 +37,10 @@ export enum Icons {
     PROFILE = 'profile',
     BACK = 'back',
     EDIT = 'edit',
-    ARROW_RIGHT = 'arrow_right'
+    ARROW_RIGHT = 'arrow_right',
+    DAY = 'day',
+    NIGHT = 'night',
+    AUTO = 'auto'
 }
 
 export interface IIcon {
@@ -69,65 +75,84 @@ export const Icon: FC<IIcon> = ({
         [className, size]
     );
 
-    const clickHandler = useCallback(() => {
-        if (onClick) {
-            onClick();
-        }
-    }, [onClick]);
+    const currentAriaLabel = useMemo(() => ariaLabel || '', [ariaLabel]);
+
+    const isAriaHidden = useMemo(() => !ariaLabel, [ariaLabel]);
+
+    const iconProps = useMemo(
+        () => ({
+            className: iconClasses,
+            'aria-label': currentAriaLabel,
+            'aria-hidden': isAriaHidden
+        }),
+        [currentAriaLabel, iconClasses, isAriaHidden]
+    );
 
     const buttonParams: IButton = useMemo(() => {
         const params: IButton = {
             withNoPadding: true,
-            onClick: clickHandler
+            onClick
         };
         switch (icon) {
             case Icons.MORE:
-                params.icon = <MoreIcon className={iconClasses} />;
+                params.icon = <MoreIcon {...iconProps} />;
                 break;
             case Icons.SEARCH:
-                params.icon = <SearchIcon className={iconClasses} />;
+                params.icon = <SearchIcon {...iconProps} />;
                 break;
             case Icons.TRASH:
-                params.icon = <TrashIcon className={iconClasses} />;
+                params.icon = <TrashIcon {...iconProps} />;
                 break;
             case Icons.PLUS:
-                params.icon = <PlusIcon className={iconClasses} />;
+                params.icon = <PlusIcon {...iconProps} />;
                 break;
             case Icons.BELL:
-                params.icon = <BellIcon className={iconClasses} />;
+                params.icon = <BellIcon {...iconProps} />;
                 break;
             case Icons.CLOSE:
-                params.icon = <CloseIcon className={iconClasses} />;
+                params.icon = <CloseIcon {...iconProps} />;
                 break;
             case Icons.LIBRARY:
-                params.icon = <LibraryIcon className={iconClasses} />;
+                params.icon = <LibraryIcon {...iconProps} />;
                 break;
             case Icons.HOME:
-                params.icon = <HomeIcon className={iconClasses} />;
+                params.icon = <HomeIcon {...iconProps} />;
                 break;
             case Icons.PROFILE:
-                params.icon = <ProfileIcon className={iconClasses} />;
+                params.icon = <ProfileIcon {...iconProps} />;
                 break;
             case Icons.BACK:
-                params.icon = <BackIcon className={iconClasses} />;
+                params.icon = <BackIcon {...iconProps} />;
                 break;
             case Icons.EDIT:
-                params.icon = <EditIcon className={iconClasses} />;
+                params.icon = <EditIcon {...iconProps} />;
                 break;
             case Icons.ARROW_RIGHT:
-                params.icon = <ArrowRIcon className={iconClasses} />;
+                params.icon = <ArrowRIcon {...iconProps} />;
+                break;
+            case Icons.DAY:
+                params.icon = <DayIcon {...iconProps} />;
+                break;
+            case Icons.NIGHT:
+                params.icon = <NightIcon {...iconProps} />;
+                break;
+            case Icons.AUTO:
+                params.icon = <AutoIcon {...iconProps} />;
                 break;
         }
         return params;
-    }, [clickHandler, icon, iconClasses]);
+    }, [onClick, icon, iconProps]);
 
     if (isNotButton && buttonParams.icon) {
         return buttonParams.icon;
     }
 
-    if (!ariaLabel) {
-        return null;
-    }
-
-    return <Button {...buttonParams} className={rootClasses} aria-label={ariaLabel} />;
+    return (
+        <Button
+            {...buttonParams}
+            className={rootClasses}
+            aria-label={currentAriaLabel}
+            aria-hidden={isAriaHidden}
+        />
+    );
 };
