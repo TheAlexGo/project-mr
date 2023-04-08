@@ -1,5 +1,10 @@
 {
   "profile-settings": "Настройки",
+  "profile-settings-security": "Безопасность",
+  "profile-settings-security-email": "Изменить почту",
+  "profile-settings-security-password": "Изменить пароль",
+  "profile-settings-lang": "Язык",
+  "profile-settings-account-delete": "Удалить аккаунт",
   "profile-version": "Версия",
   "profile-sign-out": "Выйти из аккаунта",
   "profile-switch-lang": "Сменить язык",

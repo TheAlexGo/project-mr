@@ -1,6 +1,15 @@
 .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    padding-top: 32px;
+    height: 100%;
+    padding: 32px 0;
+}
+
+.top {
+    flex-grow: 1;
+    width: 100%;
 }
 
 .container-name {
@@ -31,7 +40,17 @@
     font-size: $fs-m;
 }
 
-.button {
+.button-settings {
     margin-bottom: 32px;
-    background-color: $color_surface;
+}
+
+.version {
+    color: $color_secondary;
+    font-size: $fs-xxs;
+}
+
+.button-out {
+    margin-bottom: 16px;
+    fontSemiBold();
+    font-size: $fs-xs;
 }

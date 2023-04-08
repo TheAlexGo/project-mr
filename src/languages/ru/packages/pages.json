@@ -3,5 +3,7 @@
   "page-/library-heading": "Библиотека",
   "page-profile-heading": "Профиль",
   "page-/profile/settings-heading": "Настройки",
+  "page-/profile/settings/change/email-heading": "Изменить почту",
+  "page-/profile/settings/change/password-heading": "Изменить пароль",
   "page-not_found-heading": "Страница не найдена!"
 }

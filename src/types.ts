@@ -14,6 +14,8 @@ export enum Pages {
     LIBRARY = '/library',
     READLIST = '/library/readlist',
     PROFILE_SETTINGS = '/profile/settings',
+    PROFILE_SETTINGS_CHANGE_EMAIL = '/profile/settings/change/email',
+    PROFILE_SETTINGS_CHANGE_PASSWORD = '/profile/settings/change/password',
     PROFILE = '/profile',
     NOT_FOUND = '/not_found'
 }
