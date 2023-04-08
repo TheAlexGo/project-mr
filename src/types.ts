@@ -8,16 +8,19 @@ export enum Lang {
     ENGLISH = 'english'
 }
 
+/**
+ * Для проверки корректности выбранной страницы
+ */
 export enum Pages {
-    GENERAL = '/',
     MANGA = '/library/manga',
-    LIBRARY = '/library',
     READLIST = '/library/readlist',
-    PROFILE_SETTINGS = '/profile/settings',
+    LIBRARY = '/library',
     PROFILE_SETTINGS_CHANGE_EMAIL = '/profile/settings/change/email',
     PROFILE_SETTINGS_CHANGE_PASSWORD = '/profile/settings/change/password',
+    PROFILE_SETTINGS = '/profile/settings',
     PROFILE = '/profile',
-    NOT_FOUND = '/not_found'
+    NOT_FOUND = '/not_found',
+    GENERAL = '/'
 }
 
 export enum SourceTypes {

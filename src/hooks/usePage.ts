@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
-
-import { useLocation } from 'react-router-dom';
+import { useEffect, useLayoutEffect } from 'react';
 
 import { IIcon } from '@components/Icon/Icon';
 import { useController } from '@hooks/useController';
@@ -21,16 +19,11 @@ export const usePage = (
     withHeading = false,
     withBack = false
 ) => {
-    const { loadPage, changePage, leavePage } = useController();
-
-    const location = useLocation();
+    const { loadPage, leavePage } = useController();
 
     useEffect(() => {
-        changePage(location.pathname, headerButtons, withHeading, withBack);
-    }, [changePage, headerButtons, location, withBack, withHeading]);
+        loadPage(page, headerButtons, withHeading, withBack);
+    }, [headerButtons, loadPage, page, withBack, withHeading]);
 
-    useEffect(() => {
-        loadPage();
-        return leavePage;
-    }, [leavePage, loadPage]);
+    useLayoutEffect(() => leavePage, [leavePage]);
 };

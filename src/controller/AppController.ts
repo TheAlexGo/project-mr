@@ -5,7 +5,7 @@ import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IApiCallback, Lang, Themes } from '@types';
+import { IApiCallback, Lang, Pages, Themes } from '@types';
 
 export class AppController {
     store: Store;
@@ -97,36 +97,52 @@ export class AppController {
         if (this.store.activePage === newPage) {
             window.scrollTo(0, 0);
         }
-        this.store.setLastPositionY(window.scrollY);
     };
 
-    changePage = (page: string, headerButtons: IIcon[], withHeading = false, withBack = false) => {
+    changePage = (page: string) => {
+        const { activePage } = this.store;
+        if (page === activePage) {
+            this.logger('Уже на странице:', page);
+            return;
+        }
         this.logger('Перешли на страницу:', page);
         this.store.setActivePage(page);
-        if (withHeading && page) {
-            this.store.setHeaderTitle(this.store.locale[`page-${page.toLowerCase()}-heading`]);
+    };
+
+    loadPage = (page: Pages, headerButtons: IIcon[], withHeading = false, withBack = false) => {
+        const { currentStatePage, activePage, isPageLoaded } = this.store;
+        if (isPageLoaded) {
+            this.logger('Страница уже загружена:', activePage);
+            return;
+        }
+        this.logger('Загрузили страницу:', activePage);
+        if (currentStatePage) {
+            setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
+        }
+        if (withHeading) {
+            this.store.setHeaderTitle(
+                this.store.locale[`page-${activePage.toLowerCase()}-heading`]
+            );
         } else {
             this.store.setHeaderTitle('');
         }
         this.store.setHeaderButtons(headerButtons);
         this.store.setHeaderWithBack(withBack);
-    };
-
-    loadPage = () => {
-        const { currentStatePage, activePage } = this.store;
-        this.logger('Загрузили страницу:', activePage);
-        if (currentStatePage) {
-            setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
-        }
+        this.store.setIsPageLoaded(true);
     };
 
     leavePage = () => {
-        this.logger('Покинули страницу:', this.store.activePage);
+        const { isPageLoaded, activePage } = this.store;
+        if (!isPageLoaded) {
+            this.logger('Страницу уже покинули:', activePage);
+            return;
+        }
+        this.logger('Покинули страницу:', activePage);
         const state = {
-            positionY: this.store.lastPositionY
+            positionY: window.scrollY
         };
         this.store.updateStatePages(state);
-        this.store.setLastPositionY(0);
+        this.store.setIsPageLoaded(false);
     };
 }
 

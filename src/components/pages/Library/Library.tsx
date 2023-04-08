@@ -26,11 +26,11 @@ const Library = () => {
         [locale, logger]
     );
 
-    usePage(Pages.LIBRARY, headerButtons, true);
-
     useEffect(() => {
         setItems(getMangaCardsMock(100));
     }, []);
+
+    usePage(Pages.LIBRARY, headerButtons, true);
 
     return (
         <Page className={classes.container}>
