@@ -2,13 +2,14 @@ import React, { useCallback, useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
 
-import { Button, ButtonStates, ButtonThemes } from '@components/Button/Button';
+import { Button } from '@components/Button/Button';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { Icon, Icons } from '@components/Icon/Icon';
 import { useController } from '@hooks/useController';
 import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
 import { Justifies, Lang, Pages } from '@types';
+import { getButtonSecondaryHoverProps, getButtonWithArrowProps } from '@utils/buttons';
 
 import { Page } from '../Page/Page';
 
@@ -20,6 +21,16 @@ const ProfileSettings = observer(() => {
 
     const headerButtons = useMemo(() => [], []);
     usePage(Pages.PROFILE_SETTINGS, headerButtons, true, true);
+
+    const buttonWithArrowProps = useMemo(
+        () => ({
+            className: classes['button'],
+            ...getButtonWithArrowProps()
+        }),
+        []
+    );
+
+    const buttonSecondaryHoverProps = useMemo(() => getButtonSecondaryHoverProps(), []);
 
     const clickHandler = useCallback(() => {
         if (lang === Lang.ENGLISH) {
@@ -38,26 +49,14 @@ const ProfileSettings = observer(() => {
                             {locale['profile-settings-security']}
                         </Heading>
                         <Button
-                            theme={ButtonThemes.SECONDARY}
-                            state={ButtonStates.HOVER}
-                            className={classes['button']}
+                            {...buttonWithArrowProps}
                             href={Pages.PROFILE_SETTINGS_CHANGE_EMAIL}
-                            contentJustify={Justifies.SPACE_BETWEEN}
-                            icon={<Icon icon={Icons.ARROW_RIGHT} ariaLabel={null} isNotButton />}
-                            withRightIcon
-                            isWide
                         >
                             {locale['profile-settings-security-email']}
                         </Button>
                         <Button
-                            theme={ButtonThemes.SECONDARY}
-                            state={ButtonStates.HOVER}
-                            className={classes['button']}
+                            {...buttonWithArrowProps}
                             href={Pages.PROFILE_SETTINGS_CHANGE_PASSWORD}
-                            contentJustify={Justifies.SPACE_BETWEEN}
-                            icon={<Icon icon={Icons.ARROW_RIGHT} ariaLabel={null} isNotButton />}
-                            withRightIcon
-                            isWide
                         >
                             {locale['profile-settings-security-password']}
                         </Button>
@@ -66,24 +65,17 @@ const ProfileSettings = observer(() => {
                         <Heading type={HeadingTypes.H3} className={classes['heading']}>
                             {locale['profile-settings-lang']}
                         </Heading>
-                        <Button
-                            theme={ButtonThemes.SECONDARY}
-                            state={ButtonStates.HOVER}
-                            onClick={clickHandler}
-                            isWide
-                        >
+                        <Button {...buttonSecondaryHoverProps} onClick={clickHandler}>
                             Поменять язык
                         </Button>
                     </div>
                 </div>
                 <Button
-                    theme={ButtonThemes.SECONDARY}
-                    state={ButtonStates.HOVER}
+                    {...buttonSecondaryHoverProps}
                     className={classes['button-delete']}
                     contentJustify={Justifies.SPACE_BETWEEN}
                     icon={<Icon icon={Icons.TRASH} ariaLabel={null} isNotButton />}
                     withRightIcon
-                    isWide
                 >
                     {locale['profile-settings-account-delete']}
                 </Button>
