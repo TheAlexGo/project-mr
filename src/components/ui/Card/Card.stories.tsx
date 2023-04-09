@@ -42,6 +42,11 @@ export default {
                 disable: true
             }
         },
+        wrapperClassName: {
+            table: {
+                disable: true
+            }
+        },
         onClick: {
             table: {
                 disable: true
