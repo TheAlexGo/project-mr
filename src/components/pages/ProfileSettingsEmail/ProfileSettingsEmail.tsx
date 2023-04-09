@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react';
+import React, { FormEvent, useCallback, useMemo, useState } from 'react';
 
 import { Button, ButtonThemes, ButtonTypes } from '@components/Button/Button';
 import { Input } from '@components/Input/Input';
@@ -20,12 +20,12 @@ const ProfileSettingsEmail = () => {
     const headerButtons = useMemo(() => [], []);
     usePage(Pages.PROFILE_SETTINGS_CHANGE_EMAIL, headerButtons, true, true);
 
-    const changeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
+    const changeHandler = useCallback((value: string) => {
+        setEmail(value);
     }, []);
 
-    const errorHandler = useCallback((result: boolean) => {
-        setIsValid(result);
+    const errorHandler = useCallback((isError: boolean) => {
+        setIsValid(!isError);
     }, []);
 
     const submitHandler = useCallback(
