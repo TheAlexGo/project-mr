@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
 
-import { Button, ButtonStates, ButtonThemes } from '@components/Button/Button';
+import { Button } from '@components/Button/Button';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { Icon, Icons } from '@components/Icon/Icon';
 import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
-import { Justifies, Pages } from '@types';
+import { Pages } from '@types';
+import { getButtonWithArrowProps } from '@utils/buttons';
 
 import { Theme } from './components/Theme/Theme';
 import pkg from '../../../../package.json';
@@ -16,9 +17,12 @@ import classes from './Profile.module.styl';
 const Profile = () => {
     const { locale } = useStore();
 
-    usePage(Pages.PROFILE, [], false, false);
+    const headerButtons = useMemo(() => [], []);
+    usePage(Pages.PROFILE, headerButtons, false, false);
 
     const versionApp = useMemo(() => `${locale['profile-version']} ${pkg.version}`, [locale]);
+
+    const buttonWithArrowProps = useMemo(() => getButtonWithArrowProps(), []);
 
     return (
         <Page>
@@ -37,14 +41,9 @@ const Profile = () => {
                         </div>
                     </div>
                     <Button
-                        theme={ButtonThemes.SECONDARY}
-                        state={ButtonStates.HOVER}
+                        {...buttonWithArrowProps}
                         className={classes['button-settings']}
                         href={Pages.PROFILE_SETTINGS}
-                        contentJustify={Justifies.SPACE_BETWEEN}
-                        icon={<Icon icon={Icons.ARROW_RIGHT} ariaLabel={null} isNotButton />}
-                        withRightIcon
-                        isWide
                     >
                         {locale['button-profile-settings-text']}
                     </Button>

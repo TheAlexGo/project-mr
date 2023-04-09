@@ -40,7 +40,17 @@ export default {
                 disable: true
             }
         },
+        type: {
+            table: {
+                disable: true
+            }
+        },
         className: {
+            table: {
+                disable: true
+            }
+        },
+        wrapperClassName: {
             table: {
                 disable: true
             }

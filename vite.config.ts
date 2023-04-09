@@ -74,7 +74,8 @@ export default defineConfig({
         }),
         react({
             exclude: /\.stories\.tsx?$/,
-            include: '**/*.tsx'
+            include: '**/*.tsx',
+            jsxImportSource: '@welldone-software/why-did-you-render'
         }),
         svgrPlugin(),
         eslintPlugin(),

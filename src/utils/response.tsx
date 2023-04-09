@@ -6,7 +6,7 @@ import { IMangaCard } from '@types';
 class ResponseBuilder {
     private client: null;
 
-    constructor(uri = 'https://') {
+    constructor() {
         this.client = null;
     }
 
@@ -30,6 +30,6 @@ class ResponseBuilder {
         return getMangaListMock(20);
     }
 }
-export const responseBuilder = new ResponseBuilder('/');
+export const responseBuilder = new ResponseBuilder();
 
 export const responseBuilderContext = createContext<ResponseBuilder>(responseBuilder);

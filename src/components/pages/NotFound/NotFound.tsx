@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Button, ButtonThemes } from '@components/Button/Button';
 import { Image } from '@components/Image/Image';
@@ -14,7 +14,8 @@ import classes from './NotFound.module.styl';
 const NotFound = () => {
     const { locale } = useStore();
 
-    usePage(Pages.NOT_FOUND);
+    const headerButtons = useMemo(() => [], []);
+    usePage(Pages.NOT_FOUND, headerButtons);
 
     return (
         <Page className={classes['not-found']}>

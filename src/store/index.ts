@@ -34,7 +34,7 @@ export class Store {
     ];
     locale: Record<string, string> = {};
     activePage: string;
-    headerTitle = '';
+    headerTitleKey = '';
     headerButtons: IIcon[] = [];
     headerWithBack = false;
     statePages: Map<string, IPageState> = new Map<string, IPageState>();
@@ -72,8 +72,8 @@ export class Store {
         this.activePage = page;
     }
 
-    setHeaderTitle(headerTitle: string) {
-        this.headerTitle = headerTitle;
+    setHeaderTitleKey(headerTitleKey: string) {
+        this.headerTitleKey = headerTitleKey;
     }
 
     setHeaderButtons(headerButtons: IIcon[]) {

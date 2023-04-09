@@ -11,6 +11,7 @@ import {
     CloseIcon,
     DayIcon,
     EditIcon,
+    EyeIcon,
     HomeIcon,
     LibraryIcon,
     MoreIcon,
@@ -40,7 +41,8 @@ export enum Icons {
     ARROW_RIGHT = 'arrow_right',
     DAY = 'day',
     NIGHT = 'night',
-    AUTO = 'auto'
+    AUTO = 'auto',
+    EYE = 'eye'
 }
 
 export interface IIcon {
@@ -138,6 +140,9 @@ export const Icon: FC<IIcon> = ({
                 break;
             case Icons.AUTO:
                 params.icon = <AutoIcon {...iconProps} />;
+                break;
+            case Icons.EYE:
+                params.icon = <EyeIcon {...iconProps} />;
                 break;
         }
         return params;

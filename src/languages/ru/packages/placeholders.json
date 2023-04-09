@@ -1,5 +1,7 @@
 {
-  "placeholder-reg-email": "E-mail",
-  "placeholder-reg-password": "Пароль",
-  "placeholder-reg-password-re": "Подтвердите пароль"
+  "ph-reg-email": "E-mail",
+  "ph-password": "Пароль",
+  "ph-password-re": "Подтвердите пароль",
+  "ph-old-password": "Старый пароль",
+  "ph-new-password": "Новый пароль"
 }

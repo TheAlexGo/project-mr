@@ -5,6 +5,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { StarIcon, TrashIcon, VkIcon } from '@icons';
 import { StoryCategories } from '@sb/types';
 import { Directions, Justifies, Positions, SQUARE_ELEMENT_SIZES } from '@types';
+import { getButtonWithArrowProps } from '@utils/buttons';
 
 import { Button, ButtonStates, ButtonThemes, ButtonTypes } from './Button';
 
@@ -108,7 +109,7 @@ export default {
                 category: StoryCategories.STYLE
             }
         },
-        disabled: {
+        isDisabled: {
             name: 'Сделать кнопку неактивной?',
             table: {
                 category: StoryCategories.STYLE
@@ -160,23 +161,30 @@ export default {
             table: {
                 disable: true
             }
+        },
+        className: {
+            table: {
+                disable: true
+            }
         }
     },
     args: {
         children: 'Button',
         type: ButtonTypes.BUTTON,
+        theme: ButtonThemes.PRIMARY,
+        state: ButtonStates.DEFAULT,
+        size: undefined,
         contentDirection: Directions.ROW,
         contentJustify: Justifies.CENTER,
         contentPosition: Positions.CENTER,
-        state: ButtonStates.DEFAULT,
         isWide: false,
         isRounded: false,
         isLoading: false,
+        isDisabled: false,
         isExternalLink: false,
         withLeftIcon: false,
         withRightIcon: false,
-        withNoPadding: false,
-        disabled: false
+        withNoPadding: false
     }
 } as ComponentMeta<Story>;
 
@@ -190,6 +198,11 @@ Primary.args = {
 export const Secondary: ComponentStory<Story> = Template.bind({});
 Secondary.args = {
     theme: ButtonThemes.SECONDARY
+};
+
+export const SecondaryWithArrow: ComponentStory<Story> = Template.bind({});
+SecondaryWithArrow.args = {
+    ...getButtonWithArrowProps()
 };
 
 export const Tag: ComponentStory<Story> = Template.bind({});

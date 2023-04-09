@@ -19,15 +19,15 @@ const General: FC = () => {
     const [comedyList, setComedyList] = useState<IMangaCard[]>([]);
 
     const { locale } = useStore();
-    const { logger } = useController();
+    const { debug } = useController();
     const { getTopList, getContinueReadingList, getComedyList } = useResponse();
 
     const headerButtons = useMemo(
         () => [
-            getIconObj(Icons.BELL, () => logger('Нажали на колокольчик!'), locale),
-            getIconObj(Icons.SEARCH, () => logger('Нажали на поиск!'), locale)
+            getIconObj(Icons.BELL, () => debug('Нажали на колокольчик!'), locale),
+            getIconObj(Icons.SEARCH, () => debug('Нажали на поиск!'), locale)
         ],
-        [locale, logger]
+        [locale, debug]
     );
 
     usePage(Pages.GENERAL, headerButtons);
