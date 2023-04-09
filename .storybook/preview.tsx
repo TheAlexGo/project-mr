@@ -3,6 +3,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Story } from "@storybook/react";
 
 import '../src/styles/common.styl';
+import { useStore } from '../src/hooks/useStore';
+import { useController } from '../src/hooks/useController';
 
 export const parameters = {
     actions: {
@@ -25,6 +27,10 @@ export const parameters = {
 
 export const decorators = [
     (Story: Story) => {
+        const { lang } = useStore();
+        const { initResource } = useController();
+        initResource(lang);
+
         return (
             <Router>
                 <div style={{ position: 'relative', height: '100%' }}>

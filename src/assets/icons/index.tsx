@@ -14,6 +14,7 @@ export { ReactComponent as ArrowRIcon } from './arrow_right_icon.svg';
 export { ReactComponent as DayIcon } from './day_icon.svg';
 export { ReactComponent as NightIcon } from './night_icon.svg';
 export { ReactComponent as AutoIcon } from './theme_icon.svg';
+export { ReactComponent as EyeIcon } from './eye_icon.svg';
 
 export { ReactComponent as VkIcon } from './vk_icon.svg';
 
