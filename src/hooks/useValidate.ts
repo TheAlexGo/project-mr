@@ -3,18 +3,18 @@ import { useEffect, useState } from 'react';
 import { useController } from '@hooks/useController';
 import { ValidateTypes } from '@services/ValidateService';
 
-export const useValidate = (value: string, type: ValidateTypes) => {
-    const [error, setError] = useState<string>('');
+export const useValidate = (value: string, type: ValidateTypes): string | null => {
+    const [error, setError] = useState<string | null>(null);
 
     const { validateService } = useController();
 
     useEffect(() => {
-        if (!value) {
-            return;
-        }
         switch (type) {
             case ValidateTypes.PASSWORD:
                 setError(validateService.checkPassword(value));
+                break;
+            case ValidateTypes.EMAIL:
+                setError(validateService.checkEmail(value));
                 break;
             case ValidateTypes.UNKNOWN:
                 setError(validateService.checkUnknown());

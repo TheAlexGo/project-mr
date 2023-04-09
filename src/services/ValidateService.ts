@@ -18,5 +18,15 @@ export class ValidateService {
         return '';
     };
 
+    checkEmail = (email: string): string | null => {
+        if (email === '') {
+            return null;
+        }
+        if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            return this.locale['error-auth-reg-email'];
+        }
+        return '';
+    };
+
     checkUnknown = (): string => this.locale['error-validate-unknown'];
 }

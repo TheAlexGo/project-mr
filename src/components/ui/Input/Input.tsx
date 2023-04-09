@@ -23,10 +23,12 @@ interface IInput {
     /** Установливает placeholder */
     placeholder: string;
     /** Слушатель события ввода */
-    onChange: ChangeEventHandler;
+    onChange?: ChangeEventHandler;
+    /** Коллбек на ошибку */
+    onError?: (result: boolean) => void;
 }
 
-export const Input: FC<IInput> = ({ type, placeholder, onChange }): JSX.Element => {
+export const Input: FC<IInput> = ({ type, placeholder, onChange, onError }): JSX.Element => {
     const [value, setValue] = useState<string>('');
     const [inputType, setInputType] = useState<string>('');
     const { locale } = useStore();
@@ -91,6 +93,12 @@ export const Input: FC<IInput> = ({ type, placeholder, onChange }): JSX.Element 
     useEffect(() => {
         setInputType(type);
     }, [type]);
+
+    useEffect(() => {
+        if (onError && error !== null) {
+            onError(!error);
+        }
+    }, [error, onError]);
 
     return (
         <div>

@@ -25,11 +25,11 @@ export class AppController {
         console.log(message, ...optionalParams);
     }
 
-    debug(message: unknown, ...optionalParams: unknown[]) {
+    debug = (message: unknown, ...optionalParams: unknown[]) => {
         if (import.meta.env.DEV) {
             this.logger(message, ...optionalParams);
         }
-    }
+    };
 
     initApi = async () => {
         this.debug('Начинается инициализация приложения...');

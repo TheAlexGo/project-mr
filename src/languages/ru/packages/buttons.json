@@ -4,5 +4,6 @@
   "button-back-aria-label": "Назад",
   "button-trash-aria-label": "Удалить",
   "button-profile-settings-text": "Настройки",
-  "button-show-password": "Показать пароль?"
+  "button-show-password": "Показать пароль?",
+  "button-save": "Сохранить"
 }

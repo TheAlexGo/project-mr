@@ -4,5 +4,6 @@
     "button-back-aria-label": "Back",
     "button-trash-aria-label": "Delete",
     "button-profile-settings-text": "Settings",
-    "button-show-password": "Show password?"
+    "button-show-password": "Show password?",
+    "button-save": "Save"
 }
