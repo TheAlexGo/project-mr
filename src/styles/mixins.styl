@@ -49,6 +49,20 @@ fontExtraBold() {
 }
 // /Fonts
 
+// Theme
+darkTheme() {
+    @media (prefers-color-scheme dark) {
+        :root:not(.__ui-theme_light) & {
+            {block};
+        }
+    }
+
+    :root.__ui-theme_dark & {
+        {block};
+    }
+}
+// /Theme
+
 hover($stateClass) {
     &:not(:disabled):not(.{$stateClass}-static):hover
     &.{$stateClass}-hover {

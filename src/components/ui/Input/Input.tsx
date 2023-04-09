@@ -1,12 +1,4 @@
-import React, {
-    ChangeEvent,
-    ChangeEventHandler,
-    FC,
-    useCallback,
-    useEffect,
-    useMemo,
-    useState
-} from 'react';
+import React, { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import cn from 'classnames';
 
@@ -17,18 +9,38 @@ import { ValidateTypes } from '@services/ValidateService';
 
 import classes from './Input.module.styl';
 
-interface IInput {
+export interface IInput {
     /** Устанавливает тип поля ввода */
     type: 'text' | 'email' | 'password';
-    /** Установливает placeholder */
+    /** Устанавливает placeholder */
     placeholder: string;
+    /** Устанавливает значение ошибки извне */
+    customError?: string | null;
+    /** Нужно ли показывать ошибку? */
+    showError?: boolean;
+    /** Нужно ли показывать кнопку "Показать пароль"? */
+    showEye?: boolean;
+    /** Нужно ли показать пароль? */
+    showPassword?: boolean;
     /** Слушатель события ввода */
-    onChange?: ChangeEventHandler;
+    onChange?: (currentValue: string) => void;
     /** Коллбек на ошибку */
-    onError?: (result: boolean) => void;
+    onError?: (isError: boolean) => void;
+    /** Слушатель клика на "Показать пароль" */
+    onClickEye?: () => void;
 }
 
-export const Input: FC<IInput> = ({ type, placeholder, onChange, onError }): JSX.Element => {
+export const Input: FC<IInput> = ({
+    type,
+    placeholder,
+    customError,
+    onChange,
+    onError,
+    onClickEye,
+    showEye = true,
+    showError = true,
+    showPassword = false
+}): JSX.Element => {
     const [value, setValue] = useState<string>('');
     const [inputType, setInputType] = useState<string>('');
     const { locale } = useStore();
@@ -44,7 +56,7 @@ export const Input: FC<IInput> = ({ type, placeholder, onChange, onError }): JSX
         }
     }, [type]);
 
-    const error = useValidate(value, validateType);
+    const error = useValidate(validateType, value, undefined, showError);
 
     const eyeClasses = useMemo(
         () =>
@@ -54,10 +66,12 @@ export const Input: FC<IInput> = ({ type, placeholder, onChange, onError }): JSX
         [inputType, type]
     );
 
+    const currentError = useMemo(() => customError || error, [customError, error]);
+
     const changeHandler = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             if (onChange) {
-                onChange(e);
+                onChange(e.target.value);
             }
             setValue(e.target.value);
         },
@@ -65,15 +79,18 @@ export const Input: FC<IInput> = ({ type, placeholder, onChange, onError }): JSX
     );
 
     const clickEyeHandler = useCallback(() => {
-        if (inputType === 'password') {
+        if (onClickEye) {
+            onClickEye();
+        } else if (inputType === 'password') {
             setInputType('text');
         } else {
             setInputType('password');
         }
-    }, [inputType]);
+    }, [inputType, onClickEye]);
 
     const renderEyeIcon = useCallback(
         () =>
+            showEye &&
             type === 'password' && (
                 <Icon
                     wrapperClassName={eyeClasses}
@@ -82,23 +99,33 @@ export const Input: FC<IInput> = ({ type, placeholder, onChange, onError }): JSX
                     onClick={clickEyeHandler}
                 />
             ),
-        [clickEyeHandler, eyeClasses, locale, type]
+        [clickEyeHandler, eyeClasses, locale, showEye, type]
     );
 
     const renderError = useCallback(
-        () => error && <div className={classes['error']}>{error}</div>,
-        [error]
+        () => showError && currentError && <div className={classes['error']}>{currentError}</div>,
+        [currentError, showError]
     );
 
     useEffect(() => {
-        setInputType(type);
-    }, [type]);
+        if (type === 'password' && showPassword) {
+            setInputType('text');
+        } else {
+            setInputType(type);
+        }
+    }, [showPassword, type]);
 
     useEffect(() => {
-        if (onError && error !== null) {
-            onError(!error);
+        if (onError) {
+            if (showError) {
+                if (error !== null) {
+                    onError(!!error);
+                }
+            } else {
+                onError(!value);
+            }
         }
-    }, [error, onError]);
+    }, [error, onError, showError, value]);
 
     return (
         <div>

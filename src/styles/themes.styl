@@ -1,15 +1,3 @@
-darkTheme() {
-    @media (prefers-color-scheme dark) {
-        :root:not(.__ui-theme_light) & {
-            {block};
-        }
-    }
-
-    :root.__ui-theme_dark & {
-        {block};
-    }
-}
-
 @css {
     :root {
         --color_main_rgb: 74, 78, 84;
