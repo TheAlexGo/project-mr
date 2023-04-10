@@ -7,6 +7,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Header } from '@components/Header/Header';
 import { HeadingTypes } from '@components/Heading/Heading';
 import { Loader } from '@components/Loader/Loader';
+import { Modals } from '@components/Modals/Modals';
 import { Navbar } from '@components/Navbar/Navbar';
 import { useController } from '@hooks/useController';
 import { useStore } from '@hooks/useStore';
@@ -58,7 +59,7 @@ export const LayoutMain: FC = observer((): JSX.Element => {
     }, [changePage, location.pathname]);
 
     return (
-        <div className={rootClasses}>
+        <main className={rootClasses}>
             {renderHeader()}
             <Suspense fallback={<Loader />}>
                 <Outlet />
@@ -66,6 +67,7 @@ export const LayoutMain: FC = observer((): JSX.Element => {
             <div className={classes.navbar}>
                 <Navbar items={navigate} />
             </div>
-        </div>
+            <Modals />
+        </main>
     );
 });

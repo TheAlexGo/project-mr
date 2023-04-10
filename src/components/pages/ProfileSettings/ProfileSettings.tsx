@@ -8,8 +8,9 @@ import { Icon, Icons } from '@components/Icon/Icon';
 import { useController } from '@hooks/useController';
 import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
-import { Justifies, Lang, Pages } from '@types';
+import { Justifies, Lang, ModalLinks, Pages } from '@types';
 import { getButtonSecondaryHoverProps, getButtonWithArrowProps } from '@utils/buttons';
+import { getModalLink } from '@utils/routing';
 
 import { Page } from '../Page/Page';
 
@@ -75,6 +76,7 @@ const ProfileSettings = observer(() => {
                     className={classes['button-delete']}
                     contentJustify={Justifies.SPACE_BETWEEN}
                     icon={<Icon icon={Icons.TRASH} ariaLabel={null} isNotButton />}
+                    href={getModalLink(ModalLinks.DELETE_ACCOUNT)}
                     withRightIcon
                 >
                     {locale['profile-settings-account-delete']}

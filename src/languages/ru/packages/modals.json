@@ -5,5 +5,7 @@
   "modal-rating-button-share": "Поделиться мангой",
   "modal-rating-button-edit": "Изменить оценку",
   "modal-rating-button-rate": "Поставить оценку",
-  "modal-search-heading": "Поиск по библиотеке"
+  "modal-search-heading": "Поиск по библиотеке",
+  "modal-account-delete-heading": "Удалить аккаунт?",
+  "modal-account-delete-description": "Вы действительно хотите удалить аккаунт? Все персональная информация будет утеряна"
 }

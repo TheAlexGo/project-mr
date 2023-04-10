@@ -131,7 +131,8 @@ export enum ModalLinks {
     WELCOME = '#welcome',
     IN_FAVORITE = '#in-favorite',
     MANGA_DESCRIPTION = '#manga-description',
-    MANGA_RATING = '#manga-rating'
+    MANGA_RATING = '#manga-rating',
+    DELETE_ACCOUNT = '#delete-account'
 }
 
 export enum NotificationTypes {
@@ -268,17 +269,6 @@ export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
     /** Проверяет, прошло ли поле валидацию */
     isCheck?: boolean;
     showErrorBlock?: boolean;
-}
-
-export interface IModal {
-    heading?: string;
-    children?: ReactNode;
-    className?: string;
-    showCloseButton?: boolean;
-    withEasyClose?: boolean;
-    classNameOverlay?: string;
-    isFullScreen?: boolean;
-    isOpacity?: boolean;
 }
 
 export interface IChapter {

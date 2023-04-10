@@ -12,14 +12,20 @@ export enum HeadingTypes {
 interface IHeading {
     /** Содержимое заголовка */
     children: ReactNode;
+    /** Уникальный идентификатор */
+    id?: string;
     /** Тип заголовка */
     type?: HeadingTypes;
     /** Внешний класс */
     className?: string;
 }
 
-export const Heading: FC<IHeading> = ({ type = HeadingTypes.H1, children, className }) => {
+export const Heading: FC<IHeading> = ({ id, type = HeadingTypes.H1, children, className }) => {
     const HeadingComponent = type;
 
-    return <HeadingComponent className={className}>{children}</HeadingComponent>;
+    return (
+        <HeadingComponent id={id} className={className}>
+            {children}
+        </HeadingComponent>
+    );
 };
