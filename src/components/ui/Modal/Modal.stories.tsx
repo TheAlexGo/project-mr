@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
@@ -44,6 +44,11 @@ export default {
             table: {
                 disable: true
             }
+        },
+        container: {
+            table: {
+                disable: true
+            }
         }
     },
     args: {
@@ -54,4 +59,20 @@ export default {
     }
 } as ComponentMeta<Story>;
 
-export const Component: ComponentStory<Story> = (args) => <Modal {...args} />;
+export const Component: ComponentStory<Story> = (args) => {
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (ref.current && !isLoaded) {
+            setIsLoaded(true);
+        }
+    }, [isLoaded]);
+
+    return (
+        <div>
+            <div id="container-modal" ref={ref} />
+            <Modal {...args} container={ref.current} />
+        </div>
+    );
+};

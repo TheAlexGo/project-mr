@@ -5,7 +5,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { DeleteAccount } from '@components/Modals/components/DeleteAccount/DeleteAccount';
 import { ModalLinks } from '@types';
 
-const ModalsComponent: FC = (): JSX.Element | null => {
+interface IModals {
+    container?: HTMLElement | null;
+}
+
+const ModalsComponent: FC<IModals> = ({ container }): JSX.Element | null => {
     const { hash } = useLocation();
     const navigate = useNavigate();
 
@@ -15,7 +19,7 @@ const ModalsComponent: FC = (): JSX.Element | null => {
 
     switch (hash as ModalLinks) {
         case ModalLinks.DELETE_ACCOUNT:
-            return <DeleteAccount onCancel={cancelHandler} />;
+            return <DeleteAccount onCancel={cancelHandler} container={container} />;
         default:
             return null;
     }

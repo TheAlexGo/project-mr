@@ -31,6 +31,10 @@ export interface IModal {
     container?: HTMLElement | null;
 }
 
+/**
+ * Основной компонент модального окна
+ * @constructor
+ */
 export const Modal: FC<IModal> = ({
     id,
     heading,
@@ -38,7 +42,7 @@ export const Modal: FC<IModal> = ({
     actionText,
     onCancel,
     onAction,
-    container = document.querySelector('#modal-container')
+    container = document.querySelector('#container-modal')
 }): JSX.Element | null => {
     const [prevElement, setPrevElement] = useState<HTMLElement>();
     const { locale } = useStore();

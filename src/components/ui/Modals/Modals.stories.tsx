@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button, ButtonThemes } from '@components/Button/Button';
 import { ModalLinks } from '@types';
 import { getModalLink } from '@utils/routing';
+
+import { Modals } from './Modals';
 
 type Story = FC<{
     showModal: boolean;
@@ -31,7 +33,10 @@ export default {
 } as ComponentMeta<Story>;
 
 const Template: ComponentStory<Story> = ({ showModal, link }) => {
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const navigate = useNavigate();
+    const ref = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         if (showModal) {
             navigate(getModalLink(link));
@@ -40,10 +45,20 @@ const Template: ComponentStory<Story> = ({ showModal, link }) => {
         }
     }, [link, navigate, showModal]);
 
+    useEffect(() => {
+        if (ref.current && !isLoaded) {
+            setIsLoaded(true);
+        }
+    }, [isLoaded]);
+
     return (
-        <Button theme={ButtonThemes.PRIMARY} href={getModalLink(link)}>
-            Показать модалку
-        </Button>
+        <div>
+            <Button theme={ButtonThemes.PRIMARY} href={getModalLink(link)}>
+                Показать модалку
+            </Button>
+            <div id="container-modal" ref={ref} />
+            {isLoaded && <Modals container={ref.current} />}
+        </div>
     );
 };
 
