@@ -15,7 +15,8 @@ import {
     Manga,
     ProfileSettings,
     ProfileSettingsEmail,
-    ProfileSettingsPassword
+    ProfileSettingsPassword,
+    ProfileSettingsLanguage
 } from '@pages';
 import { Pages, Themes } from '@types';
 import { AUTO_MODIFIER, DARK_MODIFIER, LIGHT_MODIFIER } from '@utils/constants';
@@ -64,6 +65,10 @@ export const App: FC = observer(() => {
                     <Route
                         path={Pages.PROFILE_SETTINGS_CHANGE_PASSWORD}
                         element={<ProfileSettingsPassword />}
+                    />
+                    <Route
+                        path={Pages.PROFILE_SETTINGS_CHANGE_LANGUAGE}
+                        element={<ProfileSettingsLanguage />}
                     />
                     <Route path={Pages.NOT_FOUND} element={<NotFound />} />
                     <Route path="*" element={<Navigate to={Pages.NOT_FOUND} />} />

@@ -5,5 +5,6 @@
   "page-/profile/settings-heading": "Настройки",
   "page-/profile/settings/change/email-heading": "Изменить почту",
   "page-/profile/settings/change/password-heading": "Изменить пароль",
+  "page-/profile/settings/change/language-heading": "Язык",
   "page-not_found-heading": "Страница не найдена!"
 }

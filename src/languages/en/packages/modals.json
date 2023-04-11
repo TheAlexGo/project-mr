@@ -1,5 +1,11 @@
 {
   "modal-in-favorite-heading": "Add Manga",
-  "modal-in-favorite-create": "Create readlist",
-  "modal-search-heading": "Search in library"
+  "modal-in-favorite-create": "Create Sheet",
+  "modal-rating-title": "Estimate",
+  "modal-rating-button-share": "Share Manga",
+  "modal-rating-button-edit": "Change rating",
+  "modal-rating-button-rate": "Rate",
+  "modal-search-heading": "Library Search",
+  "modal-account-delete-heading": "Delete account?",
+  "modal-account-delete-description": "Are you sure you want to delete your account? All personal information will be lost"
 }

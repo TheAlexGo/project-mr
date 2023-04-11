@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Story } from "@storybook/react";
 
+import { useStore } from '@hooks/useStore';
+import { useController } from '@hooks/useController';
 import '../src/styles/common.styl';
-import { useStore } from '../src/hooks/useStore';
-import { useController } from '../src/hooks/useController';
 
 export const parameters = {
     actions: {
@@ -29,7 +29,10 @@ export const decorators = [
     (Story: Story) => {
         const { lang } = useStore();
         const { initResource } = useController();
-        initResource(lang);
+
+        useEffect(() => {
+            initResource(lang);
+        }, []);
 
         return (
             <Router>

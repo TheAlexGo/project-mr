@@ -88,7 +88,7 @@ multiEllip($countOfLine, $lineHeight = 16px, $showEllipsis = true) {
 
 squareElementSizes($withAlignCenter = false) {
     &.__size {
-        for $size in range(24, 52, 4) {
+        for $size in range(16, 52, 4) {
             &-s{$size} {
                 if $withAlignCenter {
                     top: 'calc(50% - %spx)' % ($size / 2);

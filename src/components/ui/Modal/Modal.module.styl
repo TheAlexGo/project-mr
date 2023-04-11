@@ -1,0 +1,54 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 11;
+    display: flex;
+    padding: 24px;
+    background-color: $color_black-060;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding: 24px 24px 0;
+    text-align: center;
+    background-color: $color_surface;
+    border-radius: 8px;
+}
+
+.heading {
+    margin-bottom: 8px;
+    fontBold();
+    color: $color_main;
+    font-size: $fs-l;
+}
+
+.body {
+    margin-bottom: 20px;
+    color: $color_secondary;
+    text-align: center;
+}
+
+.footer {
+    display: flex;
+    width: 100%;
+}
+
+.button {
+    flex-grow: 1;
+    fontMedium();
+    font-size: $fs-s;
+
+    &.__primary {
+        color: $color_primary;
+    }
+
+    &.__danger {
+        color: $color_error;
+    }
+}

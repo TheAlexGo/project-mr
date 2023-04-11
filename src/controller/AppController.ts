@@ -88,7 +88,7 @@ export class AppController {
                     (typeof name === 'symbol' && name.description) ||
                     (typeof name === 'string' && name.includes('isMobX'));
                 if (isMobx) {
-                    return target[name];
+                    return name;
                 }
                 const currentKey = name.toString();
                 const value = target[currentKey];
