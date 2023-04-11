@@ -6,6 +6,7 @@ import { autorun, toJS } from 'mobx';
  * @param prefix - префикс хранилища для ключа LS
  * @param keys - список сохраняемых полей
  */
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export const makeLocalStorage = <T extends Record<string, any>, K extends keyof T>(
     store: T,
     prefix: string,

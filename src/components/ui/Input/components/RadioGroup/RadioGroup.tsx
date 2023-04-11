@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { Radio } from '@components/Input/components/Radio/Radio';
