@@ -4,6 +4,7 @@ import { makeAutoObservable } from 'mobx';
 
 import { Icons, IIcon } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
+import { makeLocalStorage } from '@store/autoSave';
 import { IPageState, IThemeButton, Lang, NavTabs, Pages, Themes } from '@types';
 import { getPageName } from '@utils/routing';
 
@@ -50,6 +51,8 @@ export class Store {
         } else {
             this.activePage = Pages.GENERAL;
         }
+
+        makeLocalStorage<Store, keyof Store>(this, 'store', ['lang', 'activeTheme']);
     }
 
     setIsAppReady = (isAppReady: boolean) => {
