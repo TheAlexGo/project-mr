@@ -1,46 +1,31 @@
-darkTheme() {
-    @media (prefers-color-scheme dark) {
-        :root:not(.__ui-theme_light) & {
-            {block};
-        }
-    }
-
-    :root.__ui-theme_dark & {
-        {block};
-    }
-}
-
 @css {
     :root {
-        --color_main_rgb: 0, 0, 0;
+        --color_main_rgb: 74, 78, 84;
         --color_white_rgb: 255, 255, 255;
         --color_main: rgb(var(--color_main_rgb));
-        --color_main-06: rgba(var(--color_main_rgb), 0.6);
-        --color_secondary: #a8a8a8;
-        --color_background: #fff;
-        --color_surface: #f5f5f5;
-        --color_on-surface: #333;
+        --color_secondary: #767676;
+        --color_background: #f4f6f8;
+        --color_surface: #fff;
+        --color_on-surface: #484c53;
         --color_error: #c73825;
         --color_white: rgb(var(--color_white_rgb));
-        --color_white-008: rgba(var(--color_white_rgb), 0.08);
-        --color_black: #000;
+        --color_black_rgb: 0, 0, 0;
+        --color_black: rgb(var(--color_black));
+        --color_black-060: rgba(var(--color_black_rgb), 0.6);
         --color_hover: #b4abed;
-        --color_active: #5a45d8;
-        --color_primary: #412acb;
+        --color_active: #471cfb;
+        --color_primary: #6a56e6;
         --color_light: #ddd9f7;
         --color_navy-hover: #b4abed;
-
-        /* Для звёздочек */
-        --color_orange: #f8be2a;
-        --color_yellow: #fafd67;
-        --color_blue: #6791fd;
-        --color_pink: #fd67ca;
     }
 }
 
 +darkTheme() {
     --color_main_rgb: 255, 255, 255;
     --color_background: #1a1818;
-    --color_secondary: #808080;
+    --color_secondary: #959595;
     --color_surface: #242424;
+    --color_error: #ef452e;
+    --color_active: #ac98ff;
+    --color_active_dark: #4b2fc4;
 }

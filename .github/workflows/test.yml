@@ -7,9 +7,7 @@ on:
 env:
   DEPLOY_SERVER_HOST: ${{ secrets.DEPLOY_SERVER_HOST }}
   DEPLOY_SERVER_PORT: ${{ secrets.DEPLOY_SERVER_PORT }}
-  USERNAME: ${{ secrets.DEPLOY_SERVER_USERNAME }}
-  KEY: ${{ secrets.DEPLOY_SERVER_KEY }}
-  DEPLOY_PATH: ${{ secrets.TEST_DEPLOY_PATH }}
+  TEST_DEPLOY_PATH: ${{ secrets.TEST_DEPLOY_PATH }}
   BUILD_SCRIPT: npm run build
   BUILD_SCRIPT_OUTPUT: dist
 
@@ -32,11 +30,11 @@ jobs:
       - name: Deploy to Test Server
         uses: appleboy/scp-action@master
         with:
-          host: $TEST_DEPLOY_SERVER_HOST
-          port: $TEST_DEPLOY_SERVER_PORT
-          username: $USERNAME
-          key: $KEY
-          source: $BUILD_SCRIPT_OUTPUT
+          host: ${{ secrets.DEPLOY_SERVER_HOST }}
+          port: ${{ secrets.DEPLOY_SERVER_PORT }}
+          username: ${{ secrets.DEPLOY_SERVER_USERNAME }}
+          key: ${{ secrets.DEPLOY_SERVER_KEY }}
+          source: ${{ env.BUILD_SCRIPT_OUTPUT }}
           target: ${{ env.TEST_DEPLOY_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
           strip_components: 1
       - name: Print Info

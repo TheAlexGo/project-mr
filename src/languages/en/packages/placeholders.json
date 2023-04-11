@@ -1,5 +1,7 @@
 {
-  "placeholder-reg-email": "E-mail",
-  "placeholder-reg-password": "Password",
-  "placeholder-reg-password-re": "Confirm the password"
+  "ph-reg-email": "E-mail",
+  "ph-password": "Password",
+  "ph-password-re": "Confirm password",
+  "ph-old-password": "Past password",
+  "ph-new-password": "New password"
 }

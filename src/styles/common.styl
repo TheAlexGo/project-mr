@@ -30,12 +30,16 @@ body {
 }
 
 body {
-    color: var(--color_main);
+    color: $color_main;
     font-style: normal;
-    background-color: var(--color_background);
+    background-color: $color_background;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     fontRegular();
+
+    &.__is-overflow_hidden {
+        overflow: hidden;
+    }
 }
 
 #root {
@@ -53,14 +57,7 @@ h4
 h5
 h6 {
     margin: 0;
-}
-
-h2 {
-    font-size: $font-size-h2;
-}
-
-h3 {
-    font-size: $font-size-h3;
+    font-size: inherit;
 }
 
 h4 {

@@ -2,5 +2,10 @@
     "button-bell-aria-label": "Notification",
     "button-search-aria-label": "Search",
     "button-back-aria-label": "Back",
-    "button-trash-aria-label": "Delete"
+    "button-trash-aria-label": "Delete",
+    "button-profile-settings-text": "Settings",
+    "button-show-password": "Show password?",
+    "button-save": "Save",
+    "button-cancel": "Cancel",
+    "button-delete": "Delete"
 }

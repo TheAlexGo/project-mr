@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "storybook": "NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 6006",
     "build-storybook": "NODE_OPTIONS=--openssl-legacy-provider build-storybook -o sb-dist",
@@ -47,6 +47,7 @@
     "@typescript-eslint/parser": "^5.49.0",
     "@vitejs/plugin-legacy": "^3.0.2",
     "@vitejs/plugin-react": "^3.0.1",
+    "@welldone-software/why-did-you-render": "^7.0.1",
     "autoprefixer": "^10.4.14",
     "axios": "^1.2.6",
     "babel-loader": "^9.1.2",

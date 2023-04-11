@@ -4,7 +4,8 @@ import { makeAutoObservable } from 'mobx';
 
 import { Icons, IIcon } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
-import { IPageState, Lang, NavTabs, Pages } from '@types';
+import { makeLocalStorage } from '@store/autoSave';
+import { IPageState, IThemeButton, Lang, NavTabs, Pages, Themes } from '@types';
 import { getPageName } from '@utils/routing';
 
 export class Store {
@@ -13,14 +14,32 @@ export class Store {
      */
     isAppReady = false;
     lang = Lang.RUSSIAN;
+    activeTheme = Themes.AUTO;
     readonly defaultLang = Lang.RUSSIAN;
+    readonly availableThemes: IThemeButton[] = [
+        {
+            theme: Themes.DARK,
+            icon: Icons.NIGHT,
+            text: 'profile-theme-dark'
+        },
+        {
+            theme: Themes.LIGHT,
+            icon: Icons.DAY,
+            text: 'profile-theme-light'
+        },
+        {
+            theme: Themes.AUTO,
+            icon: Icons.AUTO,
+            text: 'profile-theme-auto'
+        }
+    ];
     locale: Record<string, string> = {};
     activePage: string;
-    headerTitle = '';
+    headerTitleKey = '';
     headerButtons: IIcon[] = [];
     headerWithBack = false;
     statePages: Map<string, IPageState> = new Map<string, IPageState>();
-    lastPositionY = 0;
+    isPageLoaded = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -32,6 +51,8 @@ export class Store {
         } else {
             this.activePage = Pages.GENERAL;
         }
+
+        makeLocalStorage<Store, keyof Store>(this, 'store', ['lang', 'activeTheme']);
     }
 
     setIsAppReady = (isAppReady: boolean) => {
@@ -42,9 +63,9 @@ export class Store {
         this.lang = lang;
     };
 
-    setLastPositionY = (lastPositionY: number) => {
-        this.lastPositionY = lastPositionY;
-    };
+    setTheme(theme: Themes) {
+        this.activeTheme = theme;
+    }
 
     setLocale(locale: Record<string, string>) {
         this.locale = locale;
@@ -54,8 +75,8 @@ export class Store {
         this.activePage = page;
     }
 
-    setHeaderTitle(headerTitle: string) {
-        this.headerTitle = headerTitle;
+    setHeaderTitleKey(headerTitleKey: string) {
+        this.headerTitleKey = headerTitleKey;
     }
 
     setHeaderButtons(headerButtons: IIcon[]) {
@@ -64,6 +85,10 @@ export class Store {
 
     setHeaderWithBack(headerWithBack: boolean) {
         this.headerWithBack = headerWithBack;
+    }
+
+    setIsPageLoaded(isPageLoaded: boolean) {
+        this.isPageLoaded = isPageLoaded;
     }
 
     updateStatePages(statePage: IPageState) {

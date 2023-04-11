@@ -29,7 +29,7 @@ export const Header: FC<IHeader> = ({
     headingType = HeadingTypes.H1,
     needBack = false
 }) => {
-    const { locale, activePage } = useStore();
+    const { locale } = useStore();
     const navigate = useNavigate();
 
     const clickBackHandler = useCallback(() => {
@@ -59,16 +59,16 @@ export const Header: FC<IHeader> = ({
                     />
                 )}
                 {heading && (
-                    <Heading className={classes.heading} type={headingType} text={heading} />
+                    <Heading className={classes.heading} type={headingType}>
+                        {heading}
+                    </Heading>
                 )}
             </div>
         );
     }, [clickBackHandler, heading, headingType, locale, needBack]);
 
-    const key = useMemo(() => `${activePage}Header`, [activePage]);
-
     return (
-        <div key={key} className={classes.header}>
+        <div className={classes.header}>
             <div className={classes.wrapper}>
                 {leftComponent}
                 <div

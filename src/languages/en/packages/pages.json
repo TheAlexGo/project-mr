@@ -3,5 +3,8 @@
   "page-/library-heading": "Library",
   "page-profile-heading": "Profile",
   "page-/profile/settings-heading": "Settings",
+  "page-/profile/settings/change/email-heading": "Change email",
+  "page-/profile/settings/change/password-heading": "Change password",
+  "page-/profile/settings/change/language-heading": "Language",
   "page-not-found": "Page not found!"
 }

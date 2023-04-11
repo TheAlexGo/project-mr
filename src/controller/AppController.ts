@@ -5,7 +5,7 @@ import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IApiCallback, Lang } from '@types';
+import { IApiCallback, Lang, Pages, Themes } from '@types';
 
 export class AppController {
     store: Store;
@@ -25,10 +25,16 @@ export class AppController {
         console.log(message, ...optionalParams);
     }
 
+    debug = (message: unknown, ...optionalParams: unknown[]) => {
+        if (import.meta.env.DEV) {
+            this.logger(message, ...optionalParams);
+        }
+    };
+
     initApi = async () => {
-        this.logger('Начинается инициализация приложения...');
+        this.debug('Начинается инициализация приложения...');
         if (this.store.isAppReady) {
-            this.logger('Приложение уже инициализированно!');
+            this.debug('Приложение уже инициализированно!');
             return false;
         }
         return this.apiService
@@ -38,14 +44,14 @@ export class AppController {
                 return result;
             })
             .then<boolean>((result) => {
-                this.logger('Приложение инициализированно успешно!');
+                this.debug('Приложение инициализированно успешно!');
                 this.store.setIsAppReady(result);
                 return result;
             });
     };
 
     apiCallback: IApiCallback = (method, result, data) => {
-        this.logger(method, result, data);
+        this.debug(method, result, data);
     };
 
     /**
@@ -54,7 +60,15 @@ export class AppController {
     switchLang = (lang: Lang) => {
         this.initResource(lang);
         this.store.setLang(lang);
-        this.logger('Установлен язык:', lang);
+        this.debug('Установлен язык:', lang);
+    };
+
+    /**
+     * Устанавливает новую тему
+     * @param {Themes} theme - выбранная тема
+     */
+    changeTheme = (theme: Themes) => {
+        this.store.setTheme(theme);
     };
 
     /**
@@ -62,18 +76,24 @@ export class AppController {
      */
     initResource = (lang: Lang) => {
         if (this.store.lang === lang && Object.keys(this.store.locale).length) {
-            this.logger(`Ресурс ${lang} уже загружен!`);
+            this.debug(`Ресурс ${lang} уже загружен!`);
             return;
         }
-        const { logger } = this;
+        const { debug } = this;
         const resource = this.langService.loadResource(lang);
 
         const currentResourceObj = new Proxy(resource, {
-            get(target: Record<string, string>, name) {
+            get(target: Record<string | symbol, string>, name) {
+                const isMobx =
+                    (typeof name === 'symbol' && name.description) ||
+                    (typeof name === 'string' && name.includes('isMobX'));
+                if (isMobx) {
+                    return name;
+                }
                 const currentKey = name.toString();
                 const value = target[currentKey];
-                if (!value) {
-                    logger(`Для ключа ${currentKey} нет локализации!`);
+                if (currentKey && !value) {
+                    debug(`Для ключа ${currentKey} нет локализации!`);
                     return currentKey;
                 }
                 return value;
@@ -82,43 +102,57 @@ export class AppController {
 
         this.store.setLocale(currentResourceObj);
         this.validateService.setLocale(currentResourceObj);
-        this.logger(`Ресурс ${lang} загружен:`, currentResourceObj);
+        this.debug(`Ресурс ${lang} загружен:`, currentResourceObj);
     };
 
     navigate = (newPage: string) => {
         if (this.store.activePage === newPage) {
             window.scrollTo(0, 0);
         }
-        this.store.setLastPositionY(window.scrollY);
     };
 
-    changePage = (page: string, headerButtons: IIcon[], withHeading = false, withBack = false) => {
-        this.logger('Перешли на страницу:', page);
-        this.store.setActivePage(page);
-        if (withHeading && page) {
-            this.store.setHeaderTitle(this.store.locale[`page-${page.toLowerCase()}-heading`]);
-        } else {
-            this.store.setHeaderTitle('');
+    changePage = (page: string) => {
+        const { activePage } = this.store;
+        if (page === activePage) {
+            this.debug('Уже на странице:', page);
+            return;
         }
-        this.store.setHeaderButtons(headerButtons);
-        this.store.setHeaderWithBack(withBack);
+        this.debug('Перешли на страницу:', page);
+        this.store.setActivePage(page);
     };
 
-    loadPage = () => {
-        const { currentStatePage, activePage } = this.store;
-        this.logger('Загрузили страницу:', activePage);
+    loadPage = (page: Pages, headerButtons: IIcon[], withHeading = false, withBack = false) => {
+        const { currentStatePage, activePage, isPageLoaded } = this.store;
+        if (isPageLoaded) {
+            this.debug('Страница уже загружена:', activePage);
+            return;
+        }
+        this.debug('Загрузили страницу:', activePage);
         if (currentStatePage) {
             setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
         }
+        if (withHeading) {
+            this.store.setHeaderTitleKey(`page-${activePage.toLowerCase()}-heading`);
+        } else {
+            this.store.setHeaderTitleKey('');
+        }
+        this.store.setHeaderButtons(headerButtons);
+        this.store.setHeaderWithBack(withBack);
+        this.store.setIsPageLoaded(true);
     };
 
     leavePage = () => {
-        this.logger('Покинули страницу:', this.store.activePage);
+        const { isPageLoaded, activePage } = this.store;
+        if (!isPageLoaded) {
+            this.debug('Страницу уже покинули:', activePage);
+            return;
+        }
+        this.debug('Покинули страницу:', activePage);
         const state = {
-            positionY: this.store.lastPositionY
+            positionY: window.scrollY
         };
         this.store.updateStatePages(state);
-        this.store.setLastPositionY(0);
+        this.store.setIsPageLoaded(false);
     };
 }
 

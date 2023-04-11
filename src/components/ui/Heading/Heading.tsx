@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 
 export enum HeadingTypes {
     H1 = 'h1',
@@ -11,15 +11,21 @@ export enum HeadingTypes {
 
 interface IHeading {
     /** Содержимое заголовка */
-    text: string;
+    children: ReactNode;
+    /** Уникальный идентификатор */
+    id?: string;
     /** Тип заголовка */
     type?: HeadingTypes;
     /** Внешний класс */
     className?: string;
 }
 
-export const Heading: FC<IHeading> = ({ type = HeadingTypes.H1, text, className }) => {
+export const Heading: FC<IHeading> = ({ id, type = HeadingTypes.H1, children, className }) => {
     const HeadingComponent = type;
 
-    return <HeadingComponent className={className}>{text}</HeadingComponent>;
+    return (
+        <HeadingComponent id={id} className={className}>
+            {children}
+        </HeadingComponent>
+    );
 };

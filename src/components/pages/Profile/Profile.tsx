@@ -1,54 +1,59 @@
 import React, { useMemo } from 'react';
 
-import { observer } from 'mobx-react-lite';
-
 import { Button } from '@components/Button/Button';
+import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { Icon, Icons } from '@components/Icon/Icon';
 import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
-import { ArrowRIcon } from '@icons';
-import { Pages, Positions } from '@types';
-import { getProfileSettingsLink } from '@utils/routing';
+import { Pages } from '@types';
+import { getButtonWithArrowProps } from '@utils/buttons';
 
+import { Theme } from './components/Theme/Theme';
+import pkg from '../../../../package.json';
 import { Page } from '../Page/Page';
 
 import classes from './Profile.module.styl';
 
-const Profile = observer(() => {
+const Profile = () => {
     const { locale } = useStore();
 
-    usePage(Pages.PROFILE);
+    const headerButtons = useMemo(() => [], []);
+    usePage(Pages.PROFILE, headerButtons, false, false);
 
-    const settingsLink = useMemo(() => getProfileSettingsLink(), []);
+    const versionApp = useMemo(() => `${locale['profile-version']} ${pkg.version}`, [locale]);
+
+    const buttonWithArrowProps = useMemo(() => getButtonWithArrowProps(), []);
 
     return (
         <Page>
             <div className={classes['container']}>
-                <div className={classes['container-name']}>
-                    <div>
-                        <div className={classes['greetings']}>{locale['profile-hello']}</div>
-                        <div className={classes['name']}>TheAlexGo</div>
+                <div className={classes['top']}>
+                    <div className={classes['container-name']}>
+                        <Heading type={HeadingTypes.H1} className={classes['heading']}>
+                            <span className={classes['greetings']}>{locale['profile-hello']},</span>
+                            <span className={classes['name']}>TheAlexGo</span>
+                        </Heading>
+                        <div>
+                            <Icon
+                                icon={Icons.EDIT}
+                                ariaLabel={locale['profile-edit-name-aria-label']}
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <Icon
-                            icon={Icons.EDIT}
-                            ariaLabel={locale['profile-edit-name-aria-label']}
-                        />
-                    </div>
+                    <Button
+                        {...buttonWithArrowProps}
+                        className={classes['button-settings']}
+                        href={Pages.PROFILE_SETTINGS}
+                    >
+                        {locale['button-profile-settings-text']}
+                    </Button>
+                    <Theme />
                 </div>
-                <Button
-                    className={classes['button']}
-                    href={settingsLink}
-                    contentPosition={Positions.SPACE_BETWEEN}
-                    icon={<ArrowRIcon />}
-                    withRightIcon
-                    isWide
-                >
-                    Настройки
-                </Button>
+                <Button className={classes['button-out']}>{locale['profile-sign-out']}</Button>
+                <div className={classes['version']}>{versionApp}</div>
             </div>
         </Page>
     );
-});
+};
 
 export default Profile;

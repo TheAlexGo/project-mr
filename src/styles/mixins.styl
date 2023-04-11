@@ -49,6 +49,20 @@ fontExtraBold() {
 }
 // /Fonts
 
+// Theme
+darkTheme() {
+    @media (prefers-color-scheme dark) {
+        :root:not(.__ui-theme_light) & {
+            {block};
+        }
+    }
+
+    :root.__ui-theme_dark & {
+        {block};
+    }
+}
+// /Theme
+
 hover($stateClass) {
     &:not(:disabled):not(.{$stateClass}-static):hover
     &.{$stateClass}-hover {
@@ -74,7 +88,7 @@ multiEllip($countOfLine, $lineHeight = 16px, $showEllipsis = true) {
 
 squareElementSizes($withAlignCenter = false) {
     &.__size {
-        for $size in range(24, 52, 4) {
+        for $size in range(16, 52, 4) {
             &-s{$size} {
                 if $withAlignCenter {
                     top: 'calc(50% - %spx)' % ($size / 2);
@@ -86,59 +100,26 @@ squareElementSizes($withAlignCenter = false) {
     }
 }
 
-calcPositionValue($pos) {
-    if ($pos == space-between) {
-        return $pos;
-    }
-    if ($pos == top or $pos == left) {
-        return start;
-    }
-    return end;
-}
-
-positionOfDirection() {
-    for $pos in top right bottom left space-between {
-        $value = calcPositionValue($pos);
-
-        &.__content_position-{$pos} {
-            for $dir in row column {
-                &.__content_direction-{$dir} {
-                    if $dir == row {
-                        if ($pos == space-between) {
-                            justify-content: $value;
-                        }
-                        else {
-                            if ($pos == left or $pos == right) {
-                                justify-content: flex- + $value;
-                            }
-                            else {
-                                align-items: flex- + $value;
-                            }
-                        }
-                    }
-                    if $dir == column {
-                        if ($pos == space-between) {
-                            justify-content: $value;
-                        }
-                        else {
-                            if ($pos == top or $pos == bottom) {
-                                justify-content: flex- + $value;
-                            }
-                            else {
-                                align-items: flex- + $value;
-                            }
-                        }
-                    }
-                }
-            }
+getDirections() {
+    for $dir in row column {
+        &.__content_direction-{$dir} {
+            flex-direction: $dir;
         }
     }
+}
 
-    for $dir in row column {
-        &.__content_direction {
-            &-{$dir} {
-                flex-direction: $dir;
-            }
+getJustifies() {
+    for $pos in start center end space-between {
+        &.__content_justify-{$pos} {
+            justify-content: $pos;
+        }
+    }
+}
+
+getPosition() {
+    for $pos in start center end {
+        &.__content_position-{$pos} {
+            align-items: $pos;
         }
     }
 }
@@ -148,5 +129,9 @@ flexPositionsAndDirections() {
     justify-content: center;
     align-items: center;
 
-    positionOfDirection();
+    getJustifies();
+
+    getDirections();
+
+    getPosition();
 }

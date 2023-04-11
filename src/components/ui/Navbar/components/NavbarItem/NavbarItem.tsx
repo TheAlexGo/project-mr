@@ -1,11 +1,10 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useCallback } from 'react';
 
 import cn from 'classnames';
-import { observer } from 'mobx-react-lite';
 
 import { Icon, Icons } from '@components/Icon/Icon';
 import { Link } from '@components/Link/Link';
-import { useStore } from '@hooks/useStore';
+import { useController } from '@hooks/useController';
 import { NavTabs, Pages, TClassNameCallback } from '@types';
 
 import classes from './NavbarItem.module.styl';
@@ -21,8 +20,8 @@ export interface INavbarItem {
     link: Pages;
 }
 
-export const NavbarItem: FC<INavbarItem> = observer(({ id, icon, link, title }): JSX.Element => {
-    const { locale } = useStore();
+export const NavbarItem: FC<INavbarItem> = ({ id, icon, link, title }): JSX.Element => {
+    const { navigate } = useController();
 
     const rootClasses: TClassNameCallback = useCallback(
         ({ isActive }) =>
@@ -32,12 +31,12 @@ export const NavbarItem: FC<INavbarItem> = observer(({ id, icon, link, title }):
         []
     );
 
-    const ariaLabel = useMemo(() => locale['nav-icon-aria-label'] + title, [locale, title]);
+    const clickHandler = useCallback(() => navigate(link), [link, navigate]);
 
     return (
-        <Link key={id} to={link} className={rootClasses}>
-            <Icon className={classes.icon} ariaLabel={ariaLabel} icon={icon} isNotButton />
+        <Link key={id} to={link} className={rootClasses} onClick={clickHandler}>
+            <Icon className={classes.icon} icon={icon} ariaLabel={null} isNotButton />
             <div className={classes.title}>{title}</div>
         </Link>
     );
-});
+};

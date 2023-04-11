@@ -1,21 +1,27 @@
-import { InputHTMLAttributes, ReactElement, ReactNode } from 'react';
+import { InputHTMLAttributes, ReactElement } from 'react';
 
+import { Icons } from '@components/Icon/Icon';
 import { Manga } from '@store/manga';
 
 export enum Lang {
     RUSSIAN = 'russian',
-    ENGLISH = 'english',
-    JAPANESE = 'japanese'
+    ENGLISH = 'english'
 }
 
+/**
+ * Для проверки корректности выбранной страницы
+ */
 export enum Pages {
-    GENERAL = '/',
     MANGA = '/library/manga',
-    LIBRARY = '/library',
     READLIST = '/library/readlist',
+    LIBRARY = '/library',
+    PROFILE_SETTINGS_CHANGE_EMAIL = '/profile/settings/change/email',
+    PROFILE_SETTINGS_CHANGE_PASSWORD = '/profile/settings/change/password',
+    PROFILE_SETTINGS_CHANGE_LANGUAGE = '/profile/settings/change/language',
     PROFILE_SETTINGS = '/profile/settings',
     PROFILE = '/profile',
-    NOT_FOUND = '/not_found'
+    NOT_FOUND = '/not_found',
+    GENERAL = '/'
 }
 
 export enum SourceTypes {
@@ -27,11 +33,15 @@ export enum SourceTypes {
 }
 
 export enum Positions {
-    TOP = 'top',
-    BOTTOM = 'bottom',
-    LEFT = 'left',
-    RIGHT = 'right',
+    START = 'start',
     CENTER = 'center',
+    END = 'end'
+}
+
+export enum Justifies {
+    START = 'start',
+    CENTER = 'center',
+    END = 'end',
     SPACE_BETWEEN = 'space-between'
 }
 
@@ -113,7 +123,8 @@ export enum SortMethod {
 
 export enum Themes {
     LIGHT = 'light',
-    DARK = 'dark'
+    DARK = 'dark',
+    AUTO = 'auto'
 }
 
 export enum ModalLinks {
@@ -121,7 +132,8 @@ export enum ModalLinks {
     WELCOME = '#welcome',
     IN_FAVORITE = '#in-favorite',
     MANGA_DESCRIPTION = '#manga-description',
-    MANGA_RATING = '#manga-rating'
+    MANGA_RATING = '#manga-rating',
+    DELETE_ACCOUNT = '#delete-account'
 }
 
 export enum NotificationTypes {
@@ -155,7 +167,7 @@ export type IApiCallback<T = string> = (
     data: T
 ) => void;
 
-export const SQUARE_ELEMENT_SIZES = ['24', '36', '40', '44', '52'] as const;
+export const SQUARE_ELEMENT_SIZES = ['16', '20', '24', '36', '40', '44', '52'] as const;
 type SquareElementSizesTuple = typeof SQUARE_ELEMENT_SIZES;
 export type SquareElementSizes = SquareElementSizesTuple[number];
 
@@ -260,17 +272,6 @@ export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
     showErrorBlock?: boolean;
 }
 
-export interface IModal {
-    heading?: string;
-    children?: ReactNode;
-    className?: string;
-    showCloseButton?: boolean;
-    withEasyClose?: boolean;
-    classNameOverlay?: string;
-    isFullScreen?: boolean;
-    isOpacity?: boolean;
-}
-
 export interface IChapter {
     id: number;
     title: string;
@@ -330,4 +331,10 @@ export type TClassNameCallback = (props: {
 
 export interface IPageState {
     positionY: number;
+}
+
+export interface IThemeButton {
+    theme: Themes;
+    icon: Icons;
+    text: string;
 }

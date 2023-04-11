@@ -19,15 +19,15 @@ const General: FC = () => {
     const [comedyList, setComedyList] = useState<IMangaCard[]>([]);
 
     const { locale } = useStore();
-    const { logger } = useController();
+    const { debug } = useController();
     const { getTopList, getContinueReadingList, getComedyList } = useResponse();
 
     const headerButtons = useMemo(
         () => [
-            getIconObj(Icons.BELL, () => logger('Нажали на колокольчик!'), locale),
-            getIconObj(Icons.SEARCH, () => logger('Нажали на поиск!'), locale)
+            getIconObj(Icons.BELL, () => debug('Нажали на колокольчик!'), locale),
+            getIconObj(Icons.SEARCH, () => debug('Нажали на поиск!'), locale)
         ],
-        [locale, logger]
+        [locale, debug]
     );
 
     usePage(Pages.GENERAL, headerButtons);
@@ -41,15 +41,15 @@ const General: FC = () => {
     const renderAllLists = useCallback(() => {
         const array = [
             {
-                title: 'Продолжите чтение',
+                title: 'block-general-continue',
                 elements: continueReadingList
             },
             {
-                title: 'Топ 10 в этом месяце',
+                title: 'block-general-top',
                 elements: topList
             },
             {
-                title: 'Комедия: популярное',
+                title: 'block-general-comedy',
                 elements: comedyList
             }
         ];
@@ -59,12 +59,12 @@ const General: FC = () => {
                 <CardList
                     axis={Axes.X}
                     cards={cards.elements}
-                    title={cards.title}
+                    title={locale[cards.title]}
                     scrollSnap={ScrollSnapTypes.X_Mandatory}
                 />
             </div>
         ));
-    }, [comedyList, continueReadingList, topList]);
+    }, [comedyList, continueReadingList, locale, topList]);
 
     return <Page className={classes.container}>{renderAllLists()}</Page>;
 };
