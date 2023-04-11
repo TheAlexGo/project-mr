@@ -1,5 +1,7 @@
 {
   "switch-lang": "Switch lang",
   "delete-aria-label": "Remove",
-  "page-not_found-aria-label": "Page not found"
+  "page-not_found-aria-label": "Page not found",
+  "lang-russian": "Russian",
+  "lang-english": "English"
 }

@@ -8,6 +8,7 @@ import {
     AutoIcon,
     BackIcon,
     BellIcon,
+    CheckIcon,
     CloseIcon,
     DayIcon,
     EditIcon,
@@ -42,7 +43,8 @@ export enum Icons {
     DAY = 'day',
     NIGHT = 'night',
     AUTO = 'auto',
-    EYE = 'eye'
+    EYE = 'eye',
+    CHECK = 'check'
 }
 
 export interface IIcon {
@@ -143,6 +145,9 @@ export const Icon: FC<IIcon> = ({
                 break;
             case Icons.EYE:
                 params.icon = <EyeIcon {...iconProps} />;
+                break;
+            case Icons.CHECK:
+                params.icon = <CheckIcon {...iconProps} />;
                 break;
         }
         return params;

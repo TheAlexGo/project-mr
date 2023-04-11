@@ -1,14 +1,13 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
 
 import { Button } from '@components/Button/Button';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { Icon, Icons } from '@components/Icon/Icon';
-import { useController } from '@hooks/useController';
 import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
-import { Justifies, Lang, ModalLinks, Pages } from '@types';
+import { Justifies, ModalLinks, Pages } from '@types';
 import { getButtonSecondaryHoverProps, getButtonWithArrowProps } from '@utils/buttons';
 import { getModalLink } from '@utils/routing';
 
@@ -18,7 +17,6 @@ import classes from './ProfileSettings.module.styl';
 
 const ProfileSettings = observer(() => {
     const { lang, locale } = useStore();
-    const { switchLang } = useController();
 
     const headerButtons = useMemo(() => [], []);
     usePage(Pages.PROFILE_SETTINGS, headerButtons, true, true);
@@ -32,14 +30,6 @@ const ProfileSettings = observer(() => {
     );
 
     const buttonSecondaryHoverProps = useMemo(() => getButtonSecondaryHoverProps(), []);
-
-    const clickHandler = useCallback(() => {
-        if (lang === Lang.ENGLISH) {
-            switchLang(Lang.RUSSIAN);
-        } else {
-            switchLang(Lang.ENGLISH);
-        }
-    }, [lang, switchLang]);
 
     return (
         <Page>
@@ -66,8 +56,11 @@ const ProfileSettings = observer(() => {
                         <Heading type={HeadingTypes.H3} className={classes['heading']}>
                             {locale['profile-settings-lang']}
                         </Heading>
-                        <Button {...buttonSecondaryHoverProps} onClick={clickHandler}>
-                            Поменять язык
+                        <Button
+                            {...buttonWithArrowProps}
+                            href={Pages.PROFILE_SETTINGS_CHANGE_LANGUAGE}
+                        >
+                            {locale[`lang-${lang}`]}
                         </Button>
                     </div>
                 </div>
