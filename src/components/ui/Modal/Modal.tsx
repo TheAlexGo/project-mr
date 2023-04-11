@@ -142,7 +142,14 @@ export const Modal: FC<IModal> = ({
     /**
      * После выхода из модального окна - возвращаемся туда, откуда открыли окно
      */
-    useEffect(() => () => prevElement?.focus(), [prevElement]);
+    useEffect(
+        () => () => {
+            if (prevElement) {
+                prevElement.focus();
+            }
+        },
+        [prevElement]
+    );
 
     if (!container) {
         logger('Контейнера для модального окна не существует!');
