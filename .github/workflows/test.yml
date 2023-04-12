@@ -10,6 +10,7 @@ env:
   TEST_DEPLOY_PATH: ${{ secrets.TEST_DEPLOY_PATH }}
   BUILD_SCRIPT: npm run build
   BUILD_SCRIPT_OUTPUT: dist
+  NODE_VERSION: ${{ vars.NODE_VERSION }}
 
 jobs:
   deploy:
@@ -18,7 +19,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '19'
+          node-version: ${{ env.NODE_VERSION }}
       - name: test
         id: load-variables
         shell: bash
