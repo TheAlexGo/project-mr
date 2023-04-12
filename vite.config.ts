@@ -69,9 +69,7 @@ export default defineConfig({
                 display: 'standalone'
             }
         }),
-        legacy({
-            targets: ['defaults', 'not IE 11']
-        }),
+        legacy(),
         react({
             exclude: /\.stories\.tsx?$/,
             include: '**/*.tsx',

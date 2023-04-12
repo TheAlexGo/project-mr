@@ -1,0 +1,25 @@
+name: Check before merging
+
+on:
+  pull_request:
+    type: ['opened']
+
+env:
+  BUILD_SCRIPT: npm run build
+  NODE_VERSION: ${{ vars.NODE_VERSION }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build Application
+        run: $BUILD_SCRIPT
+      - name: Print Info
+        run: echo "Build successfully!"
+

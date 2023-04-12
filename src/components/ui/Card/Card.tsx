@@ -63,9 +63,7 @@ export const Card: FC<ICard> = observer(
         );
 
         const clickHandler = useCallback(() => {
-            if (onClick) {
-                onClick();
-            }
+            onClick?.();
         }, [onClick]);
 
         const imageComponent = useMemo(() => {

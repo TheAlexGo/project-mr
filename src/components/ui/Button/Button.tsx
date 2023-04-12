@@ -136,9 +136,7 @@ export const Button: FC<IButton> = ({
     );
 
     const clickHandler = useCallback(() => {
-        if (onClick) {
-            onClick();
-        }
+        onClick?.();
     }, [onClick]);
 
     const iconElement = useMemo(() => {

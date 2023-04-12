@@ -12,6 +12,7 @@ env:
   BUILD_STORYBOOK_SCRIPT: npm run build-storybook
   BUILD_SCRIPT_OUTPUT: dist
   BUILD_STORYBOOK_SCRIPT_OUTPUT: sb-dist
+  NODE_VERSION: ${{ vars.NODE_VERSION }}
 
 jobs:
   deploy:
@@ -22,7 +23,7 @@ jobs:
       # Устанавливаем Node.JS для сборки приложения
       - uses: actions/setup-node@v3
         with:
-          node-version: '19'
+          node-version: ${{ env.NODE_VERSION }}
       # Записываем в переменные окружения имя текущей ветки
       - name: master
         id: load-variables

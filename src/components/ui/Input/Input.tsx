@@ -70,9 +70,7 @@ export const Input: FC<IInput> = ({
 
     const changeHandler = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
-            if (onChange) {
-                onChange(e.target.value);
-            }
+            onChange?.(e.target.value);
             setValue(e.target.value);
         },
         [onChange]
