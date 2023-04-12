@@ -57,10 +57,10 @@ export const InputPassword: FC<IInputPassword> = ({
     }, [error]);
 
     useEffect(() => {
-        if (!onError || error === null || isComputingError) {
+        if (!onError || isComputingError) {
             return;
         }
-        const isValid = isValidFirstPassword && isValidSecondPassword && !error;
+        const isValid = isValidFirstPassword && isValidSecondPassword && error === '';
         onError(!isValid);
         if (isValid) {
             onChange(secondPassword);

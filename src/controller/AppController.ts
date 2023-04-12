@@ -154,6 +154,10 @@ export class AppController {
         this.store.updateStatePages(state);
         this.store.setIsPageLoaded(false);
     };
+
+    updateUsername = (username: string) => {
+        this.store.setUser({ ...this.store.user, username });
+    };
 }
 
 export const appController = new AppController(store);
