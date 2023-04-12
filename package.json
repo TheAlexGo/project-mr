@@ -45,7 +45,7 @@
     "@types/react-list": "^0.8.7",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
-    "@vitejs/plugin-legacy": "^3.0.2",
+    "@vitejs/plugin-legacy": "^4.0.2",
     "@vitejs/plugin-react": "^3.0.1",
     "@welldone-software/why-did-you-render": "^7.0.1",
     "autoprefixer": "^10.4.14",

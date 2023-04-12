@@ -16,9 +16,7 @@ export const Tools: FC<ITools> = ({ onDelete, ...manga }): JSX.Element | null =>
     const { isDeleting } = useCards();
 
     const deleteHandler = useCallback(() => {
-        if (onDelete) {
-            onDelete(manga);
-        }
+        onDelete?.(manga);
     }, [onDelete, manga]);
 
     const ariaLabel = useMemo(() => locale['delete-aria-label'], [locale]);

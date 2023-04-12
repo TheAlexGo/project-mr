@@ -36,9 +36,7 @@ export const Radio: FC<IRadio> = ({
     const changeHandler = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             const { value } = e.target;
-            if (onChange) {
-                onChange(value);
-            }
+            onChange?.(value);
         },
         [onChange]
     );

@@ -38,9 +38,7 @@ export const RadioGroup: FC<IRadioGroup> = ({
     const changeHandler = useCallback(
         (currentElement: string) => {
             setActiveElement(currentElement);
-            if (onChange) {
-                onChange(currentElement);
-            }
+            onChange?.(currentElement);
         },
         [onChange]
     );

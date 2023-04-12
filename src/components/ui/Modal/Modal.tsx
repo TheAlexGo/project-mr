@@ -67,15 +67,11 @@ export const Modal: FC<IModal> = ({
     );
 
     const cancelClickHandler = useCallback(() => {
-        if (onCancel) {
-            onCancel();
-        }
+        onCancel?.();
     }, [onCancel]);
 
     const actionClickHandler = useCallback(() => {
-        if (onAction) {
-            onAction();
-        }
+        onAction?.();
     }, [onAction]);
 
     const overlayClickOutsideHandler = useCallback(

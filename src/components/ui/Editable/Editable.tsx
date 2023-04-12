@@ -66,9 +66,7 @@ export const Editable: FC<IEditable> = ({
     const keyDownEscapeHandler = useCallback(
         (e: KeyboardEvent) => {
             if (e.key === ESCAPE) {
-                if (onCancel) {
-                    onCancel();
-                }
+                onCancel?.();
                 e.preventDefault();
             }
         },
@@ -88,11 +86,11 @@ export const Editable: FC<IEditable> = ({
     }, [isActive]);
 
     useEffect(() => {
-        if (onSave && onCancel && newValue !== null) {
+        if (newValue !== null) {
             if (newValue) {
-                onSave(newValue);
+                onSave?.(newValue);
             } else {
-                onCancel();
+                onCancel?.();
             }
             setNewValue(null);
         }
