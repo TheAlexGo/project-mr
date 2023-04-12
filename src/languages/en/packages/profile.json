@@ -11,6 +11,7 @@
   "profile-select-lang": "Choose language",
   "profile-hello": "Hello",
   "profile-edit-name-aria-label": "Edit nickname",
+  "profile-username-aria-label": "Here you can change your name",
   "profile-edit-name-save-aria-label": "Save",
   "profile-themes": "Themes",
   "profile-theme-dark": "Dark theme",

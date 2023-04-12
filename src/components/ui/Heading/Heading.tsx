@@ -1,4 +1,8 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useMemo } from 'react';
+
+import cn from 'classnames';
+
+import classes from './Heading.module.styl';
 
 export enum HeadingTypes {
     H1 = 'h1',
@@ -18,13 +22,32 @@ interface IHeading {
     type?: HeadingTypes;
     /** Внешний класс */
     className?: string;
+    isInvisible?: boolean;
 }
 
-export const Heading: FC<IHeading> = ({ id, type = HeadingTypes.H1, children, className }) => {
+export const Heading: FC<IHeading> = ({
+    id,
+    type = HeadingTypes.H1,
+    children,
+    className,
+    isInvisible = false
+}) => {
     const HeadingComponent = type;
 
+    const rootClasses = useMemo(
+        () =>
+            cn(
+                classes['heading'],
+                {
+                    [classes['__is-invisible']]: isInvisible
+                },
+                className
+            ),
+        [className, isInvisible]
+    );
+
     return (
-        <HeadingComponent id={id} className={className}>
+        <HeadingComponent id={id} className={rootClasses}>
             {children}
         </HeadingComponent>
     );

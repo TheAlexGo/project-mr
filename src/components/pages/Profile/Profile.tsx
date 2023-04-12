@@ -1,9 +1,6 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import { Button } from '@components/Button/Button';
-import { Editable } from '@components/Editable/Editable';
-import { Heading, HeadingTypes } from '@components/Heading/Heading';
-import { Icon, Icons } from '@components/Icon/Icon';
 import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
 import { Pages } from '@types';
@@ -27,7 +24,7 @@ const Profile = () => {
     const buttonWithArrowProps = useMemo(() => getButtonWithArrowProps(), []);
 
     return (
-        <Page>
+        <Page invisibleHeading={locale['page-profile-heading']}>
             <div className={classes['container']}>
                 <div className={classes['top']}>
                     <div className={classes['container-name']}>

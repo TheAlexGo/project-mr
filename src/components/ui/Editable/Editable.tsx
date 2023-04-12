@@ -13,6 +13,8 @@ interface IEditable {
     placeholder: string;
     /** Внешний класс для стилей */
     className?: string;
+    /** Текст-описание поля для скрин-ридеров */
+    ariaLabel: string;
     /** Активно ли сейчас редактирование? */
     isActive?: boolean;
     /** Используем сохранение извне: например, при нажатии на собственную кнопку сохранения */
@@ -27,6 +29,7 @@ export const Editable: FC<IEditable> = ({
     type,
     placeholder,
     className,
+    ariaLabel,
     onSave,
     onCancel,
     isActive = false,
@@ -116,6 +119,7 @@ export const Editable: FC<IEditable> = ({
             contentEditable={isActive}
             suppressContentEditableWarning
             placeholder={currentPlaceholder}
+            aria-label={ariaLabel}
             tabIndex={-1}
             ref={ref}
         >
