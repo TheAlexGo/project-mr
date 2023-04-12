@@ -6,8 +6,8 @@ $size-left = s('calc(%s + env(safe-area-inset-left))', $offset-4x);
 .layout {
     position: relative;
     display: flex;
-    flex-grow: 1;
     flex-direction: column;
+    flex-grow: 1;
     width: 100%;
     padding: 0 $size-right $size-bottom $size-left;
 
@@ -18,7 +18,7 @@ $size-left = s('calc(%s + env(safe-area-inset-left))', $offset-4x);
     }
 }
 
-.navbar
+.navbar,
 .header {
     position: fixed;
     left: 0;
