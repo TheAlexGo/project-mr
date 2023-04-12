@@ -61,12 +61,13 @@ export const Header: FC = (): JSX.Element => {
 
     return (
         <>
-            <Heading type={HeadingTypes.H1} className={classes['heading']}>
+            <Heading type={HeadingTypes.H2} className={classes['heading']}>
                 <span className={classes['greetings']}>{locale['profile-hello']},</span>
                 <Editable
                     type="span"
                     className={classes['name']}
                     placeholder={username}
+                    ariaLabel={locale['profile-username-aria-label']}
                     isActive={isActive}
                     isSaveOutside={isSaveOutside}
                     onSave={saveHandler}

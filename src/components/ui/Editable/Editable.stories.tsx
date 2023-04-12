@@ -31,6 +31,11 @@ export default {
                 disable: true
             }
         },
+        ariaLabel: {
+            table: {
+                disable: true
+            }
+        },
         isActive: {
             table: {
                 disable: true
@@ -55,6 +60,7 @@ export default {
     args: {
         type: 'div',
         placeholder: 'TheAlexGo',
+        ariaLabel: 'Здесь вы можете изменить своё имя',
         isActive: false,
         isSaveOutside: false
     }
