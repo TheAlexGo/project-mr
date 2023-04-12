@@ -4,8 +4,9 @@ import { makeAutoObservable } from 'mobx';
 
 import { Icons, IIcon } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
+import { getUserMock } from '@mock';
 import { makeLocalStorage } from '@store/autoSave';
-import { IPageState, IThemeButton, Lang, NavTabs, Pages, Themes } from '@types';
+import { IPageState, IThemeButton, IUser, Lang, NavTabs, Pages, Themes, UserRoles } from '@types';
 import { getPageName } from '@utils/routing';
 
 export class Store {
@@ -33,6 +34,12 @@ export class Store {
             text: 'profile-theme-auto'
         }
     ];
+    readonly defaultUser: IUser = {
+        id: -1,
+        role: UserRoles.GUEST,
+        username: '',
+        email: ''
+    };
     locale: Record<string, string> = {};
     activePage: string;
     headerTitleKey = '';
@@ -41,8 +48,13 @@ export class Store {
     statePages: Map<string, IPageState> = new Map<string, IPageState>();
     isPageLoaded = false;
 
+    user: IUser = this.defaultUser;
+
     constructor() {
         makeAutoObservable(this);
+
+        // TODO: удалить после реализации регистрации
+        this.user = getUserMock();
 
         const currentPage = getPageName(window.location.pathname);
         if (currentPage) {
@@ -52,7 +64,7 @@ export class Store {
             this.activePage = Pages.GENERAL;
         }
 
-        makeLocalStorage<Store, keyof Store>(this, 'store', ['lang', 'activeTheme']);
+        makeLocalStorage<Store, keyof Store>(this, 'store', ['lang', 'activeTheme', 'user']);
     }
 
     setIsAppReady = (isAppReady: boolean) => {
@@ -91,6 +103,10 @@ export class Store {
         this.isPageLoaded = isPageLoaded;
     }
 
+    setUser(user: IUser) {
+        this.user = user;
+    }
+
     updateStatePages(statePage: IPageState) {
         this.statePages.set(this.activePage, statePage);
     }
@@ -120,6 +136,10 @@ export class Store {
 
     get currentStatePage(): IPageState | null {
         return this.statePages.get(this.activePage) || null;
+    }
+
+    get username(): string {
+        return this.user.username;
     }
 }
 

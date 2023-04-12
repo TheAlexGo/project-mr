@@ -9,4 +9,5 @@ export const AUTO_MODIFIER = '__ui-theme_auto';
 
 // Keyboard
 export const ESCAPE = 'Escape';
+export const ENTER = 'Enter';
 export const TAB = 'Tab';
