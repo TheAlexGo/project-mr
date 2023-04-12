@@ -11,7 +11,7 @@
         "stylus/indentation": 4,
         "stylus/declaration-colon": "always",
         "stylus/semicolon": "always",
-        "stylus/pythonic": "never",
-        "max-empty-lines": 1
+        "stylus/selector-list-comma": "always",
+        "stylus/pythonic": "never"
     }
 }
