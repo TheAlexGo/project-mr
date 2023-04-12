@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { Button } from '@components/Button/Button';
+import { Editable } from '@components/Editable/Editable';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { Icon, Icons } from '@components/Icon/Icon';
 import { usePage } from '@hooks/usePage';
@@ -8,6 +9,7 @@ import { useStore } from '@hooks/useStore';
 import { Pages } from '@types';
 import { getButtonWithArrowProps } from '@utils/buttons';
 
+import { Header } from './components/Header/Header';
 import { Theme } from './components/Theme/Theme';
 import pkg from '../../../../package.json';
 import { Page } from '../Page/Page';
@@ -29,16 +31,7 @@ const Profile = () => {
             <div className={classes['container']}>
                 <div className={classes['top']}>
                     <div className={classes['container-name']}>
-                        <Heading type={HeadingTypes.H1} className={classes['heading']}>
-                            <span className={classes['greetings']}>{locale['profile-hello']},</span>
-                            <span className={classes['name']}>TheAlexGo</span>
-                        </Heading>
-                        <div>
-                            <Icon
-                                icon={Icons.EDIT}
-                                ariaLabel={locale['profile-edit-name-aria-label']}
-                            />
-                        </div>
+                        <Header />
                     </div>
                     <Button
                         {...buttonWithArrowProps}

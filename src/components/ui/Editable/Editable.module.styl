@@ -1,0 +1,8 @@
+.element {
+    outline: 0;
+
+    &[placeholder]:empty::before {
+        content: attr(placeholder);
+        color: $color_main-020;
+    }
+}

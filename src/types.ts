@@ -296,7 +296,6 @@ export interface IUser {
     username: string;
     email: string;
     role: UserRoles;
-    suspend: boolean;
 }
 
 interface IJWToken {

@@ -22,7 +22,7 @@ import {
 import { getRandom, getRandomDate, getRandomInt } from '@utils/numbers';
 
 function generateArray<T>(fn: (index: number) => T, count: number): Array<T> {
-    return Array.from(Array(count).keys()).map(fn);
+    return Array.from(Array(count).keys()).map<T>(fn);
 }
 
 const uuidGenerator = UUID(0);
@@ -140,14 +140,7 @@ const mangaGenres = [
 ];
 const mangaAuthorsFirstnames = ['Александр', 'Николай', 'Дмитрий', 'Глафира', 'Фёдор', 'Марина'];
 const mangaAuthorsLastnames = ['Гордеев', 'Никоноров', 'Сохин', 'Зайцева', 'Петров', 'Михайлова'];
-const usernames = [
-    'Aboba123',
-    'TheAlexGo',
-    'SuperPivo2007',
-    '1337_PapeyGovna_228',
-    'MegaDownBreaker',
-    'JoPa_VaShEy_MaMi'
-];
+const usernames = ['TheAlexGo', 'SuperPivo2007', 'MegaDownBreaker'];
 
 export const getRandomOfArray = <T>(arr: Array<T>): T => arr[getRandomInt(arr.length - 1)];
 
@@ -302,8 +295,7 @@ export const getUsersMock = (count: number): IUser[] =>
             id: uuidGenerator.uuid(),
             username: getRandomOfArray(usernames),
             email: 'alex280702@mail.ru',
-            role: UserRoles.USER,
-            suspend: false
+            role: UserRoles.USER
         }),
         count
     );
