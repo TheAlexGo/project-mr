@@ -36,7 +36,7 @@ Format all files according to codestyle rules.
 
 ## Deploying
 
-Before starting, in the `.github/test.yml` file, you need to include the following [github variables](https://docs.github.com/en/actions/learn-github-actions/variables)
+Before starting, in the `.github/test.yml` file, you need to include the following [github variable](https://docs.github.com/en/actions/learn-github-actions/variables)
 * DEPLOY_ENABLED: 1
 * DEPLOY_STORYBOOK_ENABLED: 1
 
