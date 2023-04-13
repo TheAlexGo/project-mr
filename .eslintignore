@@ -1,6 +1,6 @@
-node_modules/
-dist/
-dev-dist/
-.prettierrc
-.eslintrc
-.storybook
+node_modules
+dev-dist
+public
+.husky
+.github
+!/.storybook
