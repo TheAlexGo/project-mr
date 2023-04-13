@@ -1,4 +1,5 @@
 node_modules
+sb-dist
 dev-dist
 public
 .husky

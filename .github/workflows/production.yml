@@ -2,10 +2,11 @@ name: Deploy to production
 
 on:
   push:
-    branches:
-      - master
+    branches: ["master"]
 
 env:
+  DEPLOY_ENABLED: 1
+  DEPLOY_STORYBOOK_ENABLED: 1
   DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
   DEPLOY_STORYBOOK_PATH: ${{ secrets.DEPLOY_STORYBOOK_PATH }}
   BUILD_SCRIPT: npm run build
@@ -35,11 +36,16 @@ jobs:
       # Собираем приложение
       - name: Build Application
         run: $BUILD_SCRIPT
+      - name: Print build status
+        run: echo "Application build successfully"
       # Собираем storybook приложение
       - name: Build Storybook Application
         run: $BUILD_STORYBOOK_SCRIPT
+      - name: Print storybook build status
+        run: echo "Storybook build successfully"
       # Доставляем собранное приложение на сервер
       - name: Deploy to Server
+        if: ${{ env.DEPLOY_ENABLED == '1' }}
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.DEPLOY_SERVER_HOST }}
@@ -51,6 +57,7 @@ jobs:
           strip_components: 1
       # Доставляем собранный storybook приложение на сервер
       - name: Deploy Storybook to Server
+        if: ${{ env.DEPLOY_STORYBOOK_ENABLED == '1' }}
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.DEPLOY_SERVER_HOST }}
@@ -61,4 +68,5 @@ jobs:
           target: ${{ env.DEPLOY_STORYBOOK_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
           strip_components: 1
       - name: Print Info
+        if: ${{ env.DEPLOY_ENABLED == '1' }}
         run: echo "Deployed successfully https://${{ secrets.SITE_DOMAINS }}"

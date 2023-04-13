@@ -5,6 +5,7 @@ on:
     branches: ["test"]
 
 env:
+  DEPLOY_ENABLED: 1
   DEPLOY_SERVER_HOST: ${{ secrets.DEPLOY_SERVER_HOST }}
   DEPLOY_SERVER_PORT: ${{ secrets.DEPLOY_SERVER_PORT }}
   TEST_DEPLOY_PATH: ${{ secrets.TEST_DEPLOY_PATH }}
@@ -28,7 +29,10 @@ jobs:
         run: npm ci
       - name: Build Application
         run: $BUILD_SCRIPT
+      - name: Print build status
+        run: echo "Build successfully"
       - name: Deploy to Test Server
+        if: ${{ env.DEPLOY_ENABLED == '1' }}
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.DEPLOY_SERVER_HOST }}
@@ -39,4 +43,5 @@ jobs:
           target: ${{ env.TEST_DEPLOY_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
           strip_components: 1
       - name: Print Info
+        if: ${{ env.DEPLOY_ENABLED == '1' }}
         run: echo "Deployed successfully https://${{ secrets.TEST_SITE_DOMAINS }}"
