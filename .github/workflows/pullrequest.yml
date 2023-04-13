@@ -5,14 +5,11 @@ on:
     type: ['opened']
 
 env:
-  PULL_REQUEST_ACTION_ENABLED: ${{ vars.PULL_REQUEST_ACTION_ENABLED }}
   BUILD_SCRIPT: npm run build
-  BUILD_STORYBOOK_SCRIPT: npm run build-storybook
   NODE_VERSION: ${{ vars.NODE_VERSION }}
 
 jobs:
   build:
-    if: ${{ env.PULL_REQUEST_ACTION_ENABLED == '1' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,16 +18,8 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install Dependencies
         run: npm ci
-      # Собираем приложение
       - name: Build Application
         run: $BUILD_SCRIPT
-      - name: Print build status
-        run: echo "Application build successfully"
-      # Собираем storybook приложение
-      - name: Build Storybook Application
-        run: $BUILD_STORYBOOK_SCRIPT
-      - name: Print storybook build status
-        run: echo "Storybook build successfully"
       - name: Print Info
         run: echo "Build successfully!"
 

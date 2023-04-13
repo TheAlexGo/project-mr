@@ -5,8 +5,7 @@ on:
     branches: ["test"]
 
 env:
-  TEST_BRANCH_ACTION_ENABLED: ${{ vars.TEST_BRANCH_ACTION_ENABLED }}
-  DEPLOY_ENABLED: 0
+  DEPLOY_ENABLED: 1
   DEPLOY_SERVER_HOST: ${{ secrets.DEPLOY_SERVER_HOST }}
   DEPLOY_SERVER_PORT: ${{ secrets.DEPLOY_SERVER_PORT }}
   TEST_DEPLOY_PATH: ${{ secrets.TEST_DEPLOY_PATH }}
@@ -16,7 +15,6 @@ env:
 
 jobs:
   deploy:
-    if: ${{ env.TEST_BRANCH_ACTION_ENABLED == '1' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
