@@ -1,7 +1,7 @@
 import { InlineConfig, mergeConfig, UserConfig } from 'vite';
 import svgrPlugin from 'vite-plugin-svgr';
 import type { StorybookViteConfig } from '@storybook/builder-vite';
-import viteConfig from '../vite.config';
+import { aliases, generalConfig } from '../vite.config';
 
 const config: StorybookViteConfig = {
     stories: [
@@ -25,16 +25,15 @@ const config: StorybookViteConfig = {
         "storyStoreV7": true
     },
     async viteFinal(config: InlineConfig) {
-        const vtConf = <UserConfig>(await viteConfig);
         return mergeConfig(config, {
-            ...vtConf,
+            ...generalConfig,
             plugins: [
                 svgrPlugin()
             ],
             build: {
                 chunkSizeWarningLimit: 750
             }
-        });
+        }) as InlineConfig;
     },
 }
 
