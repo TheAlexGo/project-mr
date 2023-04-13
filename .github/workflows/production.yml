@@ -5,8 +5,9 @@ on:
     branches: ["master"]
 
 env:
-  DEPLOY_ENABLED: 1
-  DEPLOY_STORYBOOK_ENABLED: 1
+  MASTER_BRANCH_ACTION_ENABLED: ${{ vars.MASTER_BRANCH_ACTION_ENABLED }}
+  DEPLOY_ENABLED: 0
+  DEPLOY_STORYBOOK_ENABLED: 0
   DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
   DEPLOY_STORYBOOK_PATH: ${{ secrets.DEPLOY_STORYBOOK_PATH }}
   BUILD_SCRIPT: npm run build
@@ -17,6 +18,7 @@ env:
 
 jobs:
   deploy:
+    if: ${{ env.MASTER_BRANCH_ACTION_ENABLED == '1' }}
     runs-on: ubuntu-latest
     steps:
       # Делаем checkout текущей ветки
