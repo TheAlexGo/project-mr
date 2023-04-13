@@ -36,7 +36,7 @@ Format all files according to codestyle rules.
 
 ## Deploying
 
-Before starting, in the `.github/test.yml` file, you need to include the following variables
+Before starting, in the `.github/test.yml` file, you need to include the following [github variable](https://docs.github.com/en/actions/learn-github-actions/variables)
 * DEPLOY_ENABLED: 1
 * DEPLOY_STORYBOOK_ENABLED: 1
 
@@ -58,7 +58,7 @@ To set the correct version of node, you need to specify a [github variable](http
 * NODE_VERSION - 19
 
 After uploading the solution to the `master` branch, the `.github/production.yml` script is launched, which will upload the build
-to your hosting on production domain. You must also specify the following secrets:
+to your hosting on production domain. You must also specify the following [github secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets):
 * DEPLOY_SERVER_HOST - hosting IP address
 * DEPLOY_SERVER_PORT - hosting port
 * DEPLOY_PATH - path to production domain folder: /home/path/domain.com/public_html/
