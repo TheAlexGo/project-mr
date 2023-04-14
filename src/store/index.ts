@@ -58,8 +58,7 @@ export class Store {
 
         const currentPage = getPageName(window.location.pathname);
         if (currentPage) {
-            const [, page] = currentPage;
-            this.activePage = page;
+            this.activePage = currentPage;
         } else {
             this.activePage = Pages.GENERAL;
         }
