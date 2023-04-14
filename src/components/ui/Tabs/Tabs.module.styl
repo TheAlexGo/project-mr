@@ -1,0 +1,26 @@
+.tabs {
+    display: flex;
+    margin-bottom: 12px;
+    padding: 16px 0;
+
+    .__with-fix_header & {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 10;
+        margin-bottom: 0;
+        padding: 16px;
+        background-color: $color_background;
+    }
+
+    .__with-main_header & {
+        top: $size-header;
+    }
+}
+
+.content {
+    .__with-fix_header & {
+        padding-top: 72px;
+    }
+}

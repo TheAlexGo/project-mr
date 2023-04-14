@@ -11,3 +11,5 @@ export const AUTO_MODIFIER = '__ui-theme_auto';
 export const ESCAPE = 'Escape';
 export const ENTER = 'Enter';
 export const TAB = 'Tab';
+export const ARROW_RIGHT = 'ArrowRight';
+export const ARROW_LEFT = 'ArrowLeft';

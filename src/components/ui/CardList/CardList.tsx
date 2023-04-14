@@ -75,6 +75,14 @@ export const CardList: FC<ICardList> = ({
         [cards]
     );
 
+    const wrapperClasses = useMemo(
+        () =>
+            cn(classes['wrapper'], {
+                [classes['__scroll_snap-y_mandatory']]: scrollSnap === ScrollSnapTypes.Y_Mandatory
+            }),
+        [scrollSnap]
+    );
+
     const rootClasses = useMemo(
         () =>
             cn(classes.list, {
@@ -86,7 +94,7 @@ export const CardList: FC<ICardList> = ({
 
     return (
         <Loading condition={cards.length !== 0}>
-            <div className={classes.wrapper}>
+            <div className={wrapperClasses}>
                 {title && (
                     <Heading type={HeadingTypes.H3} className={classes.heading}>
                         {title}

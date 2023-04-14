@@ -19,44 +19,37 @@ import classes from './LayoutMain.module.styl';
  * @constructor
  */
 export const LayoutMain: FC = observer((): JSX.Element => {
-    const { navigate, headerTitleKey, headerButtons, headerWithBack, locale } = useStore();
+    const { navigate, withHeaderPage, headingPage, headerButtons, headerWithBack } = useStore();
     const { changePage } = useController();
     const location = useLocation();
-
-    const heading = useMemo(() => locale[headerTitleKey], [headerTitleKey, locale]);
-
-    const withHeader = useMemo(
-        () => headerButtons.length || heading,
-        [headerButtons.length, heading]
-    );
 
     const rootClasses = useMemo(
         () =>
             cn(classes.layout, {
-                [classes['__is-with_heading']]: withHeader
+                [classes['__is-with_heading']]: withHeaderPage
             }),
-        [withHeader]
+        [withHeaderPage]
     );
 
     const renderHeader = useCallback(() => {
-        if (!withHeader) {
+        if (!withHeaderPage) {
             return null;
         }
         return (
             <div className={classes.header}>
                 <Header
                     headingType={HeadingTypes.H1}
-                    heading={heading}
+                    heading={headingPage}
                     buttons={headerButtons}
                     needBack={headerWithBack}
                 />
             </div>
         );
-    }, [headerButtons, heading, headerWithBack, withHeader]);
+    }, [headerButtons, headingPage, headerWithBack, withHeaderPage]);
 
     useLayoutEffect(() => {
-        changePage(location.pathname);
-    }, [changePage, location.pathname]);
+        changePage(location.pathname + location.hash);
+    }, [changePage, location.hash, location.pathname]);
 
     return (
         <main className={rootClasses}>
