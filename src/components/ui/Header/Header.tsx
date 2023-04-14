@@ -68,7 +68,7 @@ export const Header: FC<IHeader> = ({
     }, [clickBackHandler, heading, headingType, locale, needBack]);
 
     return (
-        <div className={classes.header}>
+        <header className={classes.header}>
             <div className={classes.wrapper}>
                 {leftComponent}
                 <div
@@ -80,6 +80,6 @@ export const Header: FC<IHeader> = ({
                 </div>
             </div>
             {description && <div className={classes.description}>{description}</div>}
-        </div>
+        </header>
     );
 };

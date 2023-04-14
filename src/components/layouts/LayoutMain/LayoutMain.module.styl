@@ -11,6 +11,8 @@ $size-left = s('calc(%s + env(safe-area-inset-left))', $offset-4x);
     width: 100%;
     padding: 0 $size-right $size-bottom $size-left;
 
+    useMediaWidth();
+
     &.__is {
         &-with_heading {
             padding-top: $size-top;
@@ -21,6 +23,7 @@ $size-left = s('calc(%s + env(safe-area-inset-left))', $offset-4x);
 .navbar,
 .header {
     position: fixed;
+    right: 0;
     left: 0;
     z-index: 10;
     width: 100%;

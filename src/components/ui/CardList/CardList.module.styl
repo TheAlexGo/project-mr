@@ -26,7 +26,27 @@
         &-y {
             display: grid;
             grid-gap: 24px 8px;
-            grid-template-columns: repeat(auto-fit, minmax($size-card, 1fr));
+            grid-template-columns: repeat(1, 1fr);
+
+            +useMobileSWidth() {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            +useMobileMWidth() {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            +useMobileLWidth() {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            +useTabletMWidth() {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            +useLaptopWidth() {
+                grid-template-columns: repeat(6, 1fr);
+            }
 
             & .card {
                 width: 100%;

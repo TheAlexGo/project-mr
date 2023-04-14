@@ -12,5 +12,9 @@ interface INavbar {
 export const Navbar: FC<INavbar> = ({ items }): JSX.Element => {
     const navItems = items.map((data) => <NavbarItem key={data.id} {...data} />);
 
-    return <nav className={classes.navbar}>{navItems}</nav>;
+    return (
+        <nav className={classes['navbar']}>
+            <div className={classes['wrapper']}>{navItems}</div>
+        </nav>
+    );
 };
