@@ -121,18 +121,27 @@ export class AppController {
         this.store.setActivePage(page);
     };
 
+    loadPageState = () => {
+        const { activePage, currentStatePage } = this.store;
+        if (currentStatePage) {
+            this.debug('Загрузили состояние:', activePage);
+            setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
+        }
+    };
+
     loadPage = (page: Pages, headerButtons: IIcon[], withHeading = false, withBack = false) => {
-        const { currentStatePage, activePage, isPageLoaded } = this.store;
+        const { activePage, isPageLoaded } = this.store;
         if (isPageLoaded) {
             this.debug('Страница уже загружена:', activePage);
             return;
         }
         this.debug('Загрузили страницу:', activePage);
-        if (currentStatePage) {
-            setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
-        }
+        this.loadPageState();
         if (withHeading) {
-            this.store.setHeaderTitleKey(`page-${activePage.toLowerCase()}-heading`);
+            /**
+             * Некоторые страницы будут иметь у себя хэш. Для получения заголовков, будем его игнорировать
+             */
+            this.store.setHeaderTitleKey(`page-${activePage.split('#')[0].toLowerCase()}-heading`);
         } else {
             this.store.setHeaderTitleKey('');
         }
@@ -141,17 +150,22 @@ export class AppController {
         this.store.setIsPageLoaded(true);
     };
 
+    savePageState = () => {
+        const { activePage } = this.store;
+        this.debug('Сохранили состояние:', activePage);
+        const state = {
+            positionY: window.scrollY
+        };
+        this.store.updateStatePages(state);
+    };
+
     leavePage = () => {
         const { isPageLoaded, activePage } = this.store;
         if (!isPageLoaded) {
             this.debug('Страницу уже покинули:', activePage);
             return;
         }
-        this.debug('Покинули страницу:', activePage);
-        const state = {
-            positionY: window.scrollY
-        };
-        this.store.updateStatePages(state);
+        this.savePageState();
         this.store.setIsPageLoaded(false);
     };
 

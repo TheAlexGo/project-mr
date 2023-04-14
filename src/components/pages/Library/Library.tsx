@@ -1,20 +1,21 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
-import { Axes, CardList } from '@components/CardList/CardList';
 import { Icons } from '@components/Icon/Icon';
+import { Tabs } from '@components/Tabs/Tabs';
+import { ITab } from '@components/Tabs/components/Tab/Tab';
 import { useController } from '@hooks/useController';
 import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
-import { getMangaCardsMock } from '@mock';
-import { IMangaCard, Pages } from '@types';
+import { Pages } from '@types';
 import { getIconObj } from '@utils/header';
 
+import { Catalog } from './components/Catalog/Catalog';
+import { MyCollection } from './components/MyCollection/MyCollection';
 import { Page } from '../Page/Page';
 
 import classes from './Library.module.styl';
 
 const Library = () => {
-    const [items, setItems] = useState<IMangaCard[]>([]);
     const { locale } = useStore();
     const { debug } = useController();
 
@@ -26,15 +27,35 @@ const Library = () => {
         [locale, debug]
     );
 
-    useEffect(() => {
-        setItems(getMangaCardsMock(100));
-    }, []);
+    const tabElements: ITab[] = useMemo(
+        () => [
+            {
+                id: 'catalog',
+                title: locale['library-catalog-heading'],
+                content: {
+                    id: 'catalog-content',
+                    children: <Catalog />
+                }
+            },
+            {
+                id: 'my-collection',
+                title: locale['library-my-collection-heading'],
+                content: {
+                    id: 'my-collection-content',
+                    children: <MyCollection />
+                }
+            }
+        ],
+        [locale]
+    );
 
     usePage(Pages.LIBRARY, headerButtons, true);
 
     return (
-        <Page className={classes.container}>
-            <CardList axis={Axes.Y} cards={items} />
+        <Page>
+            <div className={classes['container']}>
+                <Tabs title={locale['library-tabs-heading']} elements={tabElements} withFixHeader />
+            </div>
         </Page>
     );
 };

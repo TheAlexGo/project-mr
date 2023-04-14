@@ -140,6 +140,14 @@ export class Store {
     get username(): string {
         return this.user.username;
     }
+
+    get headingPage(): string {
+        return this.locale[this.headerTitleKey];
+    }
+
+    get withHeaderPage(): boolean {
+        return !!(this.headerButtons.length || this.headingPage);
+    }
 }
 
 export const store = new Store();
