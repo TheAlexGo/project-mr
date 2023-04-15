@@ -1,15 +1,50 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { useRef, useMemo, useCallback, FC, useState } from 'react';
+
+import { observer } from 'mobx-react-lite';
 
 import { CardList, Axes } from '@components/CardList/CardList';
-import { getMangaCardsMock } from '@mock';
-import { IMangaCard } from '@types';
+import { useController } from '@hooks/useController';
+import { useScrolledToBottom } from '@hooks/useScrolledToBottom';
+import { useStore } from '@hooks/useStore';
+import { CARD_MAX_HEIGHT } from '@utils/constants';
 
-export const Catalog: FC = (): JSX.Element => {
-    const [items, setItems] = useState<IMangaCard[]>([]);
+/**
+ * Делаем смещение на максимальную высоту 4-х карточек
+ */
+const OFFSET_BY_CARD_HEIGHT = 4;
 
-    useEffect(() => {
-        setItems(getMangaCardsMock(30));
-    }, []);
+export const Catalog: FC = observer((): JSX.Element => {
+    const { catalogElements } = useStore();
+    const { loadMoreInCatalog } = useController();
+    const [isLoaded, setIsLoaded] = useState<boolean>(true);
+    const [hasMore, setHasMore] = useState<boolean>(true);
 
-    return <CardList axis={Axes.Y} cards={items} />;
-};
+    /**
+     * Во время установки значения в стейт есть вероятность, что функция не обновится и останется старое значение.
+     * Избежать этого можно через useRef
+     */
+    const isLoading = useRef(false);
+
+    const scrolledToBottomHandler = useCallback(() => {
+        if (isLoading.current || !hasMore) {
+            return;
+        }
+        isLoading.current = true;
+        setIsLoaded(false);
+        setTimeout(() => {
+            loadMoreInCatalog()
+                .catch(() => setHasMore(false))
+                .finally(() => {
+                    setTimeout(() => {
+                        isLoading.current = false;
+                        setIsLoaded(true);
+                    }, 100);
+                });
+        }, 1000);
+    }, [hasMore, loadMoreInCatalog]);
+
+    const offset = useMemo(() => -(CARD_MAX_HEIGHT * OFFSET_BY_CARD_HEIGHT), []);
+    useScrolledToBottom(scrolledToBottomHandler, offset);
+
+    return <CardList axis={Axes.Y} cards={[...catalogElements]} isLoading={!isLoaded} />;
+});
