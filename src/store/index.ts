@@ -6,7 +6,17 @@ import { Icons, IIcon } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
 import { getUserMock } from '@mock';
 import { makeLocalStorage } from '@store/autoSave';
-import { IPageState, IThemeButton, IUser, Lang, NavTabs, Pages, Themes, UserRoles } from '@types';
+import {
+    IMangaCard,
+    IPageState,
+    IThemeButton,
+    IUser,
+    Lang,
+    NavTabs,
+    Pages,
+    Themes,
+    UserRoles
+} from '@types';
 import { getPageName } from '@utils/routing';
 
 export class Store {
@@ -49,6 +59,8 @@ export class Store {
     isPageLoaded = false;
 
     user: IUser = this.defaultUser;
+
+    catalogElements: IMangaCard[] = [];
 
     constructor() {
         makeAutoObservable(this);
@@ -108,6 +120,10 @@ export class Store {
 
     updateStatePages(statePage: IPageState) {
         this.statePages.set(this.activePage, statePage);
+    }
+
+    updateCatalogElements(elements: IMangaCard[]) {
+        this.catalogElements.push(...elements);
     }
 
     get navigate(): INavbarItem[] {

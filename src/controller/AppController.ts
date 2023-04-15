@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 
 import { IIcon } from '@components/Icon/Icon';
+import { getMangaCardsMock } from '@mock';
 import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
@@ -43,6 +44,7 @@ export class AppController {
                 this.initResource(this.store.lang);
                 return result;
             })
+            .then(() => this.loadMoreInCatalog()) // заполняем данными каталог
             .then<boolean>((result) => {
                 this.debug('Приложение инициализированно успешно!');
                 this.store.setIsAppReady(result);
@@ -171,6 +173,17 @@ export class AppController {
 
     updateUsername = (username: string) => {
         this.store.setUser({ ...this.store.user, username });
+    };
+
+    loadMoreInCatalog = async (): Promise<boolean> => {
+        const { catalogElements } = this.store;
+        if (catalogElements.length > 100) {
+            return Promise.reject(new Error('Больше нет элементов'));
+        }
+
+        this.debug('Загрузка карточек каталога...');
+        this.store.updateCatalogElements(getMangaCardsMock(30));
+        return Promise.resolve(true);
     };
 }
 

@@ -52,7 +52,7 @@ export const LayoutMain: FC = observer((): JSX.Element => {
     }, [changePage, location.hash, location.pathname]);
 
     return (
-        <main className={rootClasses}>
+        <div className={rootClasses}>
             {renderHeader()}
             <Suspense fallback={<Loader />}>
                 <Outlet />
@@ -61,6 +61,6 @@ export const LayoutMain: FC = observer((): JSX.Element => {
                 <Navbar items={navigate} />
             </div>
             <Modals />
-        </main>
+        </div>
     );
 });

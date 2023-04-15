@@ -1,6 +1,5 @@
 // Card sizes
-export const CARD_WIDTH = 164;
-export const CARD_HEIGHT = 300;
+export const CARD_MAX_HEIGHT = 288;
 
 // Theme modifiers
 export const LIGHT_MODIFIER = '__ui-theme_light';

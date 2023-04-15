@@ -32,9 +32,9 @@ export const Page: FC<IPage> = ({ className, invisibleHeading, children }) => {
     );
 
     return (
-        <div className={rootClasses}>
+        <main className={rootClasses}>
             {renderInvisibleHeading()}
             {children}
-        </div>
+        </main>
     );
 };
