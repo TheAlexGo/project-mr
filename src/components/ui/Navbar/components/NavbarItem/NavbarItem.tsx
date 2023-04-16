@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { Icon, Icons } from '@components/Icon/Icon';
 import { Link } from '@components/Link/Link';
 import { useController } from '@hooks/useController';
-import { NavTabs, Pages, TClassNameCallback } from '@types';
+import { NavTabs, TClassNameCallback } from '@types';
 
 import classes from './NavbarItem.module.styl';
 
@@ -17,7 +17,7 @@ export interface INavbarItem {
     /** Название раздела */
     title: string;
     /** Ссылка на раздел */
-    link: Pages;
+    link: string;
 }
 
 export const NavbarItem: FC<INavbarItem> = ({ id, icon, link, title }): JSX.Element => {

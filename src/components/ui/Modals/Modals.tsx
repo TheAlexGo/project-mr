@@ -14,7 +14,9 @@ const ModalsComponent: FC<IModals> = ({ container }): JSX.Element | null => {
     const navigate = useNavigate();
 
     const cancelHandler = useCallback(() => {
-        navigate('#');
+        navigate('#', {
+            replace: true
+        });
     }, [navigate]);
 
     switch (hash as ModalLinks) {

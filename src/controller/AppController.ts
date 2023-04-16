@@ -1,12 +1,11 @@
 import { createContext } from 'react';
 
-import { IIcon } from '@components/Icon/Icon';
 import { getMangaCardsMock } from '@mock';
 import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IApiCallback, Lang, Pages, Themes } from '@types';
+import { IApiCallback, Lang, Themes } from '@types';
 
 export class AppController {
     store: Store;
@@ -25,6 +24,16 @@ export class AppController {
         // eslint-disable-next-line prefer-rest-params,no-console
         console.log(message, ...optionalParams);
     }
+
+    group = (...label: unknown[]) => {
+        // eslint-disable-next-line no-console
+        console.group(...label);
+    };
+
+    groupEnd = () => {
+        // eslint-disable-next-line no-console
+        console.groupEnd();
+    };
 
     debug = (message: unknown, ...optionalParams: unknown[]) => {
         if (import.meta.env.DEV) {
@@ -119,7 +128,8 @@ export class AppController {
             this.debug('Уже на странице:', page);
             return;
         }
-        this.debug('Перешли на страницу:', page);
+        this.group('Страница:', page);
+        this.debug('Перешли на страницу');
         this.store.setActivePage(page);
     };
 
@@ -128,47 +138,26 @@ export class AppController {
         if (currentStatePage) {
             this.debug('Загрузили состояние:', activePage);
             setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
-        }
-    };
-
-    loadPage = (page: Pages, headerButtons: IIcon[], withHeading = false, withBack = false) => {
-        const { activePage, isPageLoaded } = this.store;
-        if (isPageLoaded) {
-            this.debug('Страница уже загружена:', activePage);
-            return;
-        }
-        this.debug('Загрузили страницу:', activePage);
-        this.loadPageState();
-        if (withHeading) {
-            /**
-             * Некоторые страницы будут иметь у себя хэш. Для получения заголовков, будем его игнорировать
-             */
-            this.store.setHeaderTitleKey(`page-${activePage.split('#')[0].toLowerCase()}-heading`);
         } else {
-            this.store.setHeaderTitleKey('');
+            setTimeout(() => window.scrollTo(0, 0));
         }
-        this.store.setHeaderButtons(headerButtons);
-        this.store.setHeaderWithBack(withBack);
-        this.store.setIsPageLoaded(true);
     };
 
     savePageState = () => {
-        const { activePage } = this.store;
-        this.debug('Сохранили состояние:', activePage);
-        const state = {
+        const { activePage, statePages } = this.store;
+        const newState = {
             positionY: window.scrollY
         };
-        this.store.updateStatePages(state);
-    };
-
-    leavePage = () => {
-        const { isPageLoaded, activePage } = this.store;
-        if (!isPageLoaded) {
-            this.debug('Страницу уже покинули:', activePage);
+        const isNewState = JSON.stringify(statePages.get(activePage)) !== JSON.stringify(newState);
+        if (!isNewState) {
+            this.debug('Состояние не изменилось');
+            this.groupEnd();
             return;
         }
-        this.savePageState();
-        this.store.setIsPageLoaded(false);
+        // TODO: Пофиксить при открытии модальных окон ломается группа логов
+        this.debug('Сохранили состояние');
+        this.groupEnd();
+        this.store.updateStatePages(newState);
     };
 
     updateUsername = (username: string) => {
@@ -184,6 +173,10 @@ export class AppController {
         this.debug('Загрузка карточек каталога...');
         this.store.updateCatalogElements(getMangaCardsMock(30));
         return Promise.resolve(true);
+    };
+
+    updateNavigate = (location: string, newLocation: string) => {
+        this.store.updateNavigate(location, newLocation);
     };
 }
 

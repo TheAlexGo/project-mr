@@ -8,7 +8,7 @@ export const MyCollection: FC = (): JSX.Element => {
     const [items, setItems] = useState<IMangaCard[]>([]);
 
     useEffect(() => {
-        setItems(getMangaCardsMock(3));
+        setItems(getMangaCardsMock(120));
     }, []);
 
     return <CardList axis={Axes.Y} cards={items} />;
