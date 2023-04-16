@@ -128,6 +128,8 @@ export class AppController {
             this.debug('Уже на странице:', page);
             return;
         }
+
+        this.groupEnd();
         this.group('Страница:', page);
         this.debug('Перешли на страницу');
         this.store.setActivePage(page);
