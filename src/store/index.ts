@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 import { makeAutoObservable } from 'mobx';
 
-import { Icons, IIcon } from '@components/Icon/Icon';
+import { Icons } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
 import { getUserMock } from '@mock';
 import { makeLocalStorage } from '@store/autoSave';
@@ -52,11 +52,7 @@ export class Store {
     };
     locale: Record<string, string> = {};
     activePage: string;
-    headerTitleKey = '';
-    headerButtons: IIcon[] = [];
-    headerWithBack = false;
     statePages: Map<string, IPageState> = new Map<string, IPageState>();
-    isPageLoaded = false;
 
     user: IUser = this.defaultUser;
 
@@ -96,22 +92,6 @@ export class Store {
 
     setActivePage(page: string) {
         this.activePage = page;
-    }
-
-    setHeaderTitleKey(headerTitleKey: string) {
-        this.headerTitleKey = headerTitleKey;
-    }
-
-    setHeaderButtons(headerButtons: IIcon[]) {
-        this.headerButtons = headerButtons;
-    }
-
-    setHeaderWithBack(headerWithBack: boolean) {
-        this.headerWithBack = headerWithBack;
-    }
-
-    setIsPageLoaded(isPageLoaded: boolean) {
-        this.isPageLoaded = isPageLoaded;
     }
 
     setUser(user: IUser) {
@@ -155,14 +135,6 @@ export class Store {
 
     get username(): string {
         return this.user.username;
-    }
-
-    get headingPage(): string {
-        return this.locale[this.headerTitleKey];
-    }
-
-    get withHeaderPage(): boolean {
-        return !!(this.headerButtons.length || this.headingPage);
     }
 }
 

@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite';
 import { Button } from '@components/Button/Button';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { Icon, Icons } from '@components/Icon/Icon';
-import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
 import { Justifies, ModalLinks, Pages } from '@types';
 import { getButtonSecondaryHoverProps, getButtonWithArrowProps } from '@utils/buttons';
@@ -18,9 +17,6 @@ import classes from './ProfileSettings.module.styl';
 const ProfileSettings = observer(() => {
     const { lang, locale } = useStore();
 
-    const headerButtons = useMemo(() => [], []);
-    usePage(Pages.PROFILE_SETTINGS, headerButtons, true, true);
-
     const buttonWithArrowProps = useMemo(
         () => ({
             className: classes['button'],
@@ -32,7 +28,7 @@ const ProfileSettings = observer(() => {
     const buttonSecondaryHoverProps = useMemo(() => getButtonSecondaryHoverProps(), []);
 
     return (
-        <Page>
+        <Page headerWithBack>
             <div className={classes['container']}>
                 <div className={classes['top']}>
                     <div className={classes['container-security']}>

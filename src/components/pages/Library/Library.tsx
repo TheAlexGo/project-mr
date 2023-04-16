@@ -4,9 +4,7 @@ import { Icons } from '@components/Icon/Icon';
 import { Tabs } from '@components/Tabs/Tabs';
 import { ITab } from '@components/Tabs/components/Tab/Tab';
 import { useController } from '@hooks/useController';
-import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
-import { Pages } from '@types';
 import { getIconObj } from '@utils/header';
 
 import { Catalog } from './components/Catalog/Catalog';
@@ -49,12 +47,15 @@ const Library = () => {
         [locale]
     );
 
-    usePage(Pages.LIBRARY, headerButtons, true);
-
     return (
-        <Page>
+        <Page headerButtons={headerButtons}>
             <div className={classes['container']}>
-                <Tabs title={locale['library-tabs-heading']} elements={tabElements} withFixHeader />
+                <Tabs
+                    tabsClassName={classes['tabs']}
+                    title={locale['library-tabs-heading']}
+                    elements={tabElements}
+                    withFixHeader
+                />
             </div>
         </Page>
     );

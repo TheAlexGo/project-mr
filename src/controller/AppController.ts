@@ -1,12 +1,11 @@
 import { createContext } from 'react';
 
-import { IIcon } from '@components/Icon/Icon';
 import { getMangaCardsMock } from '@mock';
 import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IApiCallback, Lang, Pages, Themes } from '@types';
+import { IApiCallback, Lang, Themes } from '@types';
 
 export class AppController {
     store: Store;
@@ -131,44 +130,18 @@ export class AppController {
         }
     };
 
-    loadPage = (page: Pages, headerButtons: IIcon[], withHeading = false, withBack = false) => {
-        const { activePage, isPageLoaded } = this.store;
-        if (isPageLoaded) {
-            this.debug('Страница уже загружена:', activePage);
-            return;
-        }
-        this.debug('Загрузили страницу:', activePage);
-        this.loadPageState();
-        if (withHeading) {
-            /**
-             * Некоторые страницы будут иметь у себя хэш. Для получения заголовков, будем его игнорировать
-             */
-            this.store.setHeaderTitleKey(`page-${activePage.split('#')[0].toLowerCase()}-heading`);
-        } else {
-            this.store.setHeaderTitleKey('');
-        }
-        this.store.setHeaderButtons(headerButtons);
-        this.store.setHeaderWithBack(withBack);
-        this.store.setIsPageLoaded(true);
-    };
-
     savePageState = () => {
-        const { activePage } = this.store;
-        this.debug('Сохранили состояние:', activePage);
-        const state = {
+        const { activePage, statePages } = this.store;
+        const newState = {
             positionY: window.scrollY
         };
-        this.store.updateStatePages(state);
-    };
-
-    leavePage = () => {
-        const { isPageLoaded, activePage } = this.store;
-        if (!isPageLoaded) {
-            this.debug('Страницу уже покинули:', activePage);
+        const isNewState = JSON.stringify(statePages.get(activePage)) !== JSON.stringify(newState);
+        if (!isNewState) {
+            this.debug('Состояние не изменилось для:', activePage);
             return;
         }
-        this.savePageState();
-        this.store.setIsPageLoaded(false);
+        this.debug('Сохранили состояние:', activePage);
+        this.store.updateStatePages(newState);
     };
 
     updateUsername = (username: string) => {
