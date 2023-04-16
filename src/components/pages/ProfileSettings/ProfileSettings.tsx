@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@components/Button/Button';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
@@ -16,6 +17,7 @@ import classes from './ProfileSettings.module.styl';
 
 const ProfileSettings = observer(() => {
     const { lang, locale } = useStore();
+    const navigate = useNavigate();
 
     const buttonWithArrowProps = useMemo(
         () => ({
@@ -26,6 +28,12 @@ const ProfileSettings = observer(() => {
     );
 
     const buttonSecondaryHoverProps = useMemo(() => getButtonSecondaryHoverProps(), []);
+
+    const deleteClickHandler = useCallback(() => {
+        navigate(getModalLink(ModalLinks.DELETE_ACCOUNT), {
+            replace: true
+        });
+    }, [navigate]);
 
     return (
         <Page headerWithBack>
@@ -65,7 +73,7 @@ const ProfileSettings = observer(() => {
                     className={classes['button-delete']}
                     contentJustify={Justifies.SPACE_BETWEEN}
                     icon={<Icon icon={Icons.TRASH} ariaLabel={null} isNotButton />}
-                    href={getModalLink(ModalLinks.DELETE_ACCOUNT)}
+                    onClick={deleteClickHandler}
                     withRightIcon
                 >
                     {locale['profile-settings-account-delete']}

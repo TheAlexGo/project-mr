@@ -17,16 +17,21 @@ interface ITabs {
     withFixHeader?: boolean;
     /** Класс-обёртка для контейнера с табами */
     tabsClassName?: string;
+    /** Указываем сразу активный таб (если таковой есть) */
+    activeTab?: ITab | null;
 }
 
 export const Tabs: FC<ITabs> = ({
     title,
     elements,
     tabsClassName,
-    withFixHeader = false
+    withFixHeader = false,
+    activeTab = null
 }): JSX.Element => {
-    const [selectedTab, setSelectedTab] = useState<string>(elements[0].id);
-    const [focusedTab, setFocusedTab] = useState<number>(0);
+    const [selectedTab, setSelectedTab] = useState<string>(activeTab?.id || elements[0].id);
+    const [focusedTab, setFocusedTab] = useState<number>(
+        activeTab ? elements.indexOf(activeTab) : 0
+    );
     const container = useRef<HTMLDivElement>(null);
     const tabElements = useRef<HTMLButtonElement[]>([]);
 

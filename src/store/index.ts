@@ -53,6 +53,7 @@ export class Store {
     locale: Record<string, string> = {};
     activePage: string;
     statePages: Map<string, IPageState> = new Map<string, IPageState>();
+    navigateLinks: Map<string, string> = new Map<string, string>();
 
     user: IUser = this.defaultUser;
 
@@ -70,6 +71,10 @@ export class Store {
         } else {
             this.activePage = Pages.GENERAL;
         }
+
+        this.navigateLinks.set(Pages.GENERAL, Pages.GENERAL);
+        this.navigateLinks.set(Pages.LIBRARY, Pages.LIBRARY);
+        this.navigateLinks.set(Pages.PROFILE, Pages.PROFILE);
 
         makeLocalStorage<Store, keyof Store>(this, 'store', ['lang', 'activeTheme', 'user']);
     }
@@ -106,25 +111,29 @@ export class Store {
         this.catalogElements.push(...elements);
     }
 
+    updateNavigate(location: string, newLocation: string) {
+        this.navigateLinks.set(location, newLocation);
+    }
+
     get navigate(): INavbarItem[] {
         return [
             {
                 id: NavTabs.GENERAL,
                 icon: Icons.HOME,
                 title: this.locale['nav-general'],
-                link: Pages.GENERAL
+                link: this.navigateLinks.get(Pages.GENERAL) || Pages.GENERAL
             },
             {
                 id: NavTabs.LIBRARY,
                 icon: Icons.LIBRARY,
                 title: this.locale['nav-library'],
-                link: Pages.LIBRARY
+                link: this.navigateLinks.get(Pages.LIBRARY) || Pages.LIBRARY
             },
             {
                 id: NavTabs.PROFILE,
                 icon: Icons.PROFILE,
                 title: this.locale['nav-profile'],
-                link: Pages.PROFILE
+                link: this.navigateLinks.get(Pages.PROFILE) || Pages.PROFILE
             }
         ];
     }

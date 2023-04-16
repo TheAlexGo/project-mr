@@ -25,6 +25,16 @@ export class AppController {
         console.log(message, ...optionalParams);
     }
 
+    group = (...label: unknown[]) => {
+        // eslint-disable-next-line no-console
+        console.group(...label);
+    };
+
+    groupEnd = () => {
+        // eslint-disable-next-line no-console
+        console.groupEnd();
+    };
+
     debug = (message: unknown, ...optionalParams: unknown[]) => {
         if (import.meta.env.DEV) {
             this.logger(message, ...optionalParams);
@@ -118,7 +128,8 @@ export class AppController {
             this.debug('Уже на странице:', page);
             return;
         }
-        this.debug('Перешли на страницу:', page);
+        this.group('Страница:', page);
+        this.debug('Перешли на страницу');
         this.store.setActivePage(page);
     };
 
@@ -127,6 +138,8 @@ export class AppController {
         if (currentStatePage) {
             this.debug('Загрузили состояние:', activePage);
             setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
+        } else {
+            setTimeout(() => window.scrollTo(0, 0));
         }
     };
 
@@ -137,10 +150,13 @@ export class AppController {
         };
         const isNewState = JSON.stringify(statePages.get(activePage)) !== JSON.stringify(newState);
         if (!isNewState) {
-            this.debug('Состояние не изменилось для:', activePage);
+            this.debug('Состояние не изменилось');
+            this.groupEnd();
             return;
         }
-        this.debug('Сохранили состояние:', activePage);
+        // TODO: Пофиксить при открытии модальных окон ломается группа логов
+        this.debug('Сохранили состояние');
+        this.groupEnd();
         this.store.updateStatePages(newState);
     };
 
@@ -157,6 +173,10 @@ export class AppController {
         this.debug('Загрузка карточек каталога...');
         this.store.updateCatalogElements(getMangaCardsMock(30));
         return Promise.resolve(true);
+    };
+
+    updateNavigate = (location: string, newLocation: string) => {
+        this.store.updateNavigate(location, newLocation);
     };
 }
 

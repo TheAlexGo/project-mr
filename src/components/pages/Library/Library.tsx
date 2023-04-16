@@ -1,4 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+
+import { useLocation } from 'react-router-dom';
 
 import { Icons } from '@components/Icon/Icon';
 import { Tabs } from '@components/Tabs/Tabs';
@@ -15,7 +17,8 @@ import classes from './Library.module.styl';
 
 const Library = () => {
     const { locale } = useStore();
-    const { debug } = useController();
+    const { debug, updateNavigate } = useController();
+    const { pathname, hash } = useLocation();
 
     const headerButtons = useMemo(
         () => [
@@ -47,6 +50,18 @@ const Library = () => {
         [locale]
     );
 
+    const activeTab: ITab | null = useMemo(
+        () => tabElements.find((tab) => hash.endsWith(tab.content.id)) || null,
+        [hash, tabElements]
+    );
+
+    /**
+     * Обновляем ссылку в навигации на ту вкладку, на которой остановился пользователь
+     */
+    useEffect(() => {
+        updateNavigate(pathname, pathname + hash);
+    }, [pathname, hash, updateNavigate]);
+
     return (
         <Page headerButtons={headerButtons}>
             <div className={classes['container']}>
@@ -55,6 +70,7 @@ const Library = () => {
                     title={locale['library-tabs-heading']}
                     elements={tabElements}
                     withFixHeader
+                    activeTab={activeTab}
                 />
             </div>
         </Page>
