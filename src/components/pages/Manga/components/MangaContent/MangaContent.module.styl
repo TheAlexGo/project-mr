@@ -1,0 +1,57 @@
+.cover {
+    width: 375px;
+    height: @width;
+    margin: 0 -16px 16px;
+}
+
+.container-genres {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 0 8px;
+    padding: 0;
+    list-style: none;
+}
+
+.genre {
+    color: $color_secondary;
+    font-size: $fs-s;
+}
+
+.button-rate {
+    width: 76px;
+    padding: 4px 8px 4px 12px;
+    background-color: $color_surface;
+    border-radius: 16px;
+
+    fontBold();
+}
+
+.icon-rate {
+    color: $color_yellow-dark;
+}
+
+.container-info {
+    display: flex;
+}
+
+.info-heading {
+    margin-bottom: 8px;
+    font-size: 18px;
+    fontBold();
+    multiEllip(2, 24px);
+}
+
+.info-left {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.info-author {
+    color: $color_secondary;
+    font-size: $fs-s;
+}
+
+.container-description {
+    font-size: $fs-s;
+    multiEllip(3, 18px);
+}

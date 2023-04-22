@@ -14,4 +14,4 @@ export const ProfileSettingsPassword = memo(
 export const ProfileSettingsLanguage = lazy(
     () => import('./ProfileSettingsLanguage/ProfileSettingsLanguage')
 );
-export const Manga = memo(lazy(() => import('./Manga/Manga')));
+export const Manga = lazy(() => import('./Manga/Manga'));

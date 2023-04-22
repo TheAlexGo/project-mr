@@ -21,6 +21,7 @@ export enum Pages {
     PROFILE_SETTINGS = '/profile/settings',
     PROFILE = '/profile',
     NOT_FOUND = '/not_found',
+    SEARCH = '/search',
     GENERAL = '/'
 }
 
@@ -336,4 +337,9 @@ export interface IThemeButton {
     theme: Themes;
     icon: Icons;
     text: string;
+}
+
+export interface ICatalogItemsRequest {
+    items: IMangaCard[];
+    hasMore: boolean;
 }

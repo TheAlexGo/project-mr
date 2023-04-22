@@ -14,5 +14,6 @@
   "manga-chapter": "Глава",
   "manga-chapters-none": "Глав нет",
   "manga-read-first-chapter": "Читать с первой главы",
-  "manga-cover": "Обложка"
+  "manga-cover": "Обложка",
+  "manga-button-rate-aria-label": "Рейтинг книги"
 }

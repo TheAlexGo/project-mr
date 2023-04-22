@@ -25,8 +25,12 @@ export interface IPage {
     headerWithBack?: boolean;
     /** Использовать невидимый заголовок? */
     isInvisibleHeading?: boolean;
-    /** Убрать заголовок? */
-    isDisableHeading?: boolean;
+    /** Убрать шапку? */
+    isDisableHeader?: boolean;
+    /** Сделать шапку прозрачной? */
+    isTransparentHeader?: boolean;
+    /** Сделать заголовок пустым? */
+    withBlankHeading?: boolean;
 }
 
 /**
@@ -39,7 +43,9 @@ export const Page: FC<IPage> = observer(
         customHeading,
         isInvisibleHeading = false,
         headerWithBack = false,
-        isDisableHeading = false,
+        isDisableHeader = false,
+        isTransparentHeader = false,
+        withBlankHeading = false,
         children
     }) => {
         const { locale } = useStore();
@@ -47,27 +53,43 @@ export const Page: FC<IPage> = observer(
         const { loadPageState, savePageState } = useController();
 
         const headingPage = useMemo(() => {
-            if (isDisableHeading) {
+            if (withBlankHeading) {
                 return '';
             }
             return customHeading || locale[`page-${pathname}-heading`];
-        }, [customHeading, isDisableHeading, locale, pathname]);
+        }, [customHeading, withBlankHeading, locale, pathname]);
+
+        const needRenderHeader = useMemo(
+            () => (headingPage && !isInvisibleHeading) || headerButtons.length || headerWithBack,
+            [headerButtons.length, headerWithBack, headingPage, isInvisibleHeading]
+        );
 
         const rootClasses = useMemo(
             () =>
                 cn(
                     classes['page'],
                     {
-                        [classes['__is-with_heading']]:
-                            (headingPage && !isInvisibleHeading) || headerButtons.length
+                        [classes['__is-with_heading']]: needRenderHeader && !isTransparentHeader
                     },
                     className
                 ),
-            [className, headerButtons.length, headingPage, isInvisibleHeading]
+            [className, isTransparentHeader, needRenderHeader]
+        );
+
+        const headerClasses = useMemo(
+            () =>
+                cn(classes['header'], {
+                    [classes['__is-transparent']]: isTransparentHeader
+                }),
+            [isTransparentHeader]
         );
 
         const renderHeader = useCallback(() => {
-            if (isInvisibleHeading && !headerButtons.length) {
+            if (isDisableHeader) {
+                return null;
+            }
+
+            if (!needRenderHeader) {
                 return (
                     <Heading type={HeadingTypes.H1} isInvisible>
                         {headingPage}
@@ -75,7 +97,7 @@ export const Page: FC<IPage> = observer(
                 );
             }
             return (
-                <div className={classes['header']}>
+                <div className={headerClasses}>
                     <Header
                         headingType={HeadingTypes.H1}
                         heading={headingPage}
@@ -85,7 +107,15 @@ export const Page: FC<IPage> = observer(
                     />
                 </div>
             );
-        }, [headerButtons, headerWithBack, headingPage, isInvisibleHeading]);
+        }, [
+            headerButtons,
+            headerClasses,
+            headerWithBack,
+            headingPage,
+            isDisableHeader,
+            isInvisibleHeading,
+            needRenderHeader
+        ]);
 
         /**
          * Загружаем состояние страницы

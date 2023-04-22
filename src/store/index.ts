@@ -7,6 +7,7 @@ import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem
 import { getUserMock } from '@mock';
 import { makeLocalStorage } from '@store/autoSave';
 import {
+    IManga,
     IMangaCard,
     IPageState,
     IThemeButton,
@@ -59,6 +60,8 @@ export class Store {
 
     catalogElements: IMangaCard[] = [];
 
+    activeManga: IManga | null = null;
+
     constructor() {
         makeAutoObservable(this);
 
@@ -101,6 +104,10 @@ export class Store {
 
     setUser(user: IUser) {
         this.user = user;
+    }
+
+    setActiveManga(value: IManga | null) {
+        this.activeManga = value;
     }
 
     updateStatePages(statePage: IPageState) {

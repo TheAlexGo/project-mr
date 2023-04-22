@@ -1,20 +1,22 @@
 import { createContext } from 'react';
 
-import { getMangaCardsMock } from '@mock';
 import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
 import { IApiCallback, Lang, Themes } from '@types';
+import { ResponseBuilder, responseBuilder } from '@utils/response';
 
 export class AppController {
-    store: Store;
+    private readonly store: Store;
     apiService: ApiService;
     langService: LanguageService;
     validateService: ValidateService;
+    responseBuilder: ResponseBuilder;
 
-    constructor(appStore: Store) {
+    constructor(appStore: Store, responseBuilder: ResponseBuilder) {
         this.store = appStore;
+        this.responseBuilder = responseBuilder;
         this.apiService = new ApiService(this.apiCallback);
         this.langService = new LanguageService();
         this.validateService = new ValidateService();
@@ -165,21 +167,28 @@ export class AppController {
         this.store.setUser({ ...this.store.user, username });
     };
 
-    loadMoreInCatalog = async (): Promise<boolean> => {
-        const { catalogElements } = this.store;
-        if (catalogElements.length > 100) {
-            return Promise.reject(new Error('Больше нет элементов'));
-        }
-
-        this.debug('Загрузка карточек каталога...');
-        this.store.updateCatalogElements(getMangaCardsMock(30));
-        return Promise.resolve(true);
-    };
+    loadMoreInCatalog = async (): Promise<boolean> =>
+        responseBuilder.getCatalogItems().then(({ items, hasMore }) => {
+            this.debug('Загрузка карточек каталога...');
+            this.store.updateCatalogElements(items);
+            return hasMore;
+        });
 
     updateNavigate = (location: string, newLocation: string) => {
         this.store.updateNavigate(location, newLocation);
     };
+
+    loadMangaPage = async (mangaId: number) => {
+        const { activeManga } = this.store;
+        if (activeManga?.id === mangaId) {
+            return Promise.resolve();
+        }
+        this.store.setActiveManga(null);
+        return responseBuilder
+            .getManga(mangaId)
+            .then((result) => this.store.setActiveManga(result));
+    };
 }
 
-export const appController = new AppController(store);
+export const appController = new AppController(store, responseBuilder);
 export const AppControllerContext = createContext<AppController>(appController);

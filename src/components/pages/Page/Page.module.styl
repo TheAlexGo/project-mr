@@ -6,7 +6,7 @@
     align-items: center;
 
     &.__is-with_heading {
-        padding-top: $size-header;
+        margin-top: $size-header;
     }
 }
 
@@ -20,4 +20,8 @@
     padding: s('env(safe-area-inset-top)') s('env(safe-area-inset-right)') 0 s('env(safe-area-inset-left)');
     font-size: $fs-m;
     background-color: $color_surface;
+
+    &.__is-transparent {
+        background-color: transparent;
+    }
 }

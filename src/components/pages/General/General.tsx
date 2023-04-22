@@ -64,8 +64,8 @@ const General: FC = () => {
     }, [comedyList, continueReadingList, locale, topList]);
 
     return (
-        <Page className={classes.container} headerButtons={headerButtons} isInvisibleHeading>
-            {renderAllLists()}
+        <Page headerButtons={headerButtons} isInvisibleHeading>
+            <div className={classes.container}>{renderAllLists()}</div>
         </Page>
     );
 };
