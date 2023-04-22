@@ -55,7 +55,7 @@ export const App: FC = observer(() => {
                 <Route path={Pages.GENERAL} element={<LayoutMain />}>
                     <Route index element={<General />} />
                     <Route path={Pages.LIBRARY} element={<Library />} />
-                    <Route path={`${Pages.MANGA}/:id`} element={<Manga />} />
+                    <Route path={`${Pages.MANGA}/:mangaId`} element={<Manga />} />
                     <Route path={Pages.PROFILE} element={<Profile />} />
                     <Route path={Pages.PROFILE_SETTINGS} element={<ProfileSettings />} />
                     <Route
@@ -71,7 +71,7 @@ export const App: FC = observer(() => {
                         element={<ProfileSettingsLanguage />}
                     />
                     <Route path={Pages.NOT_FOUND} element={<NotFound />} />
-                    <Route path="*" element={<Navigate to={Pages.NOT_FOUND} />} />
+                    <Route path="*" element={<Navigate to={Pages.NOT_FOUND} replace />} />
                 </Route>
             </Routes>
         </Router>

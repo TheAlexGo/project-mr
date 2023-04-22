@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 
-import { Link as RRDLink, NavLink, NavLinkProps, LinkProps } from 'react-router-dom';
+import { Link as RRDLink, NavLink, NavLinkProps, LinkProps, To } from 'react-router-dom';
 
 interface ILink extends NavLinkProps {
-    to: string;
+    to: To;
 }
 
 /*

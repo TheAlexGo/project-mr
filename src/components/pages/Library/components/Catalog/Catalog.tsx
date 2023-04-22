@@ -31,16 +31,11 @@ export const Catalog: FC = observer((): JSX.Element => {
         }
         isLoading.current = true;
         setIsLoaded(false);
-        setTimeout(() => {
-            loadMoreInCatalog()
-                .catch(() => setHasMore(false))
-                .finally(() => {
-                    setTimeout(() => {
-                        isLoading.current = false;
-                        setIsLoaded(true);
-                    }, 100);
-                });
-        }, 1000);
+        loadMoreInCatalog().then((hasMore) => {
+            isLoading.current = false;
+            setIsLoaded(true);
+            setHasMore(hasMore);
+        });
     }, [hasMore, loadMoreInCatalog]);
 
     const offset = useMemo(() => -(CARD_MAX_HEIGHT * OFFSET_BY_CARD_HEIGHT), []);
