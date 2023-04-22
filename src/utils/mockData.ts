@@ -308,7 +308,7 @@ export const getChaptersMock = (
             pageCount,
             paid: false,
             type: ChapterType.DEFAULT,
-            available: !!getRandomInt(1),
+            isAvailable: !!getRandomInt(1),
             nowProgress: getRandomInt(pageCount)
         }),
         count

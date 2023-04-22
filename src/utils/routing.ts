@@ -12,6 +12,9 @@ export const getReadlistPageLink = (title: string, id: number) =>
 
 export const getSearchPage = () => Pages.SEARCH;
 
+export const getChapterLink = (mangaId: number, chapterId: number) =>
+    `${getMangaPageLink(mangaId)}/${chapterId}`;
+
 export const getPageName = (page: string): Pages | null => {
     const result = Object.entries(Pages).find(([, value]) => page.includes(value));
     if (result) {

@@ -1,16 +1,20 @@
 import React, { FC, memo, useCallback, useMemo } from 'react';
 
-import { To } from 'react-router-dom';
+import { useLocation, To } from 'react-router-dom';
 
-import { Button } from '@components/Button/Button';
-import { HeadingTypes, Heading } from '@components/Heading/Heading';
+import { ButtonStates, ButtonThemes, Button } from '@components/Button/Button';
+import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { Icon, Icons } from '@components/Icon/Icon';
 import { Image } from '@components/Image/Image';
 import { Link } from '@components/Link/Link';
+import { Tabs } from '@components/Tabs/Tabs';
+import { ITab } from '@components/Tabs/components/Tab/Tab';
 import { useStore } from '@hooks/useStore';
-import { IManga, Justifies } from '@types';
+import { IManga, Justifies, ModalLinks } from '@types';
 import { getMangaDescription, getMangaTitle } from '@utils/manga';
-import { getSearchPage } from '@utils/routing';
+import { getModalLink, getSearchPage } from '@utils/routing';
+
+import { Chapters } from '../Chapters/Chapters';
 
 import classes from './MangaContent.module.styl';
 
@@ -21,6 +25,7 @@ export const MangaContent: FC<IMangaContent> = memo(
         const { locale } = useStore();
         const currentTitle = useMemo(() => getMangaTitle(titles), [titles]);
         const currentDescription = useMemo(() => getMangaDescription(descriptions), [descriptions]);
+        const { hash } = useLocation();
 
         const coverAlt = useMemo(
             () => `${currentTitle} ${locale['manga-cover']}`,
@@ -30,6 +35,41 @@ export const MangaContent: FC<IMangaContent> = memo(
         const buttonRateAriaLabel = useMemo(
             () => `${locale['manga-button-rate-aria-label']} ${rating}`,
             [locale, rating]
+        );
+
+        const tabElements: ITab[] = useMemo(
+            () => [
+                {
+                    id: 'chapters',
+                    title: locale['manga-tab-chapters'],
+                    content: {
+                        id: 'catalog-content',
+                        children: <Chapters />
+                    }
+                },
+                {
+                    id: 'discussion',
+                    title: locale['manga-tab-discussion'],
+                    content: {
+                        id: 'discussion-content',
+                        children: <div>{locale['manga-tab-discussion']}</div>
+                    }
+                },
+                {
+                    id: 'similar',
+                    title: locale['manga-tab-similar'],
+                    content: {
+                        id: 'similar-content',
+                        children: <div>{locale['manga-tab-similar']}</div>
+                    }
+                }
+            ],
+            [locale]
+        );
+
+        const activeTab: ITab | null = useMemo(
+            () => tabElements.find((tab) => hash.endsWith(tab.content.id)) || null,
+            [hash, tabElements]
         );
 
         const renderTags = useCallback(
@@ -94,8 +134,8 @@ export const MangaContent: FC<IMangaContent> = memo(
                                 <Icon
                                     className={classes['icon-rate']}
                                     icon={Icons.STAR}
-                                    isNotButton
                                     ariaLabel={null}
+                                    isNotButton
                                 />
                             }
                             contentJustify={Justifies.SPACE_BETWEEN}
@@ -107,6 +147,38 @@ export const MangaContent: FC<IMangaContent> = memo(
                     </div>
                 </div>
                 <div className={classes['container-description']}>{currentDescription}</div>
+                <div className={classes['container-description_link']}>
+                    <Link
+                        className={classes['link-description']}
+                        to={getModalLink(ModalLinks.MANGA_DESCRIPTION)}
+                    >
+                        {locale['manga-description-full']}
+                        <Icon
+                            className={classes['icon-arrow']}
+                            icon={Icons.ARROW_RIGHT}
+                            size="18"
+                            ariaLabel={null}
+                            isNotButton
+                        />
+                    </Link>
+                </div>
+                <div className={classes['container-buttons']}>
+                    <Button theme={ButtonThemes.PRIMARY} isWide>
+                        {locale['manga-button-read']}
+                    </Button>
+                    <Button
+                        theme={ButtonThemes.SECONDARY}
+                        state={ButtonStates.HOVER}
+                        aria-label={locale['manga-button-bookmark']}
+                    >
+                        <Icon icon={Icons.BOOKMARK} ariaLabel={null} isNotButton />
+                    </Button>
+                </div>
+                <Tabs
+                    title={locale['manga-tabs-title']}
+                    elements={tabElements}
+                    activeTab={activeTab}
+                />
             </div>
         );
     }

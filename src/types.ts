@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import { Icons } from '@components/Icon/Icon';
 import { Manga } from '@store/manga';
@@ -12,6 +12,7 @@ export enum Lang {
  * Для проверки корректности выбранной страницы
  */
 export enum Pages {
+    CHAPTER = '/chapter',
     MANGA = '/library/manga',
     READLIST = '/library/readlist',
     LIBRARY = '/library',
@@ -168,7 +169,7 @@ export type IApiCallback<T = string> = (
     data: T
 ) => void;
 
-export const SQUARE_ELEMENT_SIZES = ['16', '20', '24', '36', '40', '44', '52'] as const;
+export const SQUARE_ELEMENT_SIZES = ['16', '18', '20', '24', '36', '40', '44', '52'] as const;
 type SquareElementSizesTuple = typeof SQUARE_ELEMENT_SIZES;
 export type SquareElementSizes = SquareElementSizesTuple[number];
 
@@ -263,16 +264,6 @@ export interface IReadlist {
     alias?: CardTypes.MANGA | CardTypes.FAVORITE | CardTypes.RECENT;
 }
 
-export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
-    /** Функция валидации */
-    validator?: (value: string) => IResult;
-    /** Функция обратного вызова */
-    onNewValue?: (value: string) => void;
-    /** Проверяет, прошло ли поле валидацию */
-    isCheck?: boolean;
-    showErrorBlock?: boolean;
-}
-
 export interface IChapter {
     id: number;
     title: string;
@@ -282,7 +273,7 @@ export interface IChapter {
     paid: boolean;
     type: ChapterType;
     nowProgress: number;
-    available: boolean;
+    isAvailable: boolean;
 }
 
 export interface IChapterPage {
