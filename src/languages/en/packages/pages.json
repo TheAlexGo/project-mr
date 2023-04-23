@@ -1,7 +1,7 @@
 {
-  "page-/-heading": "General",
+  "page-general-heading": "General",
   "page-/library-heading": "Library",
-  "page-/profile-heading": "Profile",
+  "page-profile-heading": "Profile",
   "page-/profile/settings-heading": "Settings",
   "page-/profile/settings/change/email-heading": "Change email",
   "page-/profile/settings/change/password-heading": "Change password",

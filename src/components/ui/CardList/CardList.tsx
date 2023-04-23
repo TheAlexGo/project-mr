@@ -5,7 +5,6 @@ import cn from 'classnames';
 import { IMangaCardProps, MangaCard } from '@cards/MangaCard/MangaCard';
 import { IReadlistCardProps, ReadlistCard } from '@cards/ReadlistCard/ReadlistCard';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
-import { Loader } from '@components/Loader/Loader';
 import { Loading } from '@components/Loading/Loading';
 
 import classes from './CardList.module.styl';
@@ -30,8 +29,6 @@ interface ICardList {
     title?: string;
     /** Тип привязки прокрутки: https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type */
     scrollSnap?: ScrollSnapTypes;
-    /** Нужно ли показать лоадер? */
-    isLoading?: boolean;
 }
 
 /**
@@ -41,15 +38,13 @@ interface ICardList {
  * @param {Axes} axis - ось прокрутки
  * @param {string} title - название списка
  * @param {ScrollSnapTypes} scrollSnap
- * @param {boolean} isLoading - нужно ли показывать лоадер?
  * @constructor
  */
 export const CardList: FC<ICardList> = ({
     cards,
     axis,
     title,
-    scrollSnap = ScrollSnapTypes.None,
-    isLoading = false
+    scrollSnap = ScrollSnapTypes.None
 }) => {
     const renderElements = useCallback(
         () =>
@@ -80,25 +75,6 @@ export const CardList: FC<ICardList> = ({
         [cards]
     );
 
-    const renderLoader = useCallback(() => {
-        if (!isLoading) {
-            return null;
-        }
-        return (
-            <div className={classes['container-loader']}>
-                <Loader size="24" />
-            </div>
-        );
-    }, [isLoading]);
-
-    const wrapperClasses = useMemo(
-        () =>
-            cn(classes['wrapper'], {
-                [classes['__scroll_snap-y_mandatory']]: scrollSnap === ScrollSnapTypes.Y_Mandatory
-            }),
-        [scrollSnap]
-    );
-
     const rootClasses = useMemo(
         () =>
             cn(classes.list, {
@@ -110,7 +86,7 @@ export const CardList: FC<ICardList> = ({
 
     return (
         <Loading condition={cards.length !== 0}>
-            <div className={wrapperClasses}>
+            <div className={classes.wrapper}>
                 {title && (
                     <Heading type={HeadingTypes.H3} className={classes.heading}>
                         {title}
@@ -118,7 +94,6 @@ export const CardList: FC<ICardList> = ({
                 )}
                 <div className={classes.container}>
                     <ul className={rootClasses}>{renderElements()}</ul>
-                    {renderLoader()}
                 </div>
             </div>
         </Loading>

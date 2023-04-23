@@ -51,7 +51,7 @@ fontExtraBold() {
 
 // Theme
 darkTheme() {
-    @media (prefers-color-scheme: dark) {
+    @media (prefers-color-scheme dark) {
         :root:not(.__ui-theme_light) & {
             {block};
         }
@@ -80,7 +80,6 @@ multiEllip($countOfLine, $lineHeight = 16px, $showEllipsis = true) {
 
     max-height: ($countOfLine * $lineHeight);
     overflow: hidden;
-    line-height: $lineHeight;
     text-overflow: ellipsis;
     word-wrap: break-word;
     -webkit-line-clamp: $countOfLine;
@@ -89,7 +88,7 @@ multiEllip($countOfLine, $lineHeight = 16px, $showEllipsis = true) {
 
 squareElementSizes($withAlignCenter = false) {
     &.__size {
-        for $size in range(16, 52, 2) {
+        for $size in range(16, 52, 4) {
             &-s{$size} {
                 if $withAlignCenter {
                     top: 'calc(50% - %spx)' % ($size / 2);
@@ -143,41 +142,4 @@ makeInvisible() {
     height: 1px;
     overflow: hidden;
     clip: rect(1px,1px,1px,1px);
-}
-
-useMobileSWidth() {
-    @media (min-width: 276px) {
-        {block};
-    }
-}
-
-useMobileMWidth() {
-    @media (min-width: 444px) {
-        {block};
-    }
-}
-
-useMobileLWidth() {
-    @media (min-width: 612px) {
-        {block};
-    }
-}
-
-useTabletMWidth() {
-    @media (min-width: 780px) {
-        {block};
-    }
-}
-
-useLaptopWidth() {
-    @media (min-width: 948px) {
-        {block};
-    }
-}
-
-useMediaWidth() {
-    @media (min-width: 1032px) {
-        max-width: 1032px;
-        margin: 0 auto;
-    }
 }

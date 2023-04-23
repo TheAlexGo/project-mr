@@ -1,16 +1,13 @@
 import { createContext } from 'react';
 
-import { getMangaCardsMock, getMangaMock, getMangaListMock } from '@mock';
-import { store, Store } from '@store';
-import { ICatalogItemsRequest, IManga, IMangaCard } from '@types';
+import { getMangaListMock } from '@mock';
+import { IMangaCard } from '@types';
 
-export class ResponseBuilder {
+class ResponseBuilder {
     private client: null;
-    private readonly store: Store;
 
-    constructor(store: Store) {
+    constructor() {
         this.client = null;
-        this.store = store;
     }
 
     async getContinueReadingList(): Promise<IMangaCard[]> {
@@ -32,32 +29,7 @@ export class ResponseBuilder {
     async getRecentList(): Promise<IMangaCard[]> {
         return getMangaListMock(20);
     }
-
-    async getCatalogItems(): Promise<ICatalogItemsRequest> {
-        const { catalogElements } = this.store;
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                if (catalogElements.length > 100) {
-                    return resolve({
-                        items: [],
-                        hasMore: false
-                    });
-                }
-
-                return resolve({
-                    items: getMangaCardsMock(30),
-                    hasMore: true
-                });
-            }, 1000);
-        });
-    }
-
-    async getManga(mangaId: number): Promise<IManga> {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve(getMangaMock(mangaId)), 1000);
-        });
-    }
 }
-export const responseBuilder = new ResponseBuilder(store);
+export const responseBuilder = new ResponseBuilder();
 
 export const responseBuilderContext = createContext<ResponseBuilder>(responseBuilder);

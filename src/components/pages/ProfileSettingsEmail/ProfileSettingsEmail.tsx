@@ -1,9 +1,11 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, { FormEvent, useCallback, useMemo, useState } from 'react';
 
 import { Button, ButtonThemes, ButtonTypes } from '@components/Button/Button';
 import { Input } from '@components/Input/Input';
 import { useController } from '@hooks/useController';
+import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
+import { Pages } from '@types';
 
 import { Page } from '../Page/Page';
 
@@ -14,6 +16,9 @@ const ProfileSettingsEmail = () => {
     const [isValid, setIsValid] = useState<boolean>(false);
     const { locale } = useStore();
     const { debug } = useController();
+
+    const headerButtons = useMemo(() => [], []);
+    usePage(Pages.PROFILE_SETTINGS_CHANGE_EMAIL, headerButtons, true, true);
 
     const changeHandler = useCallback((value: string) => {
         setEmail(value);
@@ -32,7 +37,7 @@ const ProfileSettingsEmail = () => {
     );
 
     return (
-        <Page headerWithBack>
+        <Page>
             <form className={classes['container']} onSubmit={submitHandler}>
                 <div className={classes['container-input']}>
                     <Input

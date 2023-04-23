@@ -1,12 +1,13 @@
-import React, { PropsWithChildren, FC } from 'react';
+import React, { FC, ReactElement } from 'react';
 
 import { Loader } from '@components/Loader/Loader';
 
-interface ILoading extends PropsWithChildren {
+interface ILoading {
     /**
      * Условие, по которому будем проверять статус загрузки
      */
     condition: boolean;
+    children: ReactElement;
 }
 
 /**
@@ -19,5 +20,5 @@ export const Loading: FC<ILoading> = ({ condition, children }): JSX.Element => {
     if (!condition || !children) {
         return <Loader />;
     }
-    return children as JSX.Element;
+    return children;
 };

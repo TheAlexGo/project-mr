@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Button } from '@components/Button/Button';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { Icon, Icons } from '@components/Icon/Icon';
+import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
 import { Justifies, ModalLinks, Pages } from '@types';
 import { getButtonSecondaryHoverProps, getButtonWithArrowProps } from '@utils/buttons';
@@ -17,8 +17,9 @@ import classes from './ProfileSettings.module.styl';
 
 const ProfileSettings = observer(() => {
     const { lang, locale } = useStore();
-    const navigate = useNavigate();
-    const { state } = useLocation();
+
+    const headerButtons = useMemo(() => [], []);
+    usePage(Pages.PROFILE_SETTINGS, headerButtons, true, true);
 
     const buttonWithArrowProps = useMemo(
         () => ({
@@ -30,15 +31,8 @@ const ProfileSettings = observer(() => {
 
     const buttonSecondaryHoverProps = useMemo(() => getButtonSecondaryHoverProps(), []);
 
-    const deleteClickHandler = useCallback(() => {
-        navigate(getModalLink(ModalLinks.DELETE_ACCOUNT), {
-            replace: true,
-            state
-        });
-    }, [navigate, state]);
-
     return (
-        <Page headerWithBack>
+        <Page>
             <div className={classes['container']}>
                 <div className={classes['top']}>
                     <div className={classes['container-security']}>
@@ -75,7 +69,7 @@ const ProfileSettings = observer(() => {
                     className={classes['button-delete']}
                     contentJustify={Justifies.SPACE_BETWEEN}
                     icon={<Icon icon={Icons.TRASH} ariaLabel={null} isNotButton />}
-                    onClick={deleteClickHandler}
+                    href={getModalLink(ModalLinks.DELETE_ACCOUNT)}
                     withRightIcon
                 >
                     {locale['profile-settings-account-delete']}

@@ -3,9 +3,10 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Axes, CardList, ScrollSnapTypes } from '@components/CardList/CardList';
 import { Icons } from '@components/Icon/Icon';
 import { useController } from '@hooks/useController';
+import { usePage } from '@hooks/usePage';
 import { useResponse } from '@hooks/useResponse';
 import { useStore } from '@hooks/useStore';
-import { IMangaCard } from '@types';
+import { IMangaCard, Pages } from '@types';
 import { getIconObj } from '@utils/header';
 
 import { Page } from '../Page/Page';
@@ -28,6 +29,8 @@ const General: FC = () => {
         ],
         [locale, debug]
     );
+
+    usePage(Pages.GENERAL, headerButtons);
 
     useEffect(() => {
         getContinueReadingList().then(setContinueReadingList);
@@ -63,11 +66,7 @@ const General: FC = () => {
         ));
     }, [comedyList, continueReadingList, locale, topList]);
 
-    return (
-        <Page headerButtons={headerButtons} isInvisibleHeading>
-            <div className={classes.container}>{renderAllLists()}</div>
-        </Page>
-    );
+    return <Page className={classes.container}>{renderAllLists()}</Page>;
 };
 
 export default General;

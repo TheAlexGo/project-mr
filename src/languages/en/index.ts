@@ -2,7 +2,6 @@ import blocks from './packages/blocks.json';
 import buttons from './packages/buttons.json';
 import comments from './packages/comments.json';
 import errors from './packages/errors.json';
-import library from './packages/library.json';
 import manga from './packages/manga.json';
 import modals from './packages/modals.json';
 import nav from './packages/nav.json';
@@ -28,6 +27,5 @@ export default {
     ...readlists,
     ...profile,
     ...blocks,
-    ...buttons,
-    ...library
+    ...buttons
 };

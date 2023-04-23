@@ -4,8 +4,6 @@ import cn from 'classnames';
 
 import { Button, IButton } from '@components/Button/Button';
 import {
-    BookmarkIcon,
-    StarIcon,
     ArrowRIcon,
     AutoIcon,
     BackIcon,
@@ -46,9 +44,7 @@ export enum Icons {
     NIGHT = 'night',
     AUTO = 'auto',
     EYE = 'eye',
-    CHECK = 'check',
-    STAR = 'star',
-    BOOKMARK = 'Bookmark'
+    CHECK = 'check'
 }
 
 export interface IIcon {
@@ -152,12 +148,6 @@ export const Icon: FC<IIcon> = ({
                 break;
             case Icons.CHECK:
                 params.icon = <CheckIcon {...iconProps} />;
-                break;
-            case Icons.STAR:
-                params.icon = <StarIcon {...iconProps} />;
-                break;
-            case Icons.BOOKMARK:
-                params.icon = <BookmarkIcon {...iconProps} />;
                 break;
         }
         return params;

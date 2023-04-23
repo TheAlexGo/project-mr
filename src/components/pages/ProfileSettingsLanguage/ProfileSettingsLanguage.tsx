@@ -4,8 +4,9 @@ import { observer } from 'mobx-react-lite';
 
 import { IOption, RadioGroup } from '@components/Input/components/RadioGroup/RadioGroup';
 import { useController } from '@hooks/useController';
+import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
-import { Lang } from '@types';
+import { Lang, Pages } from '@types';
 
 import { Page } from '../Page/Page';
 
@@ -25,6 +26,9 @@ const ProfileSettingsLanguage: FC = observer((): JSX.Element => {
         [locale]
     );
 
+    const headerButtons = useMemo(() => [], []);
+    usePage(Pages.PROFILE_SETTINGS_CHANGE_LANGUAGE, headerButtons, true, true);
+
     const changeHandler = useCallback(
         (activeLang: string) => {
             switchLang(activeLang as Lang);
@@ -33,7 +37,7 @@ const ProfileSettingsLanguage: FC = observer((): JSX.Element => {
     );
 
     return (
-        <Page headerWithBack>
+        <Page>
             <div className={classes['container']}>
                 <RadioGroup
                     title={locale['profile-select-lang']}

@@ -1,24 +1,22 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
-import { useLocation } from 'react-router-dom';
-
+import { Axes, CardList } from '@components/CardList/CardList';
 import { Icons } from '@components/Icon/Icon';
-import { Tabs } from '@components/Tabs/Tabs';
-import { ITab } from '@components/Tabs/components/Tab/Tab';
 import { useController } from '@hooks/useController';
+import { usePage } from '@hooks/usePage';
 import { useStore } from '@hooks/useStore';
+import { getMangaCardsMock } from '@mock';
+import { IMangaCard, Pages } from '@types';
 import { getIconObj } from '@utils/header';
 
-import { Catalog } from './components/Catalog/Catalog';
-import { MyCollection } from './components/MyCollection/MyCollection';
 import { Page } from '../Page/Page';
 
 import classes from './Library.module.styl';
 
 const Library = () => {
+    const [items, setItems] = useState<IMangaCard[]>([]);
     const { locale } = useStore();
-    const { debug, updateNavigate } = useController();
-    const { pathname, hash } = useLocation();
+    const { debug } = useController();
 
     const headerButtons = useMemo(
         () => [
@@ -28,51 +26,15 @@ const Library = () => {
         [locale, debug]
     );
 
-    const tabElements: ITab[] = useMemo(
-        () => [
-            {
-                id: 'catalog',
-                title: locale['library-catalog-heading'],
-                content: {
-                    id: 'catalog-content',
-                    children: <Catalog />
-                }
-            },
-            {
-                id: 'my-collection',
-                title: locale['library-my-collection-heading'],
-                content: {
-                    id: 'my-collection-content',
-                    children: <MyCollection />
-                }
-            }
-        ],
-        [locale]
-    );
-
-    const activeTab: ITab | null = useMemo(
-        () => tabElements.find((tab) => hash.endsWith(tab.content.id)) || null,
-        [hash, tabElements]
-    );
-
-    /**
-     * Обновляем ссылку в навигации на ту вкладку, на которой остановился пользователь
-     */
     useEffect(() => {
-        updateNavigate(pathname, pathname + hash);
-    }, [pathname, hash, updateNavigate]);
+        setItems(getMangaCardsMock(100));
+    }, []);
+
+    usePage(Pages.LIBRARY, headerButtons, true);
 
     return (
-        <Page headerButtons={headerButtons}>
-            <div className={classes['container']}>
-                <Tabs
-                    tabsClassName={classes['tabs']}
-                    title={locale['library-tabs-heading']}
-                    elements={tabElements}
-                    withFixHeader
-                    activeTab={activeTab}
-                />
-            </div>
+        <Page className={classes.container}>
+            <CardList axis={Axes.Y} cards={items} />
         </Page>
     );
 };

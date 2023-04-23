@@ -12,7 +12,6 @@
         "stylus/declaration-colon": "always",
         "stylus/semicolon": "always",
         "stylus/selector-list-comma": "always",
-        "stylus/pythonic": "never",
-        "stylus/media-feature-colon": "always"
+        "stylus/pythonic": "never"
     }
 }

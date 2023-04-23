@@ -2,22 +2,11 @@ import { createContext } from 'react';
 
 import { makeAutoObservable } from 'mobx';
 
-import { Icons } from '@components/Icon/Icon';
+import { Icons, IIcon } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
 import { getUserMock } from '@mock';
 import { makeLocalStorage } from '@store/autoSave';
-import {
-    IManga,
-    IMangaCard,
-    IPageState,
-    IThemeButton,
-    IUser,
-    Lang,
-    NavTabs,
-    Pages,
-    Themes,
-    UserRoles
-} from '@types';
+import { IPageState, IThemeButton, IUser, Lang, NavTabs, Pages, Themes, UserRoles } from '@types';
 import { getPageName } from '@utils/routing';
 
 export class Store {
@@ -53,15 +42,13 @@ export class Store {
     };
     locale: Record<string, string> = {};
     activePage: string;
-    prevPage: string;
+    headerTitleKey = '';
+    headerButtons: IIcon[] = [];
+    headerWithBack = false;
     statePages: Map<string, IPageState> = new Map<string, IPageState>();
-    navigateLinks: Map<string, string> = new Map<string, string>();
+    isPageLoaded = false;
 
     user: IUser = this.defaultUser;
-
-    catalogElements: IMangaCard[] = [];
-
-    activeManga: IManga | null = null;
 
     constructor() {
         makeAutoObservable(this);
@@ -71,15 +58,11 @@ export class Store {
 
         const currentPage = getPageName(window.location.pathname);
         if (currentPage) {
-            this.activePage = currentPage;
+            const [, page] = currentPage;
+            this.activePage = page;
         } else {
             this.activePage = Pages.GENERAL;
         }
-        this.prevPage = this.activePage;
-
-        this.navigateLinks.set(Pages.GENERAL, Pages.GENERAL);
-        this.navigateLinks.set(Pages.LIBRARY, Pages.LIBRARY);
-        this.navigateLinks.set(Pages.PROFILE, Pages.PROFILE);
 
         makeLocalStorage<Store, keyof Store>(this, 'store', ['lang', 'activeTheme', 'user']);
     }
@@ -104,49 +87,49 @@ export class Store {
         this.activePage = page;
     }
 
-    setPrevPage(page: string) {
-        this.prevPage = page;
+    setHeaderTitleKey(headerTitleKey: string) {
+        this.headerTitleKey = headerTitleKey;
+    }
+
+    setHeaderButtons(headerButtons: IIcon[]) {
+        this.headerButtons = headerButtons;
+    }
+
+    setHeaderWithBack(headerWithBack: boolean) {
+        this.headerWithBack = headerWithBack;
+    }
+
+    setIsPageLoaded(isPageLoaded: boolean) {
+        this.isPageLoaded = isPageLoaded;
     }
 
     setUser(user: IUser) {
         this.user = user;
     }
 
-    setActiveManga(value: IManga | null) {
-        this.activeManga = value;
-    }
-
     updateStatePages(statePage: IPageState) {
         this.statePages.set(this.activePage, statePage);
     }
 
-    updateCatalogElements(elements: IMangaCard[]) {
-        this.catalogElements.push(...elements);
-    }
-
-    updateNavigate(location: string, newLocation: string) {
-        this.navigateLinks.set(location, newLocation);
-    }
-
-    get navItems(): INavbarItem[] {
+    get navigate(): INavbarItem[] {
         return [
             {
                 id: NavTabs.GENERAL,
                 icon: Icons.HOME,
                 title: this.locale['nav-general'],
-                link: this.navigateLinks.get(Pages.GENERAL) || Pages.GENERAL
+                link: Pages.GENERAL
             },
             {
                 id: NavTabs.LIBRARY,
                 icon: Icons.LIBRARY,
                 title: this.locale['nav-library'],
-                link: this.navigateLinks.get(Pages.LIBRARY) || Pages.LIBRARY
+                link: Pages.LIBRARY
             },
             {
                 id: NavTabs.PROFILE,
                 icon: Icons.PROFILE,
                 title: this.locale['nav-profile'],
-                link: this.navigateLinks.get(Pages.PROFILE) || Pages.PROFILE
+                link: Pages.PROFILE
             }
         ];
     }

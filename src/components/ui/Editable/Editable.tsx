@@ -86,30 +86,23 @@ export const Editable: FC<IEditable> = ({
     }, [isActive]);
 
     useEffect(() => {
-        const { current } = ref;
-        if (current && newValue !== null) {
+        if (newValue !== null) {
             if (newValue) {
                 onSave?.(newValue);
             } else {
                 onCancel?.();
             }
             setNewValue(null);
-            current.blur();
         }
     }, [newValue, onCancel, onSave]);
 
     useEffect(() => {
         const { current } = ref;
-        if (isSaveOutside && current) {
-            if (current.textContent) {
-                onSave?.(current.textContent);
-            } else {
-                onCancel?.();
-            }
+        if (isSaveOutside && onSave && current && current.textContent) {
+            onSave(current.textContent);
             setNewValue(null);
-            current.blur();
         }
-    }, [isSaveOutside, onCancel, onSave]);
+    }, [isSaveOutside, onSave]);
 
     useEffect(() => {
         document.addEventListener('keydown', keyDownEscapeHandler);

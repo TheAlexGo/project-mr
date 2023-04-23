@@ -1,27 +1,6 @@
 .page {
-    position: relative;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     align-items: center;
-
-    &.__is-with_heading {
-        margin-top: $size-header;
-    }
-}
-
-.header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 10;
-    width: 100%;
-    padding: s('env(safe-area-inset-top)') s('env(safe-area-inset-right)') 0 s('env(safe-area-inset-left)');
-    font-size: $fs-m;
-    background-color: $color_surface;
-
-    &.__is-transparent {
-        background-color: transparent;
-    }
 }

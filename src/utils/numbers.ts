@@ -7,9 +7,9 @@ export const getRandomInt = (max: number, min = 0) => {
 export const getRandom = (max: number, min = 0, rounded = 2) => {
     const minValue = Math.ceil(min);
     const maxValue = Math.floor(max);
-    let num = Math.random() * (maxValue - minValue + 1) + minValue;
+    const num = Math.random() * (maxValue - minValue + 1) + minValue;
     if (num > maxValue) {
-        num = maxValue;
+        return maxValue;
     }
     return +num.toFixed(rounded);
 };
