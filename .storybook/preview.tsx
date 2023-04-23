@@ -1,27 +1,26 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Story } from "@storybook/react";
 
-import { useStore } from '@hooks/useStore';
+import { Story } from '@storybook/react';
+import { BrowserRouter as Router } from 'react-router-dom';
+
 import { useController } from '@hooks/useController';
+import { useStore } from '@hooks/useStore';
 import '../src/styles/common.styl';
 
 export const parameters = {
     actions: {
-        argTypesRegex: "^on[A-Z].*"
+        argTypesRegex: '^on[A-Z].*'
     },
     controls: {
         matchers: {
             color: /(background|color)$/i,
-            date: /Date$/,
+            date: /Date$/
         },
         expanded: true
     },
     backgrounds: {
         default: 'main',
-        values: [
-            { name: 'main', value: 'var(--color_background)' }
-        ]
+        values: [{ name: 'main', value: 'var(--color_background)' }]
     }
 };
 
@@ -32,7 +31,7 @@ export const decorators = [
 
         useEffect(() => {
             initResource(lang);
-        }, []);
+        }, [initResource, lang]);
 
         return (
             <Router>
@@ -41,5 +40,5 @@ export const decorators = [
                 </div>
             </Router>
         );
-    },
+    }
 ];

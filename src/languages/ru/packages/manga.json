@@ -11,8 +11,15 @@
   "manga-description-genres": "Жанры",
   "manga-description-full": "Полное описание манги",
   "manga-button-read": "Читать",
+  "manga-button-bookmark": "Добавить в закладки",
   "manga-chapter": "Глава",
   "manga-chapters-none": "Глав нет",
   "manga-read-first-chapter": "Читать с первой главы",
-  "manga-cover": "Обложка"
+  "manga-cover": "Обложка",
+  "manga-button-rate-aria-label": "Рейтинг книги",
+  "manga-tabs-title": "Разделы книги",
+  "manga-tab-chapters": "Главы",
+  "manga-tab-discussion": "Обсуждение",
+  "manga-tab-similar": "Похожее",
+  "manga-chapter-notification": "Уведомить, когда глава будет доступна"
 }

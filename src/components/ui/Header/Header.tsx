@@ -20,6 +20,8 @@ interface IHeader {
     needBack?: boolean;
     /** Кнопки в шапке */
     buttons: IIcon[];
+    /** Использовать невидимый заголовок? */
+    isInvisibleHeading?: boolean;
 }
 
 export const Header: FC<IHeader> = ({
@@ -27,7 +29,8 @@ export const Header: FC<IHeader> = ({
     description,
     buttons = [],
     headingType = HeadingTypes.H1,
-    needBack = false
+    needBack = false,
+    isInvisibleHeading = false
 }) => {
     const { locale } = useStore();
     const navigate = useNavigate();
@@ -59,27 +62,31 @@ export const Header: FC<IHeader> = ({
                     />
                 )}
                 {heading && (
-                    <Heading className={classes.heading} type={headingType}>
+                    <Heading
+                        className={classes.heading}
+                        type={headingType}
+                        isInvisible={isInvisibleHeading}
+                    >
                         {heading}
                     </Heading>
                 )}
             </div>
         );
-    }, [clickBackHandler, heading, headingType, locale, needBack]);
+    }, [clickBackHandler, heading, headingType, isInvisibleHeading, locale, needBack]);
 
     return (
-        <div className={classes.header}>
+        <header className={classes.header}>
             <div className={classes.wrapper}>
                 {leftComponent}
                 <div
                     className={cn(classes.right, {
-                        [classes['__is-only-buttons']]: !leftComponent
+                        [classes['__is-only-buttons']]: !leftComponent || isInvisibleHeading
                     })}
                 >
                     {buttonsContent}
                 </div>
             </div>
             {description && <div className={classes.description}>{description}</div>}
-        </div>
+        </header>
     );
 };

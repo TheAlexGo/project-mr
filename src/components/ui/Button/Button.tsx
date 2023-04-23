@@ -1,4 +1,13 @@
-import React, { FC, ReactElement, ReactNode, useCallback, useMemo } from 'react';
+import React, {
+    FC,
+    Ref,
+    forwardRef,
+    HTMLAttributes,
+    ReactElement,
+    ReactNode,
+    useCallback,
+    useMemo
+} from 'react';
 
 import cn from 'classnames';
 
@@ -30,7 +39,7 @@ export enum ButtonTypes {
 /**
  * Интерфейс кнопки
  */
-export interface IButton {
+export interface IButton extends HTMLAttributes<HTMLButtonElement> {
     /** Устанавливает внешний класс */
     className?: string;
     /** Устанавливает класс для иконки */
@@ -73,116 +82,127 @@ export interface IButton {
     isLoading?: boolean;
     /** Сильная ссылка - переход на другую страницу */
     isExternalLink?: boolean;
+    ref?: Ref<HTMLButtonElement>;
 }
 
-export const Button: FC<IButton> = ({
-    className,
-    iconClassName,
-    href,
-    icon,
-    onClick,
-    theme,
-    children,
-    withLeftIcon = false,
-    withRightIcon = false,
-    isWide = false,
-    isRounded = false,
-    isDisabled = false,
-    isLoading = false,
-    isExternalLink = false,
-    withNoPadding = false,
-    state = ButtonStates.DEFAULT,
-    size,
-    type = ButtonTypes.BUTTON,
-    contentJustify = Justifies.CENTER,
-    contentDirection = Directions.ROW,
-    contentPosition = Positions.CENTER
-}): JSX.Element => {
-    const rootClasses = useMemo(
-        () =>
-            cn(
-                classes.button,
-                {
-                    [classes[`__theme-${theme}`]]: !!theme,
-                    [classes['__is-loading']]: isLoading,
-                    [classes['__is-wide']]: isWide,
-                    [classes['__is-rounded']]: isRounded,
-                    [classes['__with-no_padding']]: withNoPadding,
-                    [classes['__position-left']]: withLeftIcon,
-                    [classes['__position-right']]: withRightIcon,
-                    [classes[`__state-${state}`]]: !!state && state !== 'default',
-                    ...getSizesClass(classes, size),
-                    ...getPositionClass(classes, contentPosition),
-                    ...getDirectionClass(classes, contentDirection),
-                    ...getJustifyClass(classes, contentJustify)
-                },
-                className
-            ),
-        [
+export const Button: FC<IButton> = forwardRef(
+    (
+        {
             className,
-            contentDirection,
-            contentPosition,
-            contentJustify,
-            isLoading,
-            isRounded,
-            isWide,
-            size,
-            state,
+            iconClassName,
+            href,
+            icon,
+            onClick,
             theme,
-            withLeftIcon,
-            withNoPadding,
-            withRightIcon
-        ]
-    );
-
-    const clickHandler = useCallback(() => {
-        onClick?.();
-    }, [onClick]);
-
-    const iconElement = useMemo(() => {
-        if (icon) {
-            return <div className={cn(classes.icon, iconClassName)}>{icon}</div>;
-        }
-        return null;
-    }, [icon, iconClassName]);
-
-    const content = useMemo(() => {
-        if (isLoading) {
-            return <Loader size="24" />;
-        }
-        if (!children && icon) {
-            return iconElement;
-        }
-        return (
-            <>
-                {withLeftIcon && iconElement}
-                {children}
-                {withRightIcon && iconElement}
-            </>
+            children,
+            withLeftIcon = false,
+            withRightIcon = false,
+            isWide = false,
+            isRounded = false,
+            isDisabled = false,
+            isLoading = false,
+            isExternalLink = false,
+            withNoPadding = false,
+            state = ButtonStates.DEFAULT,
+            size,
+            type = ButtonTypes.BUTTON,
+            contentJustify = Justifies.CENTER,
+            contentDirection = Directions.ROW,
+            contentPosition = Positions.CENTER,
+            ...props
+        },
+        ref
+    ): JSX.Element => {
+        const rootClasses = useMemo(
+            () =>
+                cn(
+                    classes.button,
+                    {
+                        [classes[`__theme-${theme}`]]: !!theme,
+                        [classes['__is-loading']]: isLoading,
+                        [classes['__is-wide']]: isWide,
+                        [classes['__is-rounded']]: isRounded,
+                        [classes['__with-no_padding']]: withNoPadding,
+                        [classes['__position-left']]: withLeftIcon,
+                        [classes['__position-right']]: withRightIcon,
+                        [classes[`__state-${state}`]]: !!state && state !== 'default',
+                        ...getSizesClass(classes, size),
+                        ...getPositionClass(classes, contentPosition),
+                        ...getDirectionClass(classes, contentDirection),
+                        ...getJustifyClass(classes, contentJustify)
+                    },
+                    className
+                ),
+            [
+                className,
+                contentDirection,
+                contentPosition,
+                contentJustify,
+                isLoading,
+                isRounded,
+                isWide,
+                size,
+                state,
+                theme,
+                withLeftIcon,
+                withNoPadding,
+                withRightIcon
+            ]
         );
-    }, [children, icon, iconElement, isLoading, withLeftIcon, withRightIcon]);
 
-    if (href) {
+        const clickHandler = useCallback(() => {
+            onClick?.();
+        }, [onClick]);
+
+        const iconElement = useMemo(() => {
+            if (icon) {
+                return <div className={cn(classes.icon, iconClassName)}>{icon}</div>;
+            }
+            return null;
+        }, [icon, iconClassName]);
+
+        const content = useMemo(() => {
+            if (isLoading) {
+                return <Loader size="24" />;
+            }
+            if (!children && icon) {
+                return iconElement;
+            }
+            return (
+                <>
+                    {withLeftIcon && iconElement}
+                    {children}
+                    {withRightIcon && iconElement}
+                </>
+            );
+        }, [children, icon, iconElement, isLoading, withLeftIcon, withRightIcon]);
+
+        if (href) {
+            return (
+                <Link
+                    className={rootClasses}
+                    to={href}
+                    onClick={clickHandler}
+                    target={isExternalLink ? '_blank' : '_self'}
+                >
+                    {content}
+                </Link>
+            );
+        }
+
         return (
-            <Link
+            <button
+                {...props}
                 className={rootClasses}
-                to={href}
+                type={type}
+                disabled={isLoading || isDisabled}
                 onClick={clickHandler}
-                target={isExternalLink ? '_blank' : '_self'}
+                ref={ref}
             >
                 {content}
-            </Link>
+            </button>
         );
     }
+);
 
-    return (
-        <button
-            className={rootClasses}
-            type={type}
-            disabled={isLoading || isDisabled}
-            onClick={clickHandler}
-        >
-            {content}
-        </button>
-    );
-};
+Button.displayName = 'Button';

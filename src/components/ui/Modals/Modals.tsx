@@ -10,12 +10,15 @@ interface IModals {
 }
 
 const ModalsComponent: FC<IModals> = ({ container }): JSX.Element | null => {
-    const { hash } = useLocation();
+    const { hash, state } = useLocation();
     const navigate = useNavigate();
 
     const cancelHandler = useCallback(() => {
-        navigate('#');
-    }, [navigate]);
+        navigate('#', {
+            replace: true,
+            state
+        });
+    }, [navigate, state]);
 
     switch (hash as ModalLinks) {
         case ModalLinks.DELETE_ACCOUNT:

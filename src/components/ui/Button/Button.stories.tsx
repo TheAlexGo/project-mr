@@ -166,6 +166,11 @@ export default {
             table: {
                 disable: true
             }
+        },
+        ref: {
+            table: {
+                disable: true
+            }
         }
     },
     args: {
