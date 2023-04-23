@@ -4,8 +4,9 @@ import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IPageState, IApiCallback, Lang, Themes } from '@types';
+import { Pages, IPageState, IApiCallback, Lang, Themes } from '@types';
 import { ResponseBuilder, responseBuilder } from '@utils/response';
+import { getPageName } from '@utils/routing';
 
 export class AppController {
     private readonly store: Store;
@@ -131,15 +132,27 @@ export class AppController {
             return;
         }
 
-        this.groupEnd();
-        this.group('Страница:', page);
         this.debug('Перешли на страницу');
         this.store.setActivePage(page);
+        const currentPage = getPageName(window.location.pathname);
+        if (currentPage) {
+            this.store.updateNavigate(currentPage, page);
+        }
 
         /**
          * Достаём предыдущую страницу из состояния перемещения
          */
         this.store.setPrevPage(window.history.state.usr?.prevLink);
+    };
+
+    mountPage = (page: string) => {
+        this.group('Страница:', page);
+        this.debug('Страница монтирована');
+    };
+
+    unmountPage = () => {
+        this.debug('Страница размонтирована');
+        this.groupEnd();
     };
 
     loadPageState = () => {
@@ -152,21 +165,36 @@ export class AppController {
         }
     };
 
-    savePageState = () => {
-        const { activePage, prevPage, statePages } = this.store;
+    savePageState = (page: string) => {
+        const { statePages } = this.store;
+        const stateParams = window.history.state.usr;
         const newState: IPageState = {
-            positionY: window.scrollY,
-            prevLink: prevPage
+            positionY: stateParams?.positionY,
+            prevLink: stateParams?.prevLink
         };
-        const isNewState = JSON.stringify(statePages.get(activePage)) !== JSON.stringify(newState);
+        const isNewState = JSON.stringify(statePages.get(page)) !== JSON.stringify(newState);
         if (!isNewState) {
-            this.debug('Состояние не изменилось');
-            this.groupEnd();
+            this.debug(`Состояние для страницы "${page}" не изменилось`);
             return;
         }
-        this.debug('Сохранили состояние');
-        this.groupEnd();
-        this.store.updateStatePages(newState);
+        this.debug(`Сохранили состояние для страницы "${page}":`, newState);
+        this.store.updateStatePages(newState, page);
+    };
+
+    saveHashState = (pageWithHash: string) => {
+        const { statePages } = this.store;
+        const stateParams = window.history.state.usr;
+        const newState: IPageState = {
+            positionY: stateParams?.positionY
+        };
+        const isNewState =
+            JSON.stringify(statePages.get(pageWithHash)) !== JSON.stringify(newState);
+        if (!isNewState) {
+            this.debug(`Состояние для страницы с хешем "${pageWithHash}" не изменилось`);
+            return;
+        }
+        this.debug(`Сохранили состояние для страницы с хешем "${pageWithHash}"`, newState);
+        this.store.updateStatePages(newState, pageWithHash);
     };
 
     updateUsername = (username: string) => {
@@ -180,8 +208,8 @@ export class AppController {
             return hasMore;
         });
 
-    updateNavigate = (location: string, newLocation: string) => {
-        this.store.updateNavigate(location, newLocation);
+    updateNavigate = (page: Pages, newLocation: string) => {
+        this.store.updateNavigate(page, newLocation);
     };
 
     loadMangaPage = async (mangaId: number) => {
@@ -193,6 +221,11 @@ export class AppController {
         return responseBuilder
             .getManga(mangaId)
             .then((result) => this.store.setActiveManga(result));
+    };
+
+    updateActiveTab = (activeTab: string) => {
+        this.debug('Новый активный таб:', activeTab);
+        this.store.setActiveTab(activeTab);
     };
 }
 

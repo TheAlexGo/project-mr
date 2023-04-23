@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useEffect, FC, ReactNode, useCallback, useMemo 
 
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { Header } from '@components/Header/Header';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
@@ -48,9 +48,10 @@ export const Page: FC<IPage> = observer(
         withBlankHeading = false,
         children
     }) => {
-        const { locale } = useStore();
-        const { pathname, hash } = useLocation();
-        const { loadPageState, savePageState } = useController();
+        const { locale, currentStatePage } = useStore();
+        const navigate = useNavigate();
+        const { pathname, hash, state } = useLocation();
+        const { loadPageState } = useController();
 
         const headingPage = useMemo(() => {
             if (withBlankHeading) {
@@ -118,16 +119,25 @@ export const Page: FC<IPage> = observer(
         ]);
 
         /**
+         * Делаем переход на последнюю активную страницу, если она есть в состоянии
+         */
+        useLayoutEffect(() => {
+            if (!currentStatePage?.prevLink) {
+                return;
+            }
+            if (pathname + hash !== currentStatePage.prevLink) {
+                navigate(currentStatePage.prevLink, {
+                    state
+                });
+            }
+        }, [currentStatePage?.prevLink, navigate, state, pathname, hash]);
+
+        /**
          * Загружаем состояние страницы
          */
         useEffect(() => {
             loadPageState();
         }, [loadPageState, hash]);
-
-        /**
-         * Сохраняем состояние прямо до размонтирования DOM-элементов, для корректного сохранения позиции
-         */
-        useLayoutEffect(() => savePageState, [savePageState]);
 
         return (
             <>

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { useLocation } from 'react-router-dom';
 
@@ -16,9 +16,9 @@ import { Page } from '../Page/Page';
 import classes from './Library.module.styl';
 
 const Library = () => {
-    const { locale } = useStore();
-    const { debug, updateNavigate } = useController();
-    const { pathname, hash } = useLocation();
+    const { locale, currentStatePage } = useStore();
+    const { debug } = useController();
+    const { hash } = useLocation();
 
     const headerButtons = useMemo(
         () => [
@@ -50,17 +50,13 @@ const Library = () => {
         [locale]
     );
 
-    const activeTab: ITab | null = useMemo(
-        () => tabElements.find((tab) => hash.endsWith(tab.content.id)) || null,
-        [hash, tabElements]
+    const activeLibraryTab: ITab | null = useMemo(
+        () =>
+            tabElements.find(
+                (tab) => currentStatePage?.activeHash === tab.id || hash.endsWith(tab.id)
+            ) || null,
+        [currentStatePage?.activeHash, hash, tabElements]
     );
-
-    /**
-     * Обновляем ссылку в навигации на ту вкладку, на которой остановился пользователь
-     */
-    useEffect(() => {
-        updateNavigate(pathname, pathname + hash);
-    }, [pathname, hash, updateNavigate]);
 
     return (
         <Page headerButtons={headerButtons}>
@@ -70,7 +66,7 @@ const Library = () => {
                     title={locale['library-tabs-heading']}
                     elements={tabElements}
                     withFixHeader
-                    activeTab={activeTab}
+                    activeTab={activeLibraryTab}
                 />
             </div>
         </Page>

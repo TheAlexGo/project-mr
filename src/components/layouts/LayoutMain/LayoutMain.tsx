@@ -17,12 +17,36 @@ import classes from './LayoutMain.module.styl';
  */
 export const LayoutMain: FC = observer((): JSX.Element => {
     const { navItems } = useStore();
-    const { changePage } = useController();
-    const location = useLocation();
+    const { changePage, mountPage, unmountPage, savePageState, saveHashState } = useController();
+    const { pathname, hash } = useLocation();
 
     useLayoutEffect(() => {
-        changePage(location.pathname + location.hash);
-    }, [changePage, location.hash, location.pathname]);
+        mountPage(pathname + hash);
+    }, [hash, pathname, mountPage]);
+
+    useLayoutEffect(() => {
+        changePage(pathname + hash);
+    }, [changePage, hash, pathname]);
+
+    useLayoutEffect(
+        () => () => {
+            /**
+             * Сохраняем только если имеется хэш
+             */
+            if (!hash) {
+                return;
+            }
+            saveHashState(pathname + hash);
+        },
+        [hash, pathname, saveHashState]
+    );
+
+    /**
+     * Сохраняем состояние прямо до размонтирования DOM-элементов, для корректного сохранения позиции
+     */
+    useLayoutEffect(() => () => savePageState(pathname), [savePageState, pathname, hash]);
+
+    useLayoutEffect(() => unmountPage, [unmountPage, pathname, hash]);
 
     return (
         <div className={classes['layout']}>
