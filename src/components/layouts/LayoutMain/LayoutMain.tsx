@@ -16,7 +16,7 @@ import classes from './LayoutMain.module.styl';
  * @constructor
  */
 export const LayoutMain: FC = observer((): JSX.Element => {
-    const { navigate } = useStore();
+    const { navItems } = useStore();
     const { changePage } = useController();
     const location = useLocation();
 
@@ -30,7 +30,7 @@ export const LayoutMain: FC = observer((): JSX.Element => {
                 <Outlet />
             </Suspense>
             <div className={classes['navbar']}>
-                <Navbar items={navigate} />
+                <Navbar items={navItems} />
             </div>
             <Modals />
         </div>

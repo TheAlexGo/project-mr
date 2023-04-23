@@ -1,6 +1,5 @@
 .cover {
-    width: 375px;
-    height: @width;
+    height: 375px;
     margin: 0 -16px 16px;
 }
 
@@ -52,6 +51,29 @@
 }
 
 .container-description {
+    margin-bottom: 16px;
     font-size: $fs-s;
     multiEllip(3, 18px);
+}
+
+.container-description_link {
+    margin-bottom: 36px;
+}
+
+.link-description {
+    display: flex;
+    align-items: center;
+    color: $color_primary;
+    line-height: 18px;
+}
+
+.icon-arrow {
+    margin-left: 2px;
+}
+
+.container-buttons {
+    display: grid;
+    grid-column-gap: 12px;
+    grid-template-columns: 1fr auto;
+    margin-bottom: 28px;
 }

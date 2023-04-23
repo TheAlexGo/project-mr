@@ -16,6 +16,7 @@ export { ReactComponent as NightIcon } from './night_icon.svg';
 export { ReactComponent as AutoIcon } from './theme_icon.svg';
 export { ReactComponent as EyeIcon } from './eye_icon.svg';
 export { ReactComponent as CheckIcon } from './check_icon.svg';
+export { ReactComponent as BookmarkIcon } from './bookmark_icon.svg';
 
 export { ReactComponent as VkIcon } from './vk_icon.svg';
 

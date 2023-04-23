@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Button } from '@components/Button/Button';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
@@ -18,6 +18,7 @@ import classes from './ProfileSettings.module.styl';
 const ProfileSettings = observer(() => {
     const { lang, locale } = useStore();
     const navigate = useNavigate();
+    const { state } = useLocation();
 
     const buttonWithArrowProps = useMemo(
         () => ({
@@ -31,9 +32,10 @@ const ProfileSettings = observer(() => {
 
     const deleteClickHandler = useCallback(() => {
         navigate(getModalLink(ModalLinks.DELETE_ACCOUNT), {
-            replace: true
+            replace: true,
+            state
         });
-    }, [navigate]);
+    }, [navigate, state]);
 
     return (
         <Page headerWithBack>

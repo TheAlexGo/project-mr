@@ -21,7 +21,7 @@ export interface INavbarItem {
 }
 
 export const NavbarItem: FC<INavbarItem> = ({ id, icon, link, title }): JSX.Element => {
-    const { navigate } = useController();
+    const { callbackAfterNavigate } = useController();
 
     const rootClasses: TClassNameCallback = useCallback(
         ({ isActive }) =>
@@ -31,7 +31,9 @@ export const NavbarItem: FC<INavbarItem> = ({ id, icon, link, title }): JSX.Elem
         []
     );
 
-    const clickHandler = useCallback(() => navigate(link), [link, navigate]);
+    const clickHandler = useCallback(() => {
+        callbackAfterNavigate(link);
+    }, [link, callbackAfterNavigate]);
 
     return (
         <Link key={id} to={link} className={rootClasses} onClick={clickHandler}>
