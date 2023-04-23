@@ -4,7 +4,7 @@ import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IApiCallback, Lang, Themes } from '@types';
+import { IPageState, IApiCallback, Lang, Themes } from '@types';
 import { ResponseBuilder, responseBuilder } from '@utils/response';
 
 export class AppController {
@@ -118,7 +118,7 @@ export class AppController {
         this.debug(`Ресурс ${lang} загружен:`, currentResourceObj);
     };
 
-    navigate = (newPage: string) => {
+    callbackAfterNavigate = (newPage: string) => {
         if (this.store.activePage === newPage) {
             window.scrollTo(0, 0);
         }
@@ -135,6 +135,11 @@ export class AppController {
         this.group('Страница:', page);
         this.debug('Перешли на страницу');
         this.store.setActivePage(page);
+
+        /**
+         * Достаём предыдущую страницу из состояния перемещения
+         */
+        this.store.setPrevPage(window.history.state.usr?.prevLink);
     };
 
     loadPageState = () => {
@@ -143,14 +148,15 @@ export class AppController {
             this.debug('Загрузили состояние:', activePage);
             setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
         } else {
-            setTimeout(() => window.scrollTo(0, 0));
+            // setTimeout(() => window.scrollTo(0, 0));
         }
     };
 
     savePageState = () => {
-        const { activePage, statePages } = this.store;
-        const newState = {
-            positionY: window.scrollY
+        const { activePage, prevPage, statePages } = this.store;
+        const newState: IPageState = {
+            positionY: window.scrollY,
+            prevLink: prevPage
         };
         const isNewState = JSON.stringify(statePages.get(activePage)) !== JSON.stringify(newState);
         if (!isNewState) {
@@ -158,7 +164,6 @@ export class AppController {
             this.groupEnd();
             return;
         }
-        // TODO: Пофиксить при открытии модальных окон ломается группа логов
         this.debug('Сохранили состояние');
         this.groupEnd();
         this.store.updateStatePages(newState);

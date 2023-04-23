@@ -47,6 +47,20 @@ export const Chapter: FC<ChapterProps> = observer(
             [isAvailable]
         );
 
+        const link = useMemo(() => {
+            if (isAvailable) {
+                return getChapterLink(mangaId, id);
+            }
+            return '#';
+        }, [id, isAvailable, mangaId]);
+
+        const LinkComponent = useMemo(() => {
+            if (isAvailable) {
+                return Link;
+            }
+            return 'span';
+        }, [isAvailable]);
+
         const renderIcon = useCallback(() => {
             if (isAvailable) {
                 return null;
@@ -67,10 +81,10 @@ export const Chapter: FC<ChapterProps> = observer(
             <li className={rootClasses}>
                 <div className={classes['container-main']}>
                     <div className={wrapperClasses}>
-                        <Link className={classes['link']} to={getChapterLink(mangaId, id)}>
+                        <LinkComponent className={classes['link']} to={link}>
                             <span className={classes['title']}>{currentTitle}</span>
                             <span className={classes['date']}>{date.toLocaleDateString()}</span>
-                        </Link>
+                        </LinkComponent>
                     </div>
                     {renderIcon()}
                 </div>

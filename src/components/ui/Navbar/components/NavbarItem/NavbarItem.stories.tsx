@@ -43,7 +43,8 @@ export default {
     args: {
         icon: Icons.HOME,
         title: 'Главная',
-        link: Pages.GENERAL
+        link: Pages.GENERAL,
+        defaultLink: Pages.GENERAL
     }
 } as ComponentMeta<Story>;
 

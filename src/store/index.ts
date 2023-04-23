@@ -53,6 +53,7 @@ export class Store {
     };
     locale: Record<string, string> = {};
     activePage: string;
+    prevPage: string;
     statePages: Map<string, IPageState> = new Map<string, IPageState>();
     navigateLinks: Map<string, string> = new Map<string, string>();
 
@@ -74,6 +75,7 @@ export class Store {
         } else {
             this.activePage = Pages.GENERAL;
         }
+        this.prevPage = this.activePage;
 
         this.navigateLinks.set(Pages.GENERAL, Pages.GENERAL);
         this.navigateLinks.set(Pages.LIBRARY, Pages.LIBRARY);
@@ -102,6 +104,10 @@ export class Store {
         this.activePage = page;
     }
 
+    setPrevPage(page: string) {
+        this.prevPage = page;
+    }
+
     setUser(user: IUser) {
         this.user = user;
     }
@@ -122,7 +128,7 @@ export class Store {
         this.navigateLinks.set(location, newLocation);
     }
 
-    get navigate(): INavbarItem[] {
+    get navItems(): INavbarItem[] {
         return [
             {
                 id: NavTabs.GENERAL,

@@ -322,6 +322,7 @@ export type TClassNameCallback = (props: {
 
 export interface IPageState {
     positionY: number;
+    prevLink: string;
 }
 
 export interface IThemeButton {

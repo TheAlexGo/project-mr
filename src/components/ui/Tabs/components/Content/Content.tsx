@@ -11,7 +11,7 @@ interface IContent extends ITabContent {
 }
 
 export const Content: FC<IContent> = ({ id, tabId, className, children }): JSX.Element => {
-    const { hash } = useLocation();
+    const { hash, state } = useLocation();
     const navigate = useNavigate();
     const { savePageState } = useController();
 
@@ -19,10 +19,16 @@ export const Content: FC<IContent> = ({ id, tabId, className, children }): JSX.E
         if (hash.endsWith(id)) {
             return;
         }
-        navigate({
-            hash: id
-        });
-    }, [hash, id, navigate]);
+        navigate(
+            {
+                hash: id
+            },
+            {
+                replace: true,
+                state
+            }
+        );
+    }, [hash, id, navigate, state]);
 
     /**
      * Явно сохраняем состояние таба, потому что из Page это отловить не получиться
