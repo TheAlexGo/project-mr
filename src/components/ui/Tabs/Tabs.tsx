@@ -1,6 +1,7 @@
-import React, { useMemo, FC, KeyboardEvent, useCallback, useRef, useState } from 'react';
+import React, { useEffect, useMemo, FC, KeyboardEvent, useCallback, useRef, useState } from 'react';
 
 import cn from 'classnames';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Content } from '@components/Tabs/components/Content/Content';
 import { ITab, Tab } from '@components/Tabs/components/Tab/Tab';
@@ -32,6 +33,8 @@ export const Tabs: FC<ITabs> = ({
     const [focusedTab, setFocusedTab] = useState<number>(
         activeTab ? elements.indexOf(activeTab) : 0
     );
+    const navigate = useNavigate();
+    const { pathname, hash, state } = useLocation();
     const container = useRef<HTMLDivElement>(null);
     const tabElements = useRef<HTMLButtonElement[]>([]);
 
@@ -50,10 +53,25 @@ export const Tabs: FC<ITabs> = ({
         [elements, selectedTab]
     );
 
-    const clickTabHandler = useCallback((activeTab: string) => {
-        setSelectedTab(activeTab);
-        setFocusedTab(tabElements.current.findIndex((tab) => tab.id === activeTab));
-    }, []);
+    const updateActiveTab = useCallback(
+        (activeTab: string) => {
+            setSelectedTab(activeTab);
+            setFocusedTab(tabElements.current.findIndex((tab) => tab.id === activeTab));
+            navigate(
+                {
+                    hash: activeTab
+                },
+                {
+                    state: {
+                        ...state,
+                        positionY: window.scrollY,
+                        prevLink: pathname + hash
+                    }
+                }
+            );
+        },
+        [hash, navigate, pathname, state]
+    );
 
     const renderTabs = useCallback(
         () =>
@@ -68,12 +86,12 @@ export const Tabs: FC<ITabs> = ({
                         {...tab}
                         isActive={tab.id === selectedTab}
                         isFocus={i === focusedTab}
-                        onClick={clickTabHandler}
+                        onClick={updateActiveTab}
                         ref={refCallback}
                     />
                 );
             }),
-        [clickTabHandler, elements, focusedTab, selectedTab]
+        [updateActiveTab, elements, focusedTab, selectedTab]
     );
 
     const renderContent = useCallback(() => {
@@ -117,6 +135,13 @@ export const Tabs: FC<ITabs> = ({
         },
         [focusedTab, tabElements]
     );
+
+    useEffect(() => {
+        if (hash.endsWith(selectedTab)) {
+            return;
+        }
+        updateActiveTab(selectedTab);
+    }, [hash, selectedTab, updateActiveTab]);
 
     return (
         <div className={rootClasses}>

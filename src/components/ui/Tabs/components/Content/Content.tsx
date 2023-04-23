@@ -1,43 +1,25 @@
-import React, { useEffect, FC, useLayoutEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 
-import { useLocation, useNavigate } from 'react-router-dom';
-
+import { Loading } from '@components/Loading/Loading';
 import { ITabContent } from '@components/Tabs/components/Tab/Tab';
-import { useController } from '@hooks/useController';
 
 interface IContent extends ITabContent {
     tabId: string;
     className: string;
 }
 
-export const Content: FC<IContent> = ({ id, tabId, className, children }): JSX.Element => {
-    const { hash, state } = useLocation();
-    const navigate = useNavigate();
-    const { savePageState } = useController();
+export const Content: FC<IContent> = ({ id, tabId, className, children }): JSX.Element | null => {
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
     useEffect(() => {
-        if (hash.endsWith(id)) {
-            return;
-        }
-        navigate(
-            {
-                hash: id
-            },
-            {
-                replace: true,
-                state
-            }
-        );
-    }, [hash, id, navigate, state]);
-
-    /**
-     * Явно сохраняем состояние таба, потому что из Page это отловить не получиться
-     */
-    useLayoutEffect(() => savePageState, [savePageState]);
+        setIsLoaded(true);
+    }, []);
 
     return (
-        <div id={id} className={className} role="tabpanel" tabIndex={0} aria-labelledby={tabId}>
-            {children}
-        </div>
+        <Loading condition={isLoaded}>
+            <div id={id} className={className} role="tabpanel" tabIndex={0} aria-labelledby={tabId}>
+                {children}
+            </div>
+        </Loading>
     );
 };

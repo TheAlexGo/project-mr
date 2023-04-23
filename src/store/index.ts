@@ -18,7 +18,6 @@ import {
     Themes,
     UserRoles
 } from '@types';
-import { getPageName } from '@utils/routing';
 
 export class Store {
     /**
@@ -52,10 +51,11 @@ export class Store {
         email: ''
     };
     locale: Record<string, string> = {};
-    activePage: string;
-    prevPage: string;
+    activePage = '';
+    prevPage = '';
+    activeTab = '';
     statePages: Map<string, IPageState> = new Map<string, IPageState>();
-    navigateLinks: Map<string, string> = new Map<string, string>();
+    navigateLinks: Map<Pages, string> = new Map<Pages, string>();
 
     user: IUser = this.defaultUser;
 
@@ -66,16 +66,10 @@ export class Store {
     constructor() {
         makeAutoObservable(this);
 
+        this.activePage = window.location.pathname + window.location.hash;
+
         // TODO: удалить после реализации регистрации
         this.user = getUserMock();
-
-        const currentPage = getPageName(window.location.pathname);
-        if (currentPage) {
-            this.activePage = currentPage;
-        } else {
-            this.activePage = Pages.GENERAL;
-        }
-        this.prevPage = this.activePage;
 
         this.navigateLinks.set(Pages.GENERAL, Pages.GENERAL);
         this.navigateLinks.set(Pages.LIBRARY, Pages.LIBRARY);
@@ -108,6 +102,10 @@ export class Store {
         this.prevPage = page;
     }
 
+    setActiveTab(activeTab: string) {
+        this.activeTab = activeTab;
+    }
+
     setUser(user: IUser) {
         this.user = user;
     }
@@ -116,16 +114,16 @@ export class Store {
         this.activeManga = value;
     }
 
-    updateStatePages(statePage: IPageState) {
-        this.statePages.set(this.activePage, statePage);
+    updateStatePages(statePage: IPageState, currentPage?: string) {
+        this.statePages.set(currentPage || this.activePage, statePage);
     }
 
     updateCatalogElements(elements: IMangaCard[]) {
         this.catalogElements.push(...elements);
     }
 
-    updateNavigate(location: string, newLocation: string) {
-        this.navigateLinks.set(location, newLocation);
+    updateNavigate(page: Pages, newLocation: string) {
+        this.navigateLinks.set(page, newLocation);
     }
 
     get navItems(): INavbarItem[] {
