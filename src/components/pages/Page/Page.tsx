@@ -1,8 +1,8 @@
-import React, { useLayoutEffect, useEffect, FC, ReactNode, useCallback, useMemo } from 'react';
+import React, { useEffect, FC, ReactNode, useCallback, useMemo } from 'react';
 
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { Header } from '@components/Header/Header';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
@@ -48,9 +48,8 @@ export const Page: FC<IPage> = observer(
         withBlankHeading = false,
         children
     }) => {
-        const { locale, currentStatePage } = useStore();
-        const navigate = useNavigate();
-        const { pathname, hash, state } = useLocation();
+        const { locale } = useStore();
+        const { pathname, hash } = useLocation();
         const { loadPageState } = useController();
 
         const headingPage = useMemo(() => {
@@ -117,20 +116,6 @@ export const Page: FC<IPage> = observer(
             isInvisibleHeading,
             needRenderHeader
         ]);
-
-        /**
-         * Делаем переход на последнюю активную страницу, если она есть в состоянии
-         */
-        useLayoutEffect(() => {
-            if (!currentStatePage?.prevLink) {
-                return;
-            }
-            if (pathname + hash !== currentStatePage.prevLink) {
-                navigate(currentStatePage.prevLink, {
-                    state
-                });
-            }
-        }, [currentStatePage?.prevLink, navigate, state, pathname, hash]);
 
         /**
          * Загружаем состояние страницы
