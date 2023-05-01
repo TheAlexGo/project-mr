@@ -34,7 +34,7 @@ export const Tabs: FC<ITabs> = ({
         activeTab ? elements.indexOf(activeTab) : 0
     );
     const navigate = useNavigate();
-    const { pathname, hash, state } = useLocation();
+    const { hash, state } = useLocation();
     const container = useRef<HTMLDivElement>(null);
     const tabElements = useRef<HTMLButtonElement[]>([]);
 
