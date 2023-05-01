@@ -64,13 +64,12 @@ export const Tabs: FC<ITabs> = ({
                 {
                     state: {
                         ...state,
-                        positionY: window.scrollY,
-                        prevLink: pathname + hash
+                        positionY: window.scrollY
                     }
                 }
             );
         },
-        [hash, navigate, pathname, state]
+        [navigate, state]
     );
 
     const renderTabs = useCallback(

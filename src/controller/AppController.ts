@@ -1,5 +1,7 @@
 import { createContext } from 'react';
 
+import { toJS } from 'mobx';
+
 import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
@@ -138,11 +140,6 @@ export class AppController {
         if (currentPage) {
             this.store.updateNavigate(currentPage, page);
         }
-
-        /**
-         * Достаём предыдущую страницу из состояния перемещения
-         */
-        this.store.setPrevPage(window.history.state.usr?.prevLink);
     };
 
     mountPage = (page: string) => {
@@ -156,9 +153,9 @@ export class AppController {
     };
 
     loadPageState = () => {
-        const { activePage, currentStatePage } = this.store;
+        const { currentStatePage } = this.store;
         if (currentStatePage) {
-            this.debug('Загрузили состояние:', activePage);
+            this.debug('Загрузили состояние:', toJS(currentStatePage));
             setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
         } else {
             // setTimeout(() => window.scrollTo(0, 0));
@@ -221,11 +218,6 @@ export class AppController {
         return responseBuilder
             .getManga(mangaId)
             .then((result) => this.store.setActiveManga(result));
-    };
-
-    updateActiveTab = (activeTab: string) => {
-        this.debug('Новый активный таб:', activeTab);
-        this.store.setActiveTab(activeTab);
     };
 }
 
