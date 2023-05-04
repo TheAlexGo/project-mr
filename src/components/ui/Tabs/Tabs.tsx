@@ -65,7 +65,8 @@ export const Tabs: FC<ITabs> = ({
                     state: {
                         ...state,
                         positionY: window.scrollY
-                    }
+                    },
+                    replace: true
                 }
             );
         },
