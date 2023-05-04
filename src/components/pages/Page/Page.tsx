@@ -1,4 +1,4 @@
-import React, { useEffect, FC, ReactNode, useCallback, useMemo } from 'react';
+import React, { FC, ReactNode, useCallback, useMemo } from 'react';
 
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { Header } from '@components/Header/Header';
 import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { IIcon } from '@components/Icon/Icon';
-import { useController } from '@hooks/useController';
+import { usePageInit } from '@hooks/usePageInit';
 import { useStore } from '@hooks/useStore';
 
 import classes from './Page.module.styl';
@@ -49,8 +49,7 @@ export const Page: FC<IPage> = observer(
         children
     }) => {
         const { locale } = useStore();
-        const { pathname, hash } = useLocation();
-        const { loadPageState } = useController();
+        const { pathname } = useLocation();
 
         const headingPage = useMemo(() => {
             if (withBlankHeading) {
@@ -117,12 +116,7 @@ export const Page: FC<IPage> = observer(
             needRenderHeader
         ]);
 
-        /**
-         * Загружаем состояние страницы
-         */
-        useEffect(() => {
-            loadPageState();
-        }, [loadPageState, hash]);
+        usePageInit();
 
         return (
             <>

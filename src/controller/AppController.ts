@@ -143,7 +143,7 @@ export class AppController {
     };
 
     mountPage = (page: string) => {
-        this.group('Страница:', page);
+        this.group(`Страница: ${page}`);
         this.debug('Страница монтирована');
     };
 
@@ -154,19 +154,25 @@ export class AppController {
 
     loadPageState = () => {
         const { currentStatePage } = this.store;
+        document.body.style.minHeight = `${
+            currentStatePage?.contentHeight || window.innerHeight
+        }px`;
         if (currentStatePage) {
             this.debug('Загрузили состояние:', toJS(currentStatePage));
-            setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
-        } else {
-            // setTimeout(() => window.scrollTo(0, 0));
+            window.scrollTo(0, currentStatePage.positionY);
         }
+        setTimeout(() => {
+            document.body.style.minHeight = '';
+        }, 300);
     };
 
     savePageState = (page: string) => {
         const { statePages } = this.store;
         const stateParams = window.history.state.usr;
+        const positionY = stateParams?.positionY || 0;
         const newState: IPageState = {
-            positionY: stateParams?.positionY,
+            positionY,
+            contentHeight: window.innerHeight + positionY,
             prevLink: stateParams?.prevLink
         };
         const isNewState = JSON.stringify(statePages.get(page)) !== JSON.stringify(newState);
@@ -181,8 +187,10 @@ export class AppController {
     saveHashState = (pageWithHash: string) => {
         const { statePages } = this.store;
         const stateParams = window.history.state.usr;
+        const positionY = stateParams?.positionY || 0;
         const newState: IPageState = {
-            positionY: stateParams?.positionY
+            positionY,
+            contentHeight: window.innerHeight + positionY
         };
         const isNewState =
             JSON.stringify(statePages.get(pageWithHash)) !== JSON.stringify(newState);
