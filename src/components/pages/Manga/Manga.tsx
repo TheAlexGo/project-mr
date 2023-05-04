@@ -1,13 +1,13 @@
 import React, { FC, useCallback, useEffect, useLayoutEffect, useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { Loading } from '@components/Loading/Loading';
 import { useController } from '@hooks/useController';
 import { useStore } from '@hooks/useStore';
 import { Pages } from '@types';
-import { getMangaPageLink } from '@utils/routing';
+import { getMangaPageLink, getPageName } from '@utils/routing';
 
 import { MangaContent } from './components/MangaContent/MangaContent';
 import { Page } from '../Page/Page';
@@ -16,6 +16,7 @@ const Manga: FC = observer((): JSX.Element => {
     const { mangaId: mid } = useParams();
     const { activeManga } = useStore();
     const { loadMangaPage, updateNavigate } = useController();
+    const { state } = useLocation();
 
     const mangaId = useMemo(() => (mid ? Number.parseInt(mid, 10) : null), [mid]);
 
@@ -28,13 +29,18 @@ const Manga: FC = observer((): JSX.Element => {
     }, [activeManga]);
 
     useLayoutEffect(() => {
-        updateNavigate(Pages.LIBRARY, Pages.LIBRARY);
+        const isFromLibraryPage = getPageName(state.prevLink) === Pages.LIBRARY;
+        if (isFromLibraryPage) {
+            updateNavigate(Pages.LIBRARY, state.prevLink);
+        } else {
+            updateNavigate(Pages.LIBRARY, Pages.LIBRARY);
+        }
         return () => {
             if (mangaId) {
                 updateNavigate(Pages.LIBRARY, getMangaPageLink(mangaId));
             }
         };
-    }, [mangaId, updateNavigate]);
+    }, [mangaId, state.prevLink, updateNavigate]);
 
     useEffect(() => {
         if (!mangaId) {
