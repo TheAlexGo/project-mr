@@ -52,6 +52,25 @@ export class ResponseBuilder {
         });
     }
 
+    async getMyCollectionItems(): Promise<ICatalogItemsRequest> {
+        const { myCollectionElements } = this.store;
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                if (myCollectionElements.length > 20) {
+                    return resolve({
+                        items: [],
+                        hasMore: false
+                    });
+                }
+
+                return resolve({
+                    items: getMangaCardsMock(5),
+                    hasMore: true
+                });
+            }, 1000);
+        });
+    }
+
     async getManga(mangaId: number): Promise<IManga> {
         return new Promise((resolve) => {
             setTimeout(() => resolve(getMangaMock(mangaId)), 1000);

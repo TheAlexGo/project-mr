@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useCallback, FC, useState } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback, FC, useState } from 'react';
 
 import { observer } from 'mobx-react-lite';
 
@@ -25,7 +25,7 @@ export const Catalog: FC = observer((): JSX.Element => {
      */
     const isLoading = useRef(false);
 
-    const scrolledToBottomHandler = useCallback(() => {
+    const loadMore = useCallback(() => {
         if (isLoading.current || !hasMore) {
             return;
         }
@@ -38,8 +38,16 @@ export const Catalog: FC = observer((): JSX.Element => {
         });
     }, [hasMore, loadMoreInCatalog]);
 
+    const scrolledToBottomHandler = useCallback(loadMore, [loadMore]);
+
     const offset = useMemo(() => -(CARD_MAX_HEIGHT * OFFSET_BY_CARD_HEIGHT), []);
     useScrolledToBottom(scrolledToBottomHandler, offset);
 
-    return <CardList axis={Axes.Y} cards={[...catalogElements]} isLoading={!isLoaded} />;
+    useEffect(() => {
+        if (!catalogElements.length) {
+            loadMore();
+        }
+    }, [loadMore, catalogElements.length]);
+
+    return <CardList axis={Axes.Y} cards={catalogElements} isLoading={!isLoaded} />;
 });
