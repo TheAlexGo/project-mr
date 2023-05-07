@@ -4,7 +4,6 @@ import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
 import { defineConfig, loadEnv } from 'vite';
-import { Plugin as importToCDN } from 'vite-plugin-cdn-import';
 import eslintPlugin from 'vite-plugin-eslint';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -106,66 +105,7 @@ export default defineConfig(({ mode }) => {
             }),
             svgrPlugin(),
             eslintPlugin(),
-            stylelintPlugin(),
-            importToCDN({
-                modules: [
-                    {
-                        name: 'axios',
-                        var: 'axios',
-                        path: `dist/axios.min.js`
-                    },
-                    {
-                        name: 'lodash',
-                        var: '_',
-                        path: `lodash.min.js`
-                    },
-                    {
-                        name: 'react',
-                        var: 'React',
-                        path: `umd/react.production.min.js`
-                    },
-                    {
-                        name: 'react-dom',
-                        var: 'ReactDOM',
-                        path: `umd/react-dom.production.min.js`
-                    },
-                    {
-                        name: '@remix-run/router',
-                        var: 'RemixRouter',
-                        path: `dist/router.umd.min.js`
-                    },
-                    {
-                        name: 'react-router',
-                        var: 'ReactRouter',
-                        path: `dist/umd/react-router.production.min.js`
-                    },
-                    {
-                        name: 'react-router-dom',
-                        var: 'ReactRouterDOM',
-                        path: `dist/umd/react-router-dom.production.min.js`
-                    },
-                    {
-                        name: 'mobx',
-                        var: 'mobx',
-                        path: `dist/mobx.umd.production.min.js`
-                    },
-                    {
-                        name: 'classnames',
-                        var: 'classNames',
-                        path: `index.min.js`
-                    },
-                    {
-                        name: 'mobx-react-lite',
-                        var: 'mobxReactLite',
-                        path: `dist/mobxreactlite.umd.production.min.js`
-                    },
-                    {
-                        name: 'transliteration',
-                        var: 'transl',
-                        path: `dist/browser/bundle.umd.min.js`
-                    }
-                ]
-            })
+            stylelintPlugin()
         ],
         build: {
             rollupOptions: {
