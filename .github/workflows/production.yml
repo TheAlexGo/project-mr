@@ -55,7 +55,6 @@ jobs:
           source: ${{ env.BUILD_SCRIPT_OUTPUT }}
           target: ${{ env.DEPLOY_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
           strip_components: 1
-          rm: true
       # Доставляем собранный storybook приложение на сервер
       - name: Deploy Storybook to Server
         if: ${{ env.DEPLOY_STORYBOOK_ENABLED == '1' }}
@@ -68,7 +67,6 @@ jobs:
           source: ${{ env.BUILD_STORYBOOK_SCRIPT_OUTPUT }}
           target: ${{ env.DEPLOY_STORYBOOK_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
           strip_components: 1
-          rm: true
       - name: Print Info
         if: ${{ env.DEPLOY_ENABLED == '1' }}
         run: echo "Deployed successfully https://${{ secrets.SITE_DOMAINS }}"
