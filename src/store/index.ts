@@ -2,12 +2,22 @@ import { createContext } from 'react';
 
 import { makeAutoObservable } from 'mobx';
 
-import { Icons, IIcon } from '@components/Icon/Icon';
+import { Icons } from '@components/Icon/Icon';
 import { INavbarItem } from '@components/Navbar/components/NavbarItem/NavbarItem';
 import { getUserMock } from '@mock';
 import { makeLocalStorage } from '@store/autoSave';
-import { IPageState, IThemeButton, IUser, Lang, NavTabs, Pages, Themes, UserRoles } from '@types';
-import { getPageName } from '@utils/routing';
+import {
+    IManga,
+    IMangaCard,
+    IPageState,
+    IThemeButton,
+    IUser,
+    Lang,
+    NavTabs,
+    Pages,
+    Themes,
+    UserRoles
+} from '@types';
 
 export class Store {
     /**
@@ -41,28 +51,31 @@ export class Store {
         email: ''
     };
     locale: Record<string, string> = {};
-    activePage: string;
-    headerTitleKey = '';
-    headerButtons: IIcon[] = [];
-    headerWithBack = false;
+    activePage = '';
+    prevPage = '';
+    activeTab = '';
     statePages: Map<string, IPageState> = new Map<string, IPageState>();
-    isPageLoaded = false;
+    navigateLinks: Map<Pages, string> = new Map<Pages, string>();
 
     user: IUser = this.defaultUser;
+
+    catalogElements: IMangaCard[] = [];
+
+    myCollectionElements: IMangaCard[] = [];
+
+    activeManga: IManga | null = null;
 
     constructor() {
         makeAutoObservable(this);
 
+        this.activePage = window.location.pathname + window.location.hash;
+
         // TODO: удалить после реализации регистрации
         this.user = getUserMock();
 
-        const currentPage = getPageName(window.location.pathname);
-        if (currentPage) {
-            const [, page] = currentPage;
-            this.activePage = page;
-        } else {
-            this.activePage = Pages.GENERAL;
-        }
+        this.navigateLinks.set(Pages.GENERAL, Pages.GENERAL);
+        this.navigateLinks.set(Pages.LIBRARY, Pages.LIBRARY);
+        this.navigateLinks.set(Pages.PROFILE, Pages.PROFILE);
 
         makeLocalStorage<Store, keyof Store>(this, 'store', ['lang', 'activeTheme', 'user']);
     }
@@ -87,49 +100,57 @@ export class Store {
         this.activePage = page;
     }
 
-    setHeaderTitleKey(headerTitleKey: string) {
-        this.headerTitleKey = headerTitleKey;
+    setPrevPage(page: string) {
+        this.prevPage = page;
     }
 
-    setHeaderButtons(headerButtons: IIcon[]) {
-        this.headerButtons = headerButtons;
-    }
-
-    setHeaderWithBack(headerWithBack: boolean) {
-        this.headerWithBack = headerWithBack;
-    }
-
-    setIsPageLoaded(isPageLoaded: boolean) {
-        this.isPageLoaded = isPageLoaded;
+    setActiveTab(activeTab: string) {
+        this.activeTab = activeTab;
     }
 
     setUser(user: IUser) {
         this.user = user;
     }
 
-    updateStatePages(statePage: IPageState) {
-        this.statePages.set(this.activePage, statePage);
+    setActiveManga(value: IManga | null) {
+        this.activeManga = value;
     }
 
-    get navigate(): INavbarItem[] {
+    updateStatePages(statePage: IPageState, currentPage?: string) {
+        this.statePages.set(currentPage || this.activePage, statePage);
+    }
+
+    updateCatalogElements(elements: IMangaCard[]) {
+        this.catalogElements.push(...elements);
+    }
+
+    updateMyCollectionElements(elements: IMangaCard[]) {
+        this.myCollectionElements.push(...elements);
+    }
+
+    updateNavigate(page: Pages, newLocation: string) {
+        this.navigateLinks.set(page, newLocation);
+    }
+
+    get navItems(): INavbarItem[] {
         return [
             {
                 id: NavTabs.GENERAL,
                 icon: Icons.HOME,
                 title: this.locale['nav-general'],
-                link: Pages.GENERAL
+                link: this.navigateLinks.get(Pages.GENERAL) || Pages.GENERAL
             },
             {
                 id: NavTabs.LIBRARY,
                 icon: Icons.LIBRARY,
                 title: this.locale['nav-library'],
-                link: Pages.LIBRARY
+                link: this.navigateLinks.get(Pages.LIBRARY) || Pages.LIBRARY
             },
             {
                 id: NavTabs.PROFILE,
                 icon: Icons.PROFILE,
                 title: this.locale['nav-profile'],
-                link: Pages.PROFILE
+                link: this.navigateLinks.get(Pages.PROFILE) || Pages.PROFILE
             }
         ];
     }

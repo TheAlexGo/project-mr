@@ -1,20 +1,25 @@
 import { createContext } from 'react';
 
-import { IIcon } from '@components/Icon/Icon';
+import { toJS } from 'mobx';
+
 import { ApiService } from '@services/ApiService';
 import { LanguageService } from '@services/LanguageService';
 import { ValidateService } from '@services/ValidateService';
 import { store, Store } from '@store';
-import { IApiCallback, Lang, Pages, Themes } from '@types';
+import { Pages, IPageState, IApiCallback, Lang, Themes } from '@types';
+import { ResponseBuilder, responseBuilder } from '@utils/response';
+import { getPageName } from '@utils/routing';
 
 export class AppController {
-    store: Store;
+    private readonly store: Store;
     apiService: ApiService;
     langService: LanguageService;
     validateService: ValidateService;
+    responseBuilder: ResponseBuilder;
 
-    constructor(appStore: Store) {
+    constructor(appStore: Store, responseBuilder: ResponseBuilder) {
         this.store = appStore;
+        this.responseBuilder = responseBuilder;
         this.apiService = new ApiService(this.apiCallback);
         this.langService = new LanguageService();
         this.validateService = new ValidateService();
@@ -24,6 +29,16 @@ export class AppController {
         // eslint-disable-next-line prefer-rest-params,no-console
         console.log(message, ...optionalParams);
     }
+
+    group = (...label: unknown[]) => {
+        // eslint-disable-next-line no-console
+        console.group(...label);
+    };
+
+    groupEnd = () => {
+        // eslint-disable-next-line no-console
+        console.groupEnd();
+    };
 
     debug = (message: unknown, ...optionalParams: unknown[]) => {
         if (import.meta.env.DEV) {
@@ -43,6 +58,7 @@ export class AppController {
                 this.initResource(this.store.lang);
                 return result;
             })
+            .then(() => true)
             .then<boolean>((result) => {
                 this.debug('Приложение инициализированно успешно!');
                 this.store.setIsAppReady(result);
@@ -105,7 +121,7 @@ export class AppController {
         this.debug(`Ресурс ${lang} загружен:`, currentResourceObj);
     };
 
-    navigate = (newPage: string) => {
+    callbackAfterNavigate = (newPage: string) => {
         if (this.store.activePage === newPage) {
             window.scrollTo(0, 0);
         }
@@ -117,48 +133,108 @@ export class AppController {
             this.debug('Уже на странице:', page);
             return;
         }
-        this.debug('Перешли на страницу:', page);
+
+        this.debug('Перешли на страницу');
         this.store.setActivePage(page);
+        const currentPage = getPageName(window.location.pathname);
+        if (currentPage) {
+            this.store.updateNavigate(currentPage, page);
+        }
     };
 
-    loadPage = (page: Pages, headerButtons: IIcon[], withHeading = false, withBack = false) => {
-        const { currentStatePage, activePage, isPageLoaded } = this.store;
-        if (isPageLoaded) {
-            this.debug('Страница уже загружена:', activePage);
-            return;
-        }
-        this.debug('Загрузили страницу:', activePage);
+    mountPage = (page: string) => {
+        this.group(`Страница: ${page}`);
+        this.debug('Страница монтирована');
+    };
+
+    unmountPage = () => {
+        this.debug('Страница размонтирована');
+        this.groupEnd();
+    };
+
+    loadPageState = () => {
+        const { currentStatePage } = this.store;
+        document.body.style.minHeight = `${
+            currentStatePage?.contentHeight || window.innerHeight
+        }px`;
         if (currentStatePage) {
-            setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
+            this.debug('Загрузили состояние:', toJS(currentStatePage));
+            window.scrollTo(0, currentStatePage.positionY);
         }
-        if (withHeading) {
-            this.store.setHeaderTitleKey(`page-${activePage.toLowerCase()}-heading`);
-        } else {
-            this.store.setHeaderTitleKey('');
-        }
-        this.store.setHeaderButtons(headerButtons);
-        this.store.setHeaderWithBack(withBack);
-        this.store.setIsPageLoaded(true);
+        setTimeout(() => {
+            document.body.style.minHeight = '';
+        }, 300);
     };
 
-    leavePage = () => {
-        const { isPageLoaded, activePage } = this.store;
-        if (!isPageLoaded) {
-            this.debug('Страницу уже покинули:', activePage);
+    savePageState = (page: string) => {
+        const { statePages } = this.store;
+        const stateParams = window.history.state.usr;
+        const positionY = stateParams?.positionY || 0;
+        const newState: IPageState = {
+            positionY,
+            contentHeight: window.innerHeight + positionY,
+            prevLink: stateParams?.prevLink
+        };
+        const isNewState = JSON.stringify(statePages.get(page)) !== JSON.stringify(newState);
+        if (!isNewState) {
+            this.debug(`Состояние для страницы "${page}" не изменилось`);
             return;
         }
-        this.debug('Покинули страницу:', activePage);
-        const state = {
-            positionY: window.scrollY
+        this.debug(`Сохранили состояние для страницы "${page}":`, newState);
+        this.store.updateStatePages(newState, page);
+    };
+
+    saveHashState = (pageWithHash: string) => {
+        const { statePages } = this.store;
+        const stateParams = window.history.state.usr;
+        const positionY = stateParams?.positionY || 0;
+        const newState: IPageState = {
+            positionY,
+            contentHeight: window.innerHeight + positionY
         };
-        this.store.updateStatePages(state);
-        this.store.setIsPageLoaded(false);
+        const isNewState =
+            JSON.stringify(statePages.get(pageWithHash)) !== JSON.stringify(newState);
+        if (!isNewState) {
+            this.debug(`Состояние для страницы с хешем "${pageWithHash}" не изменилось`);
+            return;
+        }
+        this.debug(`Сохранили состояние для страницы с хешем "${pageWithHash}"`, newState);
+        this.store.updateStatePages(newState, pageWithHash);
     };
 
     updateUsername = (username: string) => {
         this.store.setUser({ ...this.store.user, username });
     };
+
+    loadMoreInCatalog = async (): Promise<boolean> =>
+        responseBuilder.getCatalogItems().then(({ items, hasMore }) => {
+            this.debug('Загрузка карточек каталога...');
+            this.store.updateCatalogElements(items);
+            return hasMore;
+        });
+
+    loadMoreInMyCollection = async (): Promise<boolean> =>
+        responseBuilder.getMyCollectionItems().then(({ items, hasMore }) => {
+            this.debug('Загрузка карточек моей коллекции...');
+            this.store.updateMyCollectionElements(items);
+            return hasMore;
+        });
+
+    updateNavigate = (page: Pages, newLocation: string) => {
+        this.store.updateNavigate(page, newLocation);
+    };
+
+    loadMangaPage = async (mangaId: number) => {
+        const { activeManga } = this.store;
+        if (activeManga?.id === mangaId) {
+            return Promise.resolve();
+        }
+        this.store.setActiveManga(null);
+        return responseBuilder
+            .getManga(mangaId)
+            .then((result) => this.store.setActiveManga(result));
+    };
 }
 
-export const appController = new AppController(store);
+export const appController = new AppController(store, responseBuilder);
 export const AppControllerContext = createContext<AppController>(appController);

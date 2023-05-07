@@ -11,31 +11,16 @@ $size-left = s('calc(%s + env(safe-area-inset-left))', $offset-4x);
     width: 100%;
     padding: 0 $size-right $size-bottom $size-left;
 
-    &.__is {
-        &-with_heading {
-            padding-top: $size-top;
-        }
-    }
-}
-
-.navbar,
-.header {
-    position: fixed;
-    left: 0;
-    z-index: 10;
-    width: 100%;
-    padding: 0 s('env(safe-area-inset-right)') 0 s('env(safe-area-inset-left)');
-}
-
-.header {
-    top: 0;
-    padding-top: s('env(safe-area-inset-top)');
-    font-size: $fs-m;
-    background-color: $color_surface;
+    useMediaWidth();
 }
 
 .navbar {
+    position: fixed;
+    right: 0;
     bottom: 0;
-    padding-bottom: s('env(safe-area-inset-bottom)');
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    padding: 0 s('env(safe-area-inset-right)') s('env(safe-area-inset-bottom)') s('env(safe-area-inset-left)');
     background-color: $color_surface;
 }

@@ -36,13 +36,20 @@ export default {
             table: {
                 category: StoryCategories.STYLE
             }
+        },
+        isLoading: {
+            name: 'Показать лоадер?',
+            table: {
+                category: StoryCategories.STYLE
+            }
         }
     },
     args: {
         title: 'Тестовое название',
         axis: 'y',
         cards: getMangaCardsMock(20),
-        scrollSnap: ScrollSnapTypes.X_Mandatory
+        scrollSnap: ScrollSnapTypes.X_Mandatory,
+        isLoading: false
     }
 } as ComponentMeta<Story>;
 

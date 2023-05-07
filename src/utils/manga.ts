@@ -1,9 +1,10 @@
 import { store } from '@store';
-import { IMangaTitle } from '@types';
+import { IMangaDescription, IMangaTitle } from '@types';
 
 /**
- * Получение манги на выбранном языке (если есть)
- * */
+ * Получение названия манги на выбранном языке (если есть)
+ * @param titles
+ */
 export const getMangaTitle = (titles: IMangaTitle[]) => {
     const { lang, defaultLang } = store;
 
@@ -12,4 +13,18 @@ export const getMangaTitle = (titles: IMangaTitle[]) => {
         mangaTitle = titles.find((t) => t.lang === defaultLang);
     }
     return (mangaTitle && mangaTitle.title) || '';
+};
+
+/**
+ * Получение описания манги на выбранном языке (если есть)
+ * @param descriptions
+ */
+export const getMangaDescription = (descriptions: IMangaDescription[]) => {
+    const { lang, defaultLang } = store;
+
+    let mangaDescription = descriptions.find((d) => d.lang === lang);
+    if (!mangaDescription) {
+        mangaDescription = descriptions.find((d) => d.lang === defaultLang);
+    }
+    return (mangaDescription && mangaDescription.description) || '';
 };
