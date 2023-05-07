@@ -1,10 +1,6 @@
 <IfModule mod_rewrite.c>
     RewriteEngine on
 
-    # Перенаправление с http на https
-    RewriteCond %{HTTP:X-Forwarded-Proto} !https
-    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
-
     # Перенаправление для реакт-приложений
     RewriteBase /
     RewriteRule ^index\.html$ - [L]
@@ -12,7 +8,7 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-l
     RewriteRule . /index.html [L]
-    </IfModule>
+</IfModule>
 
 # Включение GZIP-сжатия для различных типов файлов: TXT, SVG, RSS, javascript
 <ifModule mod_deflate.c>
