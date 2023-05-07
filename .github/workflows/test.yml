@@ -42,7 +42,6 @@ jobs:
           source: ${{ env.BUILD_SCRIPT_OUTPUT }}
           target: ${{ env.TEST_DEPLOY_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
           strip_components: 1
-          rm: true
       - name: Print Info
         if: ${{ env.DEPLOY_ENABLED == '1' }}
         run: echo "Deployed successfully https://${{ secrets.TEST_SITE_DOMAINS }}"
