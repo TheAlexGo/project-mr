@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Axes, CardList, ScrollSnapTypes } from '@components/CardList/CardList';
+import { HeadingTypes, Heading } from '@components/Heading/Heading';
 import { Icons } from '@components/Icon/Icon';
 import { useController } from '@hooks/useController';
 import { useResponse } from '@hooks/useResponse';
@@ -65,6 +66,9 @@ const General: FC = () => {
 
     return (
         <Page headerButtons={headerButtons} isInvisibleHeading>
+            <Heading type={HeadingTypes.H2} isInvisible>
+                {locale['page-/library-heading-2']}
+            </Heading>
             <div className={classes.container}>{renderAllLists()}</div>
         </Page>
     );
