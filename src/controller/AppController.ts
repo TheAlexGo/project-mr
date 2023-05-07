@@ -58,7 +58,7 @@ export class AppController {
                 this.initResource(this.store.lang);
                 return result;
             })
-            .then(() => this.loadMoreInCatalog()) // заполняем данными каталог
+            .then(() => true)
             .then<boolean>((result) => {
                 this.debug('Приложение инициализированно успешно!');
                 this.store.setIsAppReady(result);
@@ -210,6 +210,13 @@ export class AppController {
         responseBuilder.getCatalogItems().then(({ items, hasMore }) => {
             this.debug('Загрузка карточек каталога...');
             this.store.updateCatalogElements(items);
+            return hasMore;
+        });
+
+    loadMoreInMyCollection = async (): Promise<boolean> =>
+        responseBuilder.getMyCollectionItems().then(({ items, hasMore }) => {
+            this.debug('Загрузка карточек моей коллекции...');
+            this.store.updateMyCollectionElements(items);
             return hasMore;
         });
 

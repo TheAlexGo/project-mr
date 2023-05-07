@@ -61,6 +61,8 @@ export class Store {
 
     catalogElements: IMangaCard[] = [];
 
+    myCollectionElements: IMangaCard[] = [];
+
     activeManga: IManga | null = null;
 
     constructor() {
@@ -120,6 +122,10 @@ export class Store {
 
     updateCatalogElements(elements: IMangaCard[]) {
         this.catalogElements.push(...elements);
+    }
+
+    updateMyCollectionElements(elements: IMangaCard[]) {
+        this.myCollectionElements.push(...elements);
     }
 
     updateNavigate(page: Pages, newLocation: string) {
