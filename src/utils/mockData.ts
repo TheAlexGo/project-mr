@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import UUID from 'uuid-int';
-
 import Covers from '@images';
 import {
     ChapterType,
@@ -25,8 +23,17 @@ function generateArray<T>(fn: (index: number) => T, count: number): Array<T> {
     return Array.from(Array(count).keys()).map<T>(fn);
 }
 
-const uuidGenerator = UUID(0);
 const languages = Object.values(Lang);
+
+const getNextIdFn = (startId: number) => {
+    let accumulator = startId - 1;
+    return (): number => {
+        accumulator += 1;
+        return accumulator;
+    };
+};
+
+const getNextId = getNextIdFn(0);
 
 interface IMockMangaTitle {
     lang: Lang;
@@ -174,7 +181,7 @@ export const getLastnameMock = (): string =>
 export const getHumanMock = (): IMangaHuman =>
     generateArray<IMangaHuman>(
         () => ({
-            id: uuidGenerator.uuid(),
+            id: getNextId(),
             firstname: getFirstnameMock(),
             lastname: getLastnameMock()
         }),
@@ -207,18 +214,18 @@ export const getMangaTitlesMock = (count: number): IMangaTitle[] => {
     const mangaTitles = generateArray<IMangaTitle>(() => {
         const lang = getRandomOfArray<Lang>(languages);
         return {
-            id: uuidGenerator.uuid(),
+            id: getNextId(),
             title: getMangaTitleOfLangMock(lang),
             lang
         };
     }, count);
     mangaTitles.push({
-        id: uuidGenerator.uuid(),
+        id: getNextId(),
         title: getMangaTitleOfLangMock(Lang.RUSSIAN),
         lang: Lang.RUSSIAN
     });
     mangaTitles.push({
-        id: uuidGenerator.uuid(),
+        id: getNextId(),
         title: getMangaTitleOfLangMock(Lang.ENGLISH),
         lang: Lang.ENGLISH
     });
@@ -229,18 +236,18 @@ export const getMangaDescriptionsMock = (count: number): IMangaDescription[] => 
     const mangaDescriptions = generateArray<IMangaDescription>(() => {
         const lang = getRandomOfArray<Lang>(languages);
         return {
-            id: uuidGenerator.uuid(),
+            id: getNextId(),
             description: getMangaDescriptionOfLangMock(lang),
             lang
         };
     }, count);
     mangaDescriptions.push({
-        id: uuidGenerator.uuid(),
+        id: getNextId(),
         description: getMangaDescriptionOfLangMock(Lang.RUSSIAN),
         lang: Lang.RUSSIAN
     });
     mangaDescriptions.push({
-        id: uuidGenerator.uuid(),
+        id: getNextId(),
         description: getMangaDescriptionOfLangMock(Lang.ENGLISH),
         lang: Lang.ENGLISH
     });
@@ -250,7 +257,7 @@ export const getMangaDescriptionsMock = (count: number): IMangaDescription[] => 
 export const getMangaGenresMock = (count: number): IMangaGenre[] =>
     generateArray<IMangaGenre>(
         () => ({
-            id: uuidGenerator.uuid(),
+            id: getNextId(),
             title: mangaGenres[getRandomInt(mangaGenres.length - 1)],
             description: ''
         }),
@@ -265,7 +272,7 @@ export const getMangaCardsMock = (count: number): IMangaCard[] =>
     generateArray<IMangaCard>(
         () => ({
             type: 'manga',
-            id: uuidGenerator.uuid(),
+            id: getNextId(),
             titles: getMangaTitlesMock(getRandomInt(5, 1)),
             coverUri: getCoverMock()
         }),
@@ -278,7 +285,7 @@ export const getMangaListMock = (count: number, id?: number): IManga[] =>
     generateArray<IManga>(
         () => ({
             type: 'manga',
-            id: id || uuidGenerator.uuid(),
+            id: id || getNextId(),
             titles: getMangaTitlesMock(getRandomInt(5, 1)),
             descriptions: getMangaDescriptionsMock(getRandomInt(5, 1)),
             coverUri: mangaCovers[getRandomInt(mangaCovers.length - 1)],
@@ -301,7 +308,7 @@ export const getChaptersMock = (
 ): IChapter[] =>
     generateArray<IChapter>(
         (index) => ({
-            id: id || uuidGenerator.uuid(),
+            id: id || getNextId(),
             title: getRandomOfArray(mangaTitlesRu),
             date: new Date(),
             number: index + 1,
@@ -319,7 +326,7 @@ export const getChapterMock = (id?: number, pageCount?: number): IChapter =>
 export const getCommentsMock = (count: number): IComment[] =>
     generateArray<IComment>(
         () => ({
-            id: uuidGenerator.uuid(),
+            id: getNextId(),
             content: getRandomOfArray(mangaTitlesRu),
             createAt: getRandomDate(),
             userId: getRandomInt(100),
@@ -336,7 +343,7 @@ const getReadlistName = (index: number) => `Мой ридлист №${index}`;
 export const getUsersMock = (count: number): IUser[] =>
     generateArray<IUser>(
         () => ({
-            id: uuidGenerator.uuid(),
+            id: getNextId(),
             username: getRandomOfArray(usernames),
             email: 'alex280702@mail.ru',
             role: UserRoles.USER
