@@ -46,7 +46,7 @@ export const useLayoutInit = () => {
     /**
      * Сохраняем состояние прямо до размонтирования DOM-элементов, для корректного сохранения позиции
      */
-    useLayoutEffect(() => () => savePageState(pathname), [savePageState, pathname, hash]);
+    useLayoutEffect(() => () => savePageState(pathname), [savePageState, pathname]);
 
     /**
      * Последнее событие - выход со страницы
