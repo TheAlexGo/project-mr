@@ -1,12 +1,13 @@
 import React, {
-    FC,
     Ref,
     forwardRef,
     HTMLAttributes,
     ReactElement,
     ReactNode,
     useCallback,
-    useMemo
+    useMemo,
+    MouseEventHandler,
+    MouseEvent
 } from 'react';
 
 import cn from 'classnames';
@@ -51,7 +52,7 @@ export interface IButton extends HTMLAttributes<HTMLButtonElement> {
     /** Устанавливает тему кнопки */
     theme?: ButtonThemes;
     /** Слушатель события клика по кнопке */
-    onClick?: VoidFunction;
+    onClick?: MouseEventHandler;
     /** Устанавливает состояние кнопки */
     state?: ButtonStates;
     /** Расположение контента относительно кнопки: слева, справа или по центру */
@@ -85,7 +86,7 @@ export interface IButton extends HTMLAttributes<HTMLButtonElement> {
     ref?: Ref<HTMLButtonElement>;
 }
 
-export const Button: FC<IButton> = forwardRef(
+export const Button = forwardRef<HTMLButtonElement, IButton>(
     (
         {
             className,
@@ -150,9 +151,12 @@ export const Button: FC<IButton> = forwardRef(
             ]
         );
 
-        const clickHandler = useCallback(() => {
-            onClick?.();
-        }, [onClick]);
+        const clickHandler = useCallback(
+            (e: MouseEvent) => {
+                onClick?.(e);
+            },
+            [onClick]
+        );
 
         const iconElement = useMemo(() => {
             if (icon) {
