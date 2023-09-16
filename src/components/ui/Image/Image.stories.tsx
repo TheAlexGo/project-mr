@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { StoryCategories } from '@sb/types';
 import { getCoverMock, getCoversMock } from '@utils/mockData';
@@ -63,10 +63,12 @@ export default {
         withBorderRadius: true,
         isLazy: true
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const Component: ComponentStory<Story> = ({ src, ...args }) => (
-    <div style={{ width: 240, height: 320 }}>
-        <Image key={src} {...args} src={src} />
-    </div>
-);
+export const Component: StoryObj<Story> = {
+    render: ({ src, ...args }) => (
+        <div style={{ width: 240, height: 320 }}>
+            <Image key={src} {...args} src={src} />
+        </div>
+    )
+};

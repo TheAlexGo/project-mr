@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { StoryCategories } from '@sb/types';
 
@@ -22,6 +20,6 @@ export default {
     args: {
         value: 70
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const Component: ComponentStory<Story> = (args) => <GaugeBar {...args} />;
+export const Component: StoryObj<Story> = {};

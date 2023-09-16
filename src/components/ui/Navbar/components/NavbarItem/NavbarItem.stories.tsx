@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { Icons } from '@components/Icon/Icon';
 import { StoryCategories } from '@sb/types';
@@ -46,6 +44,6 @@ export default {
         link: Pages.GENERAL,
         defaultLink: Pages.GENERAL
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const Item: ComponentStory<Story> = (args) => <NavbarItem {...args} />;
+export const Item: StoryObj<Story> = {};

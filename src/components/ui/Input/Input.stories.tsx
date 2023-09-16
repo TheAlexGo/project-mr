@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { StoryCategories } from '@sb/types';
 
@@ -70,6 +68,6 @@ export default {
         showPassword: false,
         showEye: true
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const SimpleInput: ComponentStory<Story> = (args) => <Input {...args} />;
+export const SimpleInput: StoryObj<Story> = {};

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { CardList, ScrollSnapTypes, Axes } from '@components/CardList/CardList';
 import { getMangaListMock } from '@mock';
@@ -63,6 +63,6 @@ export default {
         ],
         withFixHeader: false
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const Component: ComponentStory<Story> = (args) => <Tabs {...args} />;
+export const Component: StoryObj<Story> = {};

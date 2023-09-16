@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { StarIcon, TrashIcon, VkIcon } from '@icons';
 import { StoryCategories } from '@sb/types';
@@ -191,43 +191,47 @@ export default {
         withRightIcon: false,
         withNoPadding: false
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-const Template: ComponentStory<Story> = (args) => <Button {...args} />;
-
-export const Primary: ComponentStory<Story> = Template.bind({});
-Primary.args = {
-    theme: ButtonThemes.PRIMARY
+export const Primary: StoryObj<Story> = {
+    args: {
+        theme: ButtonThemes.PRIMARY
+    }
 };
 
-export const Secondary: ComponentStory<Story> = Template.bind({});
-Secondary.args = {
-    theme: ButtonThemes.SECONDARY
+export const Secondary: StoryObj<Story> = {
+    args: {
+        theme: ButtonThemes.SECONDARY
+    }
 };
 
-export const SecondaryWithArrow: ComponentStory<Story> = Template.bind({});
-SecondaryWithArrow.args = {
-    ...getButtonWithArrowProps()
+export const SecondaryWithArrow: StoryObj<Story> = {
+    args: {
+        ...getButtonWithArrowProps()
+    }
 };
 
-export const Tag: ComponentStory<Story> = Template.bind({});
-Tag.args = {
-    theme: ButtonThemes.TAG
+export const Tag: StoryObj<Story> = {
+    args: {
+        theme: ButtonThemes.TAG
+    }
 };
 
-export const Trash: ComponentStory<Story> = Template.bind({});
-Trash.args = {
-    children: null,
-    withNoPadding: true,
-    size: '24',
-    icon: <TrashIcon />
+export const Trash: StoryObj<Story> = {
+    args: {
+        children: null,
+        withNoPadding: true,
+        size: '24',
+        icon: <TrashIcon />
+    }
 };
 
-export const Social: ComponentStory<Story> = Template.bind({});
-Social.args = {
-    children: null,
-    withNoPadding: true,
-    isRounded: true,
-    size: '44',
-    icon: <VkIcon />
+export const Social: StoryObj<Story> = {
+    args: {
+        children: null,
+        withNoPadding: true,
+        isRounded: true,
+        size: '44',
+        icon: <VkIcon />
+    }
 };

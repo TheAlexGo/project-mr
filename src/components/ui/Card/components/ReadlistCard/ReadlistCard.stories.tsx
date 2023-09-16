@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { StoryCategories } from '@sb/types';
 
@@ -66,6 +64,6 @@ export default {
         isTitleAlignCenter: false,
         id: 123
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const Readlist: ComponentStory<Story> = (args) => <ReadlistCard {...args} />;
+export const Readlist: StoryObj<Story> = {};

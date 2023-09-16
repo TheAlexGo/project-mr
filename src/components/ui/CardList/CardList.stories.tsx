@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { getMangaCardsMock } from '@mock';
 import { StoryCategories } from '@sb/types';
@@ -51,6 +49,6 @@ export default {
         scrollSnap: ScrollSnapTypes.X_Mandatory,
         isLoading: false
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const Component: ComponentStory<Story> = (args) => <CardList {...args} />;
+export const Component: StoryObj<Story> = {};

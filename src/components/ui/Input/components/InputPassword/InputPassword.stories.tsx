@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { StoryCategories } from '@sb/types';
 
@@ -39,7 +37,8 @@ export default {
         firstPlaceholder: 'Пароль',
         secondPlaceholder: 'Повторите пароль'
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const Password: ComponentStory<Story> = (args) => <InputPassword {...args} />;
-Password.storyName = 'Input Password';
+export const Password: StoryObj<Story> = {
+    name: 'Input Password'
+};

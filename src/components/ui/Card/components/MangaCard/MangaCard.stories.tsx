@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { getCoversMock, getMangaCardMock } from '@mock';
 import { StoryCategories } from '@sb/types';
@@ -68,8 +68,8 @@ export default {
     args: {
         ...getMangaCardMock()
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const Manga: ComponentStory<Story> = ({ coverUri, ...args }) => (
-    <MangaCard key={coverUri} {...args} coverUri={coverUri} />
-);
+export const Manga: StoryObj<Story> = {
+    render: ({ coverUri, ...args }) => <MangaCard key={coverUri} {...args} coverUri={coverUri} />
+};

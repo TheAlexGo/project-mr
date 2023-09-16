@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 
 import { StoryCategories } from '@sb/types';
 
@@ -57,9 +57,9 @@ export default {
             'Вы действительно хотите удалить аккаунт? Все персональная информация будет утеряна',
         actionText: 'Удалить'
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const Component: ComponentStory<Story> = (args) => {
+export const Component: StoryFn<Story> = (args) => {
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const ref = useRef<HTMLDivElement>(null);
 

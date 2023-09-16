@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { StoryCategories } from '@sb/types';
 
@@ -56,7 +54,8 @@ export default {
         value: 'ru',
         isChecked: false
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const RG: ComponentStory<Story> = (args) => <Radio {...args} />;
-RG.storyName = 'Radio Group';
+export const RG: StoryObj<Story> = {
+    name: 'Radio Group'
+};

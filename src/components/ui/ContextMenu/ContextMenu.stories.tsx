@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { action } from '@storybook/addon-actions';
-import { ComponentStory } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 
 import { Axes, CardList, ScrollSnapTypes } from '@components/CardList/CardList';
 import { ButtonMenu } from '@components/ContextMenu/ui/ButtonMenu/ButtonMenu';
@@ -85,64 +85,70 @@ export default {
     }
 };
 
-export const Button: ComponentStory<typeof ButtonMenu> = (args) => <ButtonMenu {...args} />;
-Button.storyName = 'ButtonMenu';
-Button.args = {
-    items: [
-        {
-            id: 'menu',
-            title: 'Тест',
-            icon: Icons.MORE,
-            ariaLabelForSelected: 'выбрано',
-            children: [
-                {
-                    id: 'rename',
-                    title: 'Переименовать',
-                    icon: Icons.HOME
-                },
-                {
-                    id: 'edit',
-                    title: 'Редактировать',
-                    icon: Icons.EDIT
-                },
-                {
-                    id: 'delete',
-                    title: 'Удалить лист',
-                    icon: Icons.TRASH
-                }
-            ]
-        }
-    ]
+export const Button: StoryObj<typeof ButtonMenu> = {
+    render: (args) => <ButtonMenu {...args} />,
+    name: 'ButtonMenu',
+
+    args: {
+        items: [
+            {
+                id: 'menu',
+                title: 'Тест',
+                icon: Icons.MORE,
+                ariaLabelForSelected: 'выбрано',
+                children: [
+                    {
+                        id: 'rename',
+                        title: 'Переименовать',
+                        icon: Icons.HOME
+                    },
+                    {
+                        id: 'edit',
+                        title: 'Редактировать',
+                        icon: Icons.EDIT
+                    },
+                    {
+                        id: 'delete',
+                        title: 'Удалить лист',
+                        icon: Icons.TRASH
+                    }
+                ]
+            }
+        ]
+    }
 };
 
-export const TabsComponent: ComponentStory<typeof Tabs> = (args) => <Tabs {...args} />;
-TabsComponent.storyName = 'Tabs';
-TabsComponent.args = {
-    items: [
-        {
-            id: 'tab-1',
-            title: 'Каталог',
-            isSelected: true,
-            content: {
-                id: 'block-1',
-                children: (
-                    <div>
-                        <CardList
-                            axis={Axes.Y}
-                            cards={getMangaListMock(20)}
-                            scrollSnap={ScrollSnapTypes.X_Mandatory}
-                        />
-                    </div>
-                )
+export const TabsComponent: StoryObj<typeof Tabs> = {
+    render: (args) => <Tabs {...args} />,
+    name: 'Tabs',
+
+    args: {
+        items: [
+            {
+                id: 'tab-1',
+                title: 'Каталог',
+                isSelected: true,
+                content: {
+                    id: 'block-1',
+                    children: (
+                        <div>
+                            <CardList
+                                axis={Axes.Y}
+                                cards={getMangaListMock(20)}
+                                scrollSnap={ScrollSnapTypes.X_Mandatory}
+                            />
+                        </div>
+                    )
+                }
+            },
+            {
+                id: 'tab-2',
+                title: 'Моя коллеция',
+                content: {
+                    id: 'block-2',
+                    children: <div>Содержимое Моей коллекции</div>
+                }
             }
-        },
-        {
-            id: 'tab-2',
-            title: 'Моя коллеция',
-            content: {
-                id: 'block-2',
-                children: <div>Содержимое Моей коллекции</div>
-            }
-        }
-    ]
+        ]
+    }
 };

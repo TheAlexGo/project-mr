@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta, StoryFn } from '@storybook/react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, ButtonThemes } from '@components/Button/Button';
@@ -30,9 +30,9 @@ export default {
     args: {
         showModal: true
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-const Template: ComponentStory<Story> = ({ showModal, link }) => {
+const Template: StoryFn<Story> = ({ showModal, link }) => {
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const navigate = useNavigate();
     const ref = useRef<HTMLDivElement>(null);
@@ -62,8 +62,11 @@ const Template: ComponentStory<Story> = ({ showModal, link }) => {
     );
 };
 
-export const DeleteAccount: ComponentStory<Story> = Template.bind({});
-DeleteAccount.args = {
-    showModal: true,
-    link: ModalLinks.DELETE_ACCOUNT
+export const DeleteAccount: StoryObj<Story> = {
+    render: Template,
+
+    args: {
+        showModal: true,
+        link: ModalLinks.DELETE_ACCOUNT
+    }
 };

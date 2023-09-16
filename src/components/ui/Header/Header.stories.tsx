@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { HeadingTypes } from '@components/Heading/Heading';
 import { Icons } from '@components/Icon/Icon';
@@ -73,6 +71,6 @@ export default {
             getIconObj(Icons.SEARCH, () => null, locale)
         ]
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const Component: ComponentStory<Story> = (args) => <Header {...args} />;
+export const Component: StoryObj<Story> = {};

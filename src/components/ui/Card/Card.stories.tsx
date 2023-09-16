@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryObj, Meta } from '@storybook/react';
 
 import { StoryCategories } from '@sb/types';
 import { getCoverMock } from '@utils/mockData';
@@ -69,6 +67,6 @@ export default {
         isTitleAlignCenter: false,
         href: '/'
     }
-} as ComponentMeta<Story>;
+} as Meta<Story>;
 
-export const Component: ComponentStory<Story> = (args) => <Card {...args} />;
+export const Component: StoryObj<Story> = {};
