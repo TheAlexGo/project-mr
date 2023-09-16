@@ -42,7 +42,7 @@ const ProfileSettings = observer(() => {
             <div className={classes['container']}>
                 <div className={classes['top']}>
                     <div className={classes['container-security']}>
-                        <Heading type={HeadingTypes.H3} className={classes['heading']}>
+                        <Heading type={HeadingTypes.H2} className={classes['heading']}>
                             {locale['profile-settings-security']}
                         </Heading>
                         <Button
@@ -59,7 +59,7 @@ const ProfileSettings = observer(() => {
                         </Button>
                     </div>
                     <div>
-                        <Heading type={HeadingTypes.H3} className={classes['heading']}>
+                        <Heading type={HeadingTypes.H2} className={classes['heading']}>
                             {locale['profile-settings-lang']}
                         </Heading>
                         <Button

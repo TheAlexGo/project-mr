@@ -4,6 +4,8 @@ import { getMangaCardsMock, getMangaMock, getMangaListMock } from '@mock';
 import { store, Store } from '@store';
 import { ICatalogItemsRequest, IManga, IMangaCard } from '@types';
 
+const REQUEST_DELAY = 500;
+
 export class ResponseBuilder {
     private client: null;
     private readonly store: Store;
@@ -48,7 +50,7 @@ export class ResponseBuilder {
                     items: getMangaCardsMock(30),
                     hasMore: true
                 });
-            }, 1000);
+            }, REQUEST_DELAY);
         });
     }
 
@@ -67,13 +69,13 @@ export class ResponseBuilder {
                     items: getMangaCardsMock(5),
                     hasMore: true
                 });
-            }, 1000);
+            }, REQUEST_DELAY);
         });
     }
 
     async getManga(mangaId: number): Promise<IManga> {
         return new Promise((resolve) => {
-            setTimeout(() => resolve(getMangaMock(mangaId)), 1000);
+            setTimeout(() => resolve(getMangaMock(mangaId)), REQUEST_DELAY);
         });
     }
 }

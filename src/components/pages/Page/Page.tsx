@@ -90,9 +90,11 @@ export const Page: FC<IPage> = observer(
 
             if (!needRenderHeader) {
                 return (
-                    <Heading type={HeadingTypes.H1} isInvisible>
-                        {headingPage}
-                    </Heading>
+                    <header>
+                        <Heading type={HeadingTypes.H1} isInvisible>
+                            {headingPage}
+                        </Heading>
+                    </header>
                 );
             }
             return (

@@ -23,5 +23,5 @@ export const Chapters: FC = (): JSX.Element => {
         setChapters(getChaptersMock(10));
     }, []);
 
-    return <div>{renderChapters()}</div>;
+    return <ul>{renderChapters()}</ul>;
 };

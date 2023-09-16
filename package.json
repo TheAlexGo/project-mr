@@ -31,6 +31,7 @@
     "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
+    "@axe-core/react": "^4.7.3",
     "@babel/core": "^7.22.19",
     "@storybook/addon-a11y": "^7.4.2",
     "@storybook/addon-actions": "^7.4.2",

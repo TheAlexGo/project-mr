@@ -8,4 +8,13 @@ import { App } from './components/App';
 
 import '@styles/common.styl';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<App />);
+if (process.env.NODE_ENV !== 'production') {
+    import('@axe-core/react').then((axe) => {
+        setTimeout(() => {
+            axe.default(React, ReactDOM, 1000);
+        }, 1000);
+        ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<App />);
+    });
+} else {
+    ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<App />);
+}
