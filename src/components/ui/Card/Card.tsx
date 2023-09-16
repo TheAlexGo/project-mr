@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useMemo } from 'react';
+import React, { FC, JSX, ReactElement, useCallback } from 'react';
 
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -46,40 +46,31 @@ export const Card: FC<ICard> = observer(
     }): JSX.Element => {
         const { locale } = useStore();
 
-        const rootClasses = useMemo(
-            () => cn(classes.wrapper, wrapperClassName),
-            [wrapperClassName]
-        );
-        const linkClasses = useMemo(() => cn(classes.card, className), [className]);
+        const rootClasses = cn(classes.wrapper, wrapperClassName);
+        const linkClasses = cn(classes.card, className);
 
-        const coverAlt = useMemo(() => locale['manga-cover'], [locale]);
+        const coverAlt = `${locale['manga-cover']} ${title}`;
 
-        const titleClasses = useMemo(
-            () =>
-                cn(classes.title, {
-                    [classes['__align-center']]: isTitleAlignCenter
-                }),
-            [isTitleAlignCenter]
-        );
+        const titleClasses = cn(classes.title, {
+            [classes['__align-center']]: isTitleAlignCenter
+        });
 
         const clickHandler = useCallback(() => {
             onClick?.();
         }, [onClick]);
 
-        const imageComponent = useMemo(() => {
-            if (typeof image === 'string') {
-                return (
-                    <Image
-                        className={classes.image}
-                        src={image}
-                        alt={coverAlt}
-                        withBorderRadius
-                        isLazy
-                    />
-                );
-            }
-            return image;
-        }, [coverAlt, image]);
+        const imageComponent =
+            typeof image === 'string' ? (
+                <Image
+                    className={classes.image}
+                    src={image}
+                    alt={coverAlt}
+                    withBorderRadius
+                    isLazy
+                />
+            ) : (
+                image
+            );
 
         return (
             <li className={rootClasses}>

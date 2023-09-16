@@ -23,11 +23,15 @@ import { AUTO_MODIFIER, DARK_MODIFIER, LIGHT_MODIFIER } from '@utils/constants';
 
 export const App: FC = observer(() => {
     const { initApi } = useController();
-    const { isAppReady, activeTheme } = useStore();
+    const { isAppReady, activeTheme, lang } = useStore();
 
     useLayoutEffect(() => {
         initApi();
     }, [initApi]);
+
+    useLayoutEffect(() => {
+        document.documentElement.lang = lang;
+    }, [lang]);
 
     useLayoutEffect(() => {
         const { classList } = document.documentElement;

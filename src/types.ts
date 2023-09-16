@@ -4,8 +4,8 @@ import { Icons } from '@components/Icon/Icon';
 import { Manga } from '@store/manga';
 
 export enum Lang {
-    RUSSIAN = 'russian',
-    ENGLISH = 'english'
+    RUSSIAN = 'ru',
+    ENGLISH = 'en'
 }
 
 /**

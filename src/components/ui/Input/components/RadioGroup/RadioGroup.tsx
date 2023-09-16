@@ -59,7 +59,7 @@ export const RadioGroup: FC<IRadioGroup> = ({
 
     return (
         <div role="radiogroup" aria-labelledby={headingId}>
-            <Heading id={headingId} className={classes['heading']} type={HeadingTypes.H3}>
+            <Heading id={headingId} className={classes['heading']} type={HeadingTypes.H2}>
                 {title}
             </Heading>
             {renderElements()}
