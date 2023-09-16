@@ -1,3 +1,5 @@
+import { mergeConfig } from 'vite';
+
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
@@ -24,6 +26,14 @@ const config: StorybookConfig = {
 
     features: {
         storyStoreV7: true
+    },
+
+    async viteFinal(config) {
+        return mergeConfig(config, {
+            build: {
+                chunkSizeWarningLimit: 750
+            }
+        });
     },
 
     docs: {
