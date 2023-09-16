@@ -7,7 +7,7 @@
     z-index: 11;
     display: flex;
     padding: 24px;
-    background-color: $color_black-060;
+    background-color: var(--color_black-060);
 }
 
 .modal {
@@ -17,20 +17,20 @@
     margin: auto;
     padding: 24px 24px 0;
     text-align: center;
-    background-color: $color_surface;
+    background-color: var(--color_surface);
     border-radius: 8px;
 }
 
 .heading {
     margin-bottom: 8px;
     fontBold();
-    color: $color_main;
+    color: var(--color_main);
     font-size: $fs-l;
 }
 
 .body {
     margin-bottom: 20px;
-    color: $color_secondary;
+    color: var(--color_secondary);
     text-align: center;
 }
 
@@ -45,10 +45,10 @@
     font-size: $fs-s;
 
     &.__primary {
-        color: $color_primary;
+        color: var(--color_primary);
     }
 
     &.__danger {
-        color: $color_error;
+        color: var(--color_error);
     }
 }

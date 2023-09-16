@@ -9,9 +9,9 @@
     width: 100%;
     height: 48px;
     padding: 0 12px;
-    color: $color_main;
+    color: var(--color_main);
     font-size: $fs-s;
-    background-color: $color_surface;
+    background-color: var(--color_surface);
     border: 0;
     border-radius: 8px;
 }
@@ -20,16 +20,16 @@
     position: absolute;
     top: 50%;
     right: 12px;
-    color: $color_secondary;
+    color: var(--color_secondary);
     transform: translateY(-50%);
 
     &.__is-active {
-        color: $color_main;
+        color: var(--color_main);
     }
 }
 
 .error {
     margin-top: 8px;
-    color: $color_error;
+    color: var(--color_error);
     font-size: $fs-xxs;
 }

@@ -3,12 +3,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 0;
-    border-bottom: 1px solid $color_surface;
+    border-bottom: 1px solid var(--color_surface);
 }
 
 .label {
     fontMedium();
-    color: $color_main;
+    color: var(--color_main);
     font-size: $fs-s;
 }
 
@@ -24,8 +24,8 @@
 
     &:checked {
         & + .radio-custom {
-            background-color: $color_active;
-            border: 1px solid $color_active;
+            background-color: var(--color_active);
+            border: 1px solid var(--color_active);
 
             & .icon {
                 display: block;
@@ -35,7 +35,7 @@
 
     &:focus-visible {
         & + .radio-custom {
-            outline: 1px solid $color_primary;
+            outline: 1px solid var(--color_primary);
         }
     }
 }
@@ -46,12 +46,12 @@
     align-items: center;
     width: 24px;
     height: 24px;
-    background-color: $color_surface;
-    border: 1px solid $color_on-surface;
+    background-color: var(--color_surface);
+    border: 1px solid var(--color_on-surface);
     border-radius: 50%;
 }
 
 .icon {
     display: none;
-    color: $color_white;
+    color: var(--color_white);
 }

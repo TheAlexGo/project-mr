@@ -1,7 +1,7 @@
 $size-top = s('calc(%s + env(safe-area-inset-top))', $size-header);
-$size-right = s('calc(%s + env(safe-area-inset-right))', $offset-4x);
+$size-right = s('calc(%s + env(safe-area-inset-right))', 16px);
 $size-bottom = s('calc(%s + env(safe-area-inset-bottom))', $size-nav);
-$size-left = s('calc(%s + env(safe-area-inset-left))', $offset-4x);
+$size-left = s('calc(%s + env(safe-area-inset-left))', 16px);
 
 .layout {
     position: relative;
@@ -22,5 +22,5 @@ $size-left = s('calc(%s + env(safe-area-inset-left))', $offset-4x);
     z-index: 10;
     width: 100%;
     padding: 0 s('env(safe-area-inset-right)') s('env(safe-area-inset-bottom)') s('env(safe-area-inset-left)');
-    background-color: $color_surface;
+    background-color: var(--color_surface);
 }

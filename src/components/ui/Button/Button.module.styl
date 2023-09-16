@@ -8,7 +8,7 @@ baseButtonStyles() {
     position: relative;
     margin: 0;
     padding: 0;
-    color: $color_main;
+    color: var(--color_main);
     font-size: $fs-s;
     text-align: initial;
     background-color: transparent;
@@ -24,16 +24,16 @@ baseButtonStyles() {
         &-primary {
             baseButtonStyles();
 
-            color: $color_white;
-            background-color: $color_primary;
+            color: var(--color_white);
+            background-color: var(--color_primary);
 
             +hover('__state') {
-                background-color: $color_active;
+                background-color: var(--color_active);
             }
 
             &:disabled {
-                color: $color_on-surface;
-                background-color: $color_surface;
+                color: var(--color_on-surface);
+                background-color: var(--color_surface);
             }
         }
 
@@ -41,11 +41,11 @@ baseButtonStyles() {
             baseButtonStyles();
 
             +hover('__state') {
-                background-color: $color_surface;
+                background-color: var(--color_surface);
             }
 
             &:disabled {
-                color: $color_on-surface;
+                color: var(--color_on-surface);
             }
         }
     }
