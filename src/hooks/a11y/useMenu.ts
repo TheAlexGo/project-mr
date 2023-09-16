@@ -294,7 +294,8 @@ export const useMenu = <
 
     const getDefaultMenuItemExpandedProps = useCallback(
         <
-            T extends TMenuItemExpandedWithMenuFull<TSubMenuItem> = TMenuItemExpandedWithMenuFull<TSubMenuItem>
+            T extends
+                TMenuItemExpandedWithMenuFull<TSubMenuItem> = TMenuItemExpandedWithMenuFull<TSubMenuItem>
         >(
             currentItem: T
         ): T => ({
