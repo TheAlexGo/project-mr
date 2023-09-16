@@ -20,13 +20,10 @@ const Library = () => {
     const { debug } = useController();
     const { hash } = useLocation();
 
-    const headerButtons = useMemo(
-        () => [
-            getIconObj(Icons.SEARCH, () => debug('Нажали на поиск!'), locale),
-            getIconObj(Icons.TRASH, () => debug('Нажали на удаление!'), locale)
-        ],
-        [locale, debug]
-    );
+    const headerButtons = [
+        getIconObj(Icons.SEARCH, () => debug('Нажали на поиск!'), locale),
+        getIconObj(Icons.TRASH, () => debug('Нажали на удаление!'), locale)
+    ];
 
     const tabElements: ITab[] = useMemo(
         () => [

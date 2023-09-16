@@ -1,5 +1,7 @@
 import React, { useState, useEffect, FC } from 'react';
 
+import cn from 'classnames';
+
 import { Loading } from '@components/Loading/Loading';
 import { ITabContent } from '@components/Tabs/components/Tab/Tab';
 
@@ -18,15 +20,9 @@ export const Content: FC<IContent> = ({ id, tabId, className, children }): JSX.E
     }, []);
 
     return (
-        <div className={classes['wrapper']}>
+        <div className={cn(classes['wrapper'], className)}>
             <Loading condition={isLoaded}>
-                <div
-                    id={id}
-                    className={className}
-                    role="tabpanel"
-                    tabIndex={0}
-                    aria-labelledby={tabId}
-                >
+                <div id={id} role="tabpanel" tabIndex={0} aria-labelledby={tabId}>
                     {children}
                 </div>
             </Loading>
