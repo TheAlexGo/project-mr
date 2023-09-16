@@ -3,5 +3,6 @@
   "delete-aria-label": "Remove",
   "page-not_found-aria-label": "Page not found",
   "lang-ru": "Russian",
-  "lang-en": "English"
+  "lang-en": "English",
+  "loading": "Content is loading..."
 }

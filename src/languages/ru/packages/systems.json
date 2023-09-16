@@ -3,5 +3,6 @@
   "delete-aria-label": "Удалить",
   "page-not_found-aria-label": "Страница не найдена",
   "lang-ru": "Русский",
-  "lang-en": "Английский"
+  "lang-en": "Английский",
+  "loading": "Загрузка содержимого..."
 }

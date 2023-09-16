@@ -31,6 +31,16 @@ export default {
             table: {
                 category: StoryCategories.MAIN
             }
+        },
+        tabsClassName: {
+            table: {
+                disable: true
+            }
+        },
+        activeTab: {
+            table: {
+                disable: true
+            }
         }
     },
     args: {

@@ -1,4 +1,4 @@
-import React, { FC, Ref, forwardRef, ReactElement, useCallback, useMemo } from 'react';
+import React, { FC, JSX, Ref, forwardRef, ReactElement, useCallback, useMemo } from 'react';
 
 import cn from 'classnames';
 

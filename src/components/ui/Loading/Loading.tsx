@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, FC } from 'react';
+import React, { JSX, PropsWithChildren, FC } from 'react';
 
 import { Loader } from '@components/Loader/Loader';
 

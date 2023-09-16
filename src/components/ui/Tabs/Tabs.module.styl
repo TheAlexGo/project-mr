@@ -3,7 +3,7 @@
     margin-bottom: 12px;
     padding: 16px 0;
 
-    useMediaWidth();
+    useDesktopWidth();
 
     .__with-fix_header & {
         position: fixed;
@@ -17,7 +17,9 @@
 }
 
 .content {
+    useDesktopWidth();
+
     .__with-fix_header & {
-        margin-top: 72px;
+        padding-top: 60px;
     }
 }

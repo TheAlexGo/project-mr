@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { useController } from '@hooks/useController';
@@ -25,7 +25,7 @@ export const parameters = {
 };
 
 export const decorators = [
-    (Story: Story) => {
+    (Story: StoryFn) => {
         const { lang } = useStore();
         const { initResource } = useController();
 
@@ -35,7 +35,7 @@ export const decorators = [
 
         return (
             <Router>
-                <div style={{ position: 'relative', height: '100%' }}>
+                <div style={{ position: 'relative', height: '100%', minHeight: 82 }}>
                     <Story />
                 </div>
             </Router>
