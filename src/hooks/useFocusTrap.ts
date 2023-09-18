@@ -11,21 +11,6 @@ export const useFocusTrap = (ref: RefObject<HTMLElement>) => {
     const [firstElement, setFirstElement] = useState<HTMLElement | null>(null);
     const [lastElement, setLastElement] = useState<HTMLElement | null>(null);
 
-    /**
-     * Получаем первый и последний фокусируемые элементы
-     */
-    useEffect(() => {
-        const { current } = ref;
-        if (!current || firstElement || lastElement) {
-            return;
-        }
-        const focusableElements = getKeyboardFocusableElements(current);
-        const firstEl = focusableElements[0] as HTMLElement;
-        const lastEl = focusableElements[focusableElements.length - 1] as HTMLElement;
-        setFirstElement(firstEl);
-        setLastElement(lastEl);
-    }, [firstElement, lastElement, ref]);
-
     const tabPressHandler = useCallback(
         (e: KeyboardEvent) => {
             if (e.key !== TAB) {
@@ -48,6 +33,21 @@ export const useFocusTrap = (ref: RefObject<HTMLElement>) => {
         },
         [firstElement, lastElement]
     );
+
+    /**
+     * Получаем первый и последний фокусируемые элементы
+     */
+    useEffect(() => {
+        const { current } = ref;
+        if (!current || firstElement || lastElement) {
+            return;
+        }
+        const focusableElements = getKeyboardFocusableElements(current);
+        const firstEl = focusableElements[0];
+        const lastEl = focusableElements[focusableElements.length - 1];
+        setFirstElement(firstEl);
+        setLastElement(lastEl);
+    }, [firstElement, lastElement, ref]);
 
     /**
      * После получения первого элемента - фокусируемся на него
