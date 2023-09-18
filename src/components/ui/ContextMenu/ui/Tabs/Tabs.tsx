@@ -1,12 +1,12 @@
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import React, { FC, JSX, useCallback, useMemo, useState } from 'react';
 
 import cn from 'classnames';
 
 import { ContextMenu } from '@components/ContextMenu/ContextMenu';
 import { ITabItem, TTabs } from '@components/ContextMenu/ui/Tabs/types';
-import { Content } from '@components/Tabs/components/Content/Content';
 import { TMenuItemUnion } from '@hooks/a11y/types';
 
+import { Content } from './components/Content/Content';
 import { Tab } from './components/Tab/Tab';
 import { ITab } from './types';
 
@@ -17,7 +17,7 @@ const renderItem: TTabs['renderItem'] = (additionalProps, initialProps) => (
 );
 
 interface ITabs {
-    /** Название группы вкладок */
+    /** Название группы вкладок (aria-label) */
     title: string;
     /** Элементы группы вкладок */
     items: ITab[];
