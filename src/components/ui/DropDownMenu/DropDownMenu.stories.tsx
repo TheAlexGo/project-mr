@@ -169,6 +169,7 @@ const WithSearchComponent = observer(({ ...args }) => {
         <DropDownMenu {...args}>
             <DropDownMenu.Button
                 as={Input}
+                type="text"
                 onChange={changeHandler}
                 value={query}
                 placeholder="Введите текст"

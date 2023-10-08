@@ -24,86 +24,89 @@ interface IButton<T> {
     children?: ReactNode;
 }
 
-export const Button = forwardRef(
-    <T extends ValidTags = 'button'>(
-        { as = 'button' as T, children, ...props }: OverwritableType<IButton<T>, T>,
-        ref: OverwritableRef<T>
-    ): JSX.Element => {
-        const { options, containerRef, buttonRef, menuRef, isOpen, setIsOpen } = useStore();
+type TProps<T extends ValidTags> = OverwritableType<IButton<T>, T>;
+type TRef<T extends ValidTags> = OverwritableRef<T>;
 
-        const clickHandler: MouseEventHandler = (e) => {
-            setIsOpen((prevIsOpen) => {
-                if (prevIsOpen) {
-                    if (options.openMenuAfterFocus) {
-                        return prevIsOpen;
-                    }
+const ButtonWithoutRef = <T extends ValidTags = 'button'>(
+    { as = 'button' as T, children, ...props }: TProps<T>,
+    ref: TRef<T>
+): JSX.Element => {
+    const { options, containerRef, buttonRef, menuRef, isOpen, setIsOpen } = useStore();
+
+    const clickHandler: MouseEventHandler = (e) => {
+        setIsOpen((prevIsOpen) => {
+            if (prevIsOpen) {
+                if (options.openMenuAfterFocus) {
+                    return prevIsOpen;
                 }
-                return !prevIsOpen;
-            });
-            props?.onClick?.(e);
-        };
-
-        const focusToFirstElement = () => {
-            const { current } = menuRef;
-            if (current) {
-                getKeyboardFocusableElements(current)[0]?.focus();
             }
-        };
+            return !prevIsOpen;
+        });
+        props?.onClick?.(e);
+    };
 
-        const keyDownHandler: KeyboardEventHandler = (e) => {
-            let needPreventEvent = false;
-            switch (e.key) {
-                case KeyboardKeys.ARROW_UP:
-                case KeyboardKeys.ARROW_DOWN:
-                    if (isOpen) {
-                        focusToFirstElement();
-                    } else {
-                        setIsOpen(true);
-                    }
-                    needPreventEvent = true;
-                    break;
-                default:
-                    break;
-            }
+    const focusToFirstElement = () => {
+        const { current } = menuRef;
+        if (current) {
+            getKeyboardFocusableElements(current)[0]?.focus();
+        }
+    };
 
-            if (needPreventEvent) {
-                e.preventDefault();
-            }
-            props?.onKeyDown?.(e);
-        };
+    const keyDownHandler: KeyboardEventHandler = (e) => {
+        let needPreventEvent = false;
+        switch (e.key) {
+            case KeyboardKeys.ARROW_UP:
+            case KeyboardKeys.ARROW_DOWN:
+                if (isOpen) {
+                    focusToFirstElement();
+                } else {
+                    setIsOpen(true);
+                }
+                needPreventEvent = true;
+                break;
+            default:
+                break;
+        }
 
-        const focusHandler: FocusEventHandler = (e) => {
-            if (options.openMenuAfterFocus) {
-                setIsOpen(true);
-            }
-            props?.onFocus?.(e);
-        };
+        if (needPreventEvent) {
+            e.preventDefault();
+        }
+        props?.onKeyDown?.(e);
+    };
 
-        const blurHandler: FocusEventHandler = (e) => {
-            if (options.closeMenuAfterBlur && !containerRef.current?.contains(e.relatedTarget)) {
-                setIsOpen(false);
-            }
-            props?.onBlur?.(e);
-        };
+    const focusHandler: FocusEventHandler = (e) => {
+        if (options.openMenuAfterFocus) {
+            setIsOpen(true);
+        }
+        props?.onFocus?.(e);
+    };
 
-        useImperativeHandle(ref, () => buttonRef.current);
+    const blurHandler: FocusEventHandler = (e) => {
+        if (options.closeMenuAfterBlur && !containerRef.current?.contains(e.relatedTarget)) {
+            setIsOpen(false);
+        }
+        props?.onBlur?.(e);
+    };
 
-        return (
-            <DynamicTag
-                aria-expanded={isOpen}
-                {...props}
-                as={as as ValidTags}
-                onClick={clickHandler}
-                onKeyDown={keyDownHandler}
-                onFocus={focusHandler}
-                onBlur={blurHandler}
-                aria-haspopup="true"
-                ref={buttonRef}
-            >
-                {children}
-            </DynamicTag>
-        );
-    }
-);
+    useImperativeHandle(ref, () => buttonRef.current);
 
-Button.displayName = 'DropDownMenu.Button';
+    return (
+        <DynamicTag
+            aria-expanded={isOpen}
+            {...props}
+            as={as as ValidTags}
+            onClick={clickHandler}
+            onKeyDown={keyDownHandler}
+            onFocus={focusHandler}
+            onBlur={blurHandler}
+            aria-haspopup="true"
+            ref={buttonRef}
+        >
+            {children}
+        </DynamicTag>
+    );
+};
+
+type TCallback = <T extends ValidTags>(p: TProps<T> & { ref?: TRef<T> }) => JSX.Element;
+
+export const Button = forwardRef(ButtonWithoutRef) as TCallback;

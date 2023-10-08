@@ -1,5 +1,6 @@
 import React, {
     useState,
+    type JSX,
     type MouseEventHandler,
     type ElementType,
     type FocusEventHandler,

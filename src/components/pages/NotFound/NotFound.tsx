@@ -3,11 +3,11 @@ import React from 'react';
 import { Button, ButtonThemes } from '@components/Button/Button';
 import { Image } from '@components/Image/Image';
 import { useStore } from '@hooks/useStore';
-import { NotFoundIcon } from '@icons';
 
 import { Page } from '../Page/Page';
 
 import classes from './NotFound.module.styl';
+import NotFoundIcon from '@icons/not_found_icon.svg';
 
 const NotFound = () => {
     const { locale } = useStore();

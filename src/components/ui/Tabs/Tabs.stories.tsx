@@ -1,9 +1,9 @@
-import React, { forwardRef, type HTMLAttributes } from 'react';
+import React, { forwardRef } from 'react';
 
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
-import { Button } from '@components/Button/Button';
+import { Button, IButton } from '@components/Button/Button';
 import { Icon, Icons } from '@components/Icon/Icon';
 
 import { Tabs } from './Tabs';
@@ -207,7 +207,7 @@ class Store {
 
 const store = new Store();
 
-const TabsItem = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(({ ...props }, ref) => (
+const TabsItem = forwardRef<HTMLButtonElement, IButton>(({ ...props }, ref) => (
     <DropDownMenu.Button as={Button} {...props} ref={ref} />
 ));
 

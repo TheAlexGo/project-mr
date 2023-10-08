@@ -6,9 +6,9 @@ import { observer } from 'mobx-react-lite';
 import { Loader } from '@components/Loader/Loader';
 import { useIntersection } from '@hooks/useIntersection';
 import { useStore } from '@hooks/useStore';
-import { NotFoundIcon } from '@icons';
 
 import classes from './Image.module.styl';
+import NotFoundIcon from '@icons/not_found_icon.svg';
 
 export interface IImage {
     /** Путь до картинки */

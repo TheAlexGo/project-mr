@@ -11,7 +11,7 @@ import { Tabs } from './Tabs';
 type Story = typeof Tabs;
 
 export default {
-    title: 'UI / Tabs',
+    title: 'OLD / Tabs',
     component: Tabs,
     argTypes: {
         title: {
