@@ -15,9 +15,8 @@ import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 
 type Story = typeof DropDownMenu;
 
-// eslint-disable-next-line import/no-default-export
 export default {
-    title: 'A11y / DropDownMenu',
+    title: 'UI / DropDownMenu',
     component: DropDownMenu,
     argTypes: {
         openMenuAfterFocus: {

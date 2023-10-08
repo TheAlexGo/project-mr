@@ -14,7 +14,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 type Story = typeof Tabs;
 
 export default {
-    title: 'A11y / Tabs',
+    title: 'UI / Tabs',
     component: Tabs,
     argTypes: {},
     args: {}
