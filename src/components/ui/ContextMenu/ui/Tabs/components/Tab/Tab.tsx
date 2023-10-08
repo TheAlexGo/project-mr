@@ -6,7 +6,7 @@ import { Button } from '@components/Button/Button';
 import { IMenuItemMainProps } from '@components/ContextMenu/types';
 import { ITab } from '@components/ContextMenu/ui/Tabs/types';
 
-import classes from '@components/Tabs/components/Tab/Tab.module.styl';
+import classes from '@components/TabsOld/components/Tab/Tab.module.styl';
 
 interface ITabProps {
     additionalProps: IMenuItemMainProps;

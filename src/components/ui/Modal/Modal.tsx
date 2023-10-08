@@ -9,7 +9,7 @@ import { Heading, HeadingTypes } from '@components/Heading/Heading';
 import { useController } from '@hooks/useController';
 import { useFocusTrap } from '@hooks/useFocusTrap';
 import { useStore } from '@hooks/useStore';
-import { ESCAPE } from '@utils/constants';
+import { KeyboardKeys } from '@utils/constants';
 import { DISABLED_SCROLL_MODIFIER } from '@utils/dom';
 
 import classes from './Modal.module.styl';
@@ -85,7 +85,7 @@ export const Modal: FC<IModal> = ({
 
     const keyUpHandler = useCallback(
         (e: KeyboardEvent) => {
-            if (e.key === ESCAPE) {
+            if (e.key === KeyboardKeys.ESCAPE) {
                 cancelClickHandler();
             }
         },
@@ -107,7 +107,7 @@ export const Modal: FC<IModal> = ({
         [actionClickHandler, actionText, buttonDangerClasses]
     );
 
-    useFocusTrap(overlayRef);
+    useFocusTrap(overlayRef.current);
 
     /**
      * Отключаем глобальный скролл

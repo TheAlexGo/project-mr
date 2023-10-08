@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 're
 
 import cn from 'classnames';
 
-import { ENTER, ESCAPE } from '@utils/constants';
+import { KeyboardKeys } from '@utils/constants';
 
 import classes from './Editable.module.styl';
 
@@ -56,7 +56,7 @@ export const Editable: FC<IEditable> = ({
     }, [isActive, newValue, placeholder]);
 
     const keyDownEnterHandler = useCallback((e: React.KeyboardEvent<HTMLElement>) => {
-        if (e.key === ENTER) {
+        if (e.key === KeyboardKeys.ENTER) {
             const target = e.target as HTMLElement;
             setNewValue(target.textContent);
             e.preventDefault();
@@ -65,7 +65,7 @@ export const Editable: FC<IEditable> = ({
 
     const keyDownEscapeHandler = useCallback(
         (e: KeyboardEvent) => {
-            if (e.key === ESCAPE) {
+            if (e.key === KeyboardKeys.ESCAPE) {
                 onCancel?.();
                 e.preventDefault();
             }

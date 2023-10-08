@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { JSX, ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 
 import { IInput, Input } from '@components/Input/Input';
 import { useValidate } from '@hooks/useValidate';
@@ -30,13 +30,13 @@ export const InputPassword: FC<IInputPassword> = ({
 
     const error = useValidate(ValidateTypes.PASSWORD_MATCH, firstPassword, secondPassword);
 
-    const firstChangeHandler = useCallback((currentValue: string) => {
-        setFirstPassword(currentValue);
+    const firstChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setFirstPassword(e.target.value);
         setIsComputingError(true);
     }, []);
 
-    const secondChangeHandler = useCallback((currentValue: string) => {
-        setSecondPassword(currentValue);
+    const secondChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setSecondPassword(e.target.value);
         setIsComputingError(true);
     }, []);
 
@@ -81,6 +81,7 @@ export const InputPassword: FC<IInputPassword> = ({
                 <Input
                     type="password"
                     placeholder={firstPlaceholder}
+                    value={firstPassword}
                     onChange={firstChangeHandler}
                     onError={firstErrorHandler}
                     onClickEye={clickEyeHandler}
@@ -91,6 +92,7 @@ export const InputPassword: FC<IInputPassword> = ({
                 <Input
                     type="password"
                     placeholder={secondPlaceholder}
+                    value={secondPassword}
                     customError={error}
                     onChange={secondChangeHandler}
                     onError={secondErrorHandler}

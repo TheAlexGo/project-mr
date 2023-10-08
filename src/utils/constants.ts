@@ -7,8 +7,13 @@ export const DARK_MODIFIER = '__ui-theme_dark';
 export const AUTO_MODIFIER = '__ui-theme_auto';
 
 // Keyboard
-export const ESCAPE = 'Escape';
-export const ENTER = 'Enter';
-export const TAB = 'Tab';
-export const ARROW_RIGHT = 'ArrowRight';
-export const ARROW_LEFT = 'ArrowLeft';
+export enum KeyboardKeys {
+    ESCAPE = 'Escape',
+    ENTER = 'Enter',
+    SPACE = 'Space',
+    TAB = 'Tab',
+    ARROW_UP = 'ArrowUp',
+    ARROW_DOWN = 'ArrowDown',
+    ARROW_RIGHT = 'ArrowRight',
+    ARROW_LEFT = 'ArrowLeft'
+}

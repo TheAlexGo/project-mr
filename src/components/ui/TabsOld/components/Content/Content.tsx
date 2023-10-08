@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FC } from 'react';
 
 import { Loading } from '@components/Loading/Loading';
-import { ITabContent } from '@components/Tabs/components/Tab/Tab';
+import { ITabContent } from '@components/TabsOld/components/Tab/Tab';
 
 import classes from './Content.module.styl';
 

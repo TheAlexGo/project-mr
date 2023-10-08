@@ -1,3 +1,5 @@
+import React, { ChangeEventHandler, useState } from 'react';
+
 import { StoryObj, Meta } from '@storybook/react';
 
 import { StoryCategories } from '@sb/types';
@@ -70,4 +72,14 @@ export default {
     }
 } as Meta<Story>;
 
-export const SimpleInput: StoryObj<Story> = {};
+export const SimpleInput: StoryObj<Story> = {
+    render: function Component({ ...args }) {
+        const [value, setValue] = useState('');
+        const changeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+            setValue(e.target.value);
+            args.onChange?.(e);
+        };
+
+        return <Input {...args} onChange={changeHandler} value={value} />;
+    }
+};

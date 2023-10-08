@@ -3,8 +3,8 @@ import React, { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { Icons } from '@components/Icon/Icon';
-import { Tabs } from '@components/Tabs/Tabs';
-import { ITab } from '@components/Tabs/components/Tab/Tab';
+import { Tabs } from '@components/TabsOld/Tabs';
+import { ITab } from '@components/TabsOld/components/Tab/Tab';
 import { useController } from '@hooks/useController';
 import { useStore } from '@hooks/useStore';
 import { getIconObj } from '@utils/header';

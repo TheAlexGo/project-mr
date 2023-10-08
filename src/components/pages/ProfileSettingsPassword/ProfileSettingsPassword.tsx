@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 
 import { Button, ButtonThemes, ButtonTypes } from '@components/Button/Button';
 import { Input } from '@components/Input/Input';
@@ -18,8 +18,8 @@ const ProfileSettingsPassword = () => {
     const { locale } = useStore();
     const { debug } = useController();
 
-    const oldPasswordChangeHandler = useCallback((currentPassword: string) => {
-        setOldPassword(currentPassword);
+    const oldPasswordChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setOldPassword(e.target.value);
     }, []);
 
     const newPasswordChangeHandler = useCallback((currentPassword: string) => {
@@ -57,6 +57,7 @@ const ProfileSettingsPassword = () => {
                         <Input
                             type="password"
                             placeholder={locale['ph-old-password']}
+                            value={oldPassword}
                             onChange={oldPasswordChangeHandler}
                             onError={oldPasswordErrorHandler}
                             showError={false}

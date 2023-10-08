@@ -1,5 +1,5 @@
 import { IMenu } from '@components/ContextMenu/types';
-import { ITabContent } from '@components/Tabs/components/Tab/Tab';
+import { ITabContent } from '@components/TabsOld/components/Tab/Tab';
 import { IMenuItemCore, TMenuItemSimpleFirstData } from '@hooks/a11y/types';
 
 export interface ITab extends IMenuItemCore {

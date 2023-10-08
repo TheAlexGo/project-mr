@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 
 import { Button, ButtonThemes, ButtonTypes } from '@components/Button/Button';
 import { Input } from '@components/Input/Input';
@@ -15,8 +15,8 @@ const ProfileSettingsEmail = () => {
     const { locale } = useStore();
     const { debug } = useController();
 
-    const changeHandler = useCallback((value: string) => {
-        setEmail(value);
+    const changeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
     }, []);
 
     const errorHandler = useCallback((isError: boolean) => {
